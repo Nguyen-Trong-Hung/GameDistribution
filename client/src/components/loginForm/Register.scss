@@ -1,0 +1,53 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa; // Màu nền cho container
+
+  form {
+    background: white;
+    padding: 20px;
+    width: 100%;
+    .form-group {
+      margin-bottom: 15px;
+
+      h1{
+        margin-bottom: 20px;
+        color: black ;
+        font-size: 1.2rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px; // Khoảng cách bên trong cho input
+        box-sizing: border-box;
+        border: 1px solid #ccc; // Đường viền cho input
+        border-radius: 4px; // Bo tròn các góc cho input
+        font-size: 1rem; // Kích thước chữ cho input
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center; // Căn giữa nút đăng ký
+
+      button {
+        height: 40px;
+        width: 35%;
+        padding: 10px;
+        background-color: rgb(45, 11, 184);
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 18px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+      }
+    }
+  }
+}

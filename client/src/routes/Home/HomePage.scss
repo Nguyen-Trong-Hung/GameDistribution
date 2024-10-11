@@ -1,0 +1,49 @@
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    background-color: #e8e7e7; // Màu nền cho toàn bộ section
+  
+    .title {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      h1 {
+        font-size: 2.8rem; // Kích thước chữ lớn cho tiêu đề
+        font-weight: bold; // In đậm
+        color: #153ec6; // Màu chữ tiêu đề
+        margin: 0; // Loại bỏ margin để hai dòng sát nhau
+      }
+    }
+  
+    .slogan {
+      margin-bottom: 50px;
+      p {
+        font-size: 1.12rem; // Kích thước chữ cho slogan
+        color: black; // Màu chữ cho slogan
+        margin: 0; // Loại bỏ margin để hai dòng sát nhau
+      }
+    }
+  
+    button {
+      background-color: #007bff; // Màu nền cho nút bấm
+      color: #fff; // Màu chữ của nút
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-bottom: 20px;
+  
+      &:hover {
+        background-color: #0056b3; // Màu khi hover
+      }
+    }
+  
+    img {
+      max-width: 44%;
+      height: auto;
+    }
+  }

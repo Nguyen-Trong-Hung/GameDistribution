@@ -1,0 +1,88 @@
+/* src/components/Layout/Layout.scss */
+.gameBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(246, 246, 246);
+    color: white;
+  
+    .home {
+      img {
+        padding-left: 100px;
+        max-height: 50px;
+        margin-right: 20px; // Thêm khoảng cách giữa img và các mục khác
+      }
+    }
+  
+    .category {
+      display: flex;
+      align-items: center;
+    }
+  
+    a {
+      color: black; // Màu chữ
+      text-decoration: none; // Loại bỏ gạch chân
+      margin-right: 20px; // Khoảng cách giữa các mục
+      font-size: 1.2rem; // Kích thước chữ
+      position: relative; // Để sử dụng cho hiệu ứng con hổ
+      transition: color 0.3s, transform 0.3s; // Hiệu ứng chuyển đổi cho màu sắc và phóng to
+  
+      &:hover {
+        color: #007bff; // Màu chữ khi hover
+        transform: scale(1.1); // Phóng to chữ khi hover
+      }
+    }
+  
+    .search-container {
+      display: flex;
+      align-items: center;
+      background-color: rgb(246, 246, 246);
+      border-radius: 12px;
+      border: 3px solid rgb(45, 11, 184);
+      padding: 5px 10px;
+  
+      input {
+        border: none;
+        background: none;
+        color: black;
+        padding: 5px;
+        font-size: 1rem;
+        outline: none;
+  
+        &::placeholder {
+          color: #ccc;
+        }
+      }
+  
+      .search-icon {
+        color: rgb(45, 11, 184);
+        font-size: 2rem;
+      }
+    }
+  }
+  .login-container {
+    display: flex;
+    border-radius: 5px; /* Bán kính viền */
+    padding: 10px; /* Tăng padding để làm cho container to ra */
+    padding-right: 50px;
+    margin: 10px 0; /* Thêm margin để tạo khoảng cách xung quanh container */
+  
+    .login-button {
+        display: flex;
+        align-items: center;
+        color: white;
+        border-radius: 12px; /* Tăng bán kính viền */
+        padding: 6px 12px; /* Tăng padding để làm cho nút to ra */
+        margin: 0 10px; /* Khoảng cách giữa các mục */
+        background-color: rgb(45, 11, 184); /* Sử dụng lại màu của container */
+        font-size: 1rem; /* Tăng kích thước chữ */
+        font-weight: bold;
+        cursor: pointer;
+      }
+  
+    .login-icon {
+      color: white;
+      font-size: 0.7rem; /* Tăng kích thước biểu tượng */
+      margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
+    }
+  }

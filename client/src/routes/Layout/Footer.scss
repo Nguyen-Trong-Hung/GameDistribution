@@ -1,0 +1,74 @@
+.footer {
+    background-color: #f8f9fa; // Màu nền cho footer
+    padding: 10px 100px; // Khoảng cách trên, dưới và 2 bên cho footer
+    border-top: 1px solid #e7e7e7; // Đường viền trên cho footer
+    text-align: center; // Căn giữa nội dung footer
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px; // Khoảng cách giữa các phần tử trong container
+  
+      img {
+        max-width: 150px; // Giới hạn chiều rộng của hình ảnh
+        height: auto;
+      }
+  
+      .address {
+        display: flex;
+        align-items: center;
+        gap: 10px; // Khoảng cách giữa biểu tượng và liên kết
+        font-size: 0.9rem; // Kích thước chữ cho địa chỉ
+        color: #6c757d; // Màu chữ cho địa chỉ
+  
+        .address-link {
+          color: #007bff; // Màu chữ cho liên kết địa chỉ
+          text-decoration: none; // Loại bỏ gạch chân cho liên kết
+  
+          &:hover {
+            text-decoration: underline; // Thêm gạch chân khi hover
+          }
+        }
+      }
+  
+      .social-media {
+        display: flex;
+        flex-direction: column;
+        .follow-us {
+          font-size: 01.2rem; // Kích thước chữ cho "Follow us"
+          color: #000; // Màu chữ đen cho "Follow us"
+          text-align: bold;
+        }
+  
+        .social-links {
+          margin-top: -3px;
+          display: flex;
+          gap: 10px; // Khoảng cách giữa các liên kết mạng xã hội
+  
+          a {
+            color: #007bff; // Màu chữ cho liên kết mạng xã hội
+            font-size: 1.5rem; // Kích thước biểu tượng mạng xã hội
+  
+            &:hover {
+              color: #0056b3; // Màu khi hover
+            }
+          }
+        }
+      }
+    }
+  
+    .footer-policy {
+      margin-top: -20px; // Khoảng cách trên cho footer-policy
+      font-size: 0.9rem; // Kích thước chữ cho footer-policy
+      color: #6c757d; // Màu chữ cho footer-policy
+  
+      .footer-link {
+        color: #007bff; // Màu chữ cho liên kết trong footer-policy
+        text-decoration: none; // Loại bỏ gạch chân cho liên kết
+  
+        &:hover {
+          text-decoration: underline; // Thêm gạch chân khi hover
+        }
+      }
+    }
+  }
