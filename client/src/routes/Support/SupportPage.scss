@@ -1,0 +1,89 @@
+.contact-form {
+    width: 50%;
+    margin: auto;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  
+    h1 {
+      color: #3d13fc;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  
+    .form-group {
+      margin-bottom: 1.5rem;
+  
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+  
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+  
+    textarea {
+      min-height: 150px;
+      border-radius: 35px;
+      resize: none; /* Allows the textarea to be resizable */
+    }
+  
+      .categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+  
+        .category-button {
+          padding: 0.5rem 1rem;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          background-color: #e5e5e5;
+          cursor: pointer;
+  
+          &.active {
+            background-color: #3d13fc;
+            color: white;
+          }
+        }
+      }
+    }
+  
+    .submit-button {
+      width: 100%;
+      padding: 1rem;
+      background-color: #3d13fc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2rem;
+  
+      &:hover {
+        background-color: #320fbf;
+      }
+    }
+  
+    .faq-links {
+      margin-top: 2rem;
+      text-align: center;
+  
+      a {
+        color: #3d13fc;
+        text-decoration: none;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
