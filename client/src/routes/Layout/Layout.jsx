@@ -27,6 +27,7 @@ const Layout = () => {
         <div className='category'>
           <div><Link to="/games">Games</Link></div>
           <div><Link to="/support">Support</Link></div>
+          {isLoggedIn && <div><Link to="/distribution">Distribution</Link></div>}
         </div>
         <div className="search-container">
           <input type="text" placeholder="Search..." />

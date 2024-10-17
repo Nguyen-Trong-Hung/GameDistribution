@@ -28,7 +28,7 @@ function Footer() {
                     </div>
                 </div>
                 <div className="footer-policy">
-                    <p>Azerion Copyright 2017 - 2023 | 
+                    <p>Azerion Copyright 2017 - 2023 |
                         <a
                             target="_blank"
                             className="footer-link"
@@ -50,7 +50,7 @@ function Footer() {
                         <a
                             target="_blank"
                             className="footer-link"
-                            rel="nofollow"
+                            rel="noopener noreferrer"
                             href="https://static.gamedistribution.com/terms/both.html"
                         >
                             Terms &amp; conditions

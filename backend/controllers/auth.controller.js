@@ -1,11 +1,10 @@
-import db from '../DB/db.js';
+import { findUserByEmail, createUser } from '../Models/User.model.js';
 
 // Login logic
 export const login = (req, res) => {
   const { email, password } = req.body;
 
-  const sql = 'SELECT * FROM users WHERE email = ?';
-  db.query(sql, [email], (err, result) => {
+  findUserByEmail(email, (err, result) => {
     if (err) {
       return res.json({ success: false, message: 'Server error' });
     }
@@ -26,9 +25,7 @@ export const login = (req, res) => {
 export const register = (req, res) => {
   const { email, password, username } = req.body;
 
-  // Check if email already exists
-  const sql = 'SELECT * FROM users WHERE email = ?';
-  db.query(sql, [email], (err, result) => {
+  findUserByEmail(email, (err, result) => {
     if (err) {
       return res.json({ success: false, message: 'Server error' });
     }
@@ -36,10 +33,8 @@ export const register = (req, res) => {
       return res.json({ success: false, message: 'Email already exists' });
     }
 
-    // Add user to database
     const newUser = { email, password, username, isAdmin: 0 };
-    const insertSql = 'INSERT INTO users SET ?';
-    db.query(insertSql, newUser, (err, result) => {
+    createUser(newUser, (err, result) => {
       if (err) {
         return res.json({ success: false, message: 'Server error' });
       }

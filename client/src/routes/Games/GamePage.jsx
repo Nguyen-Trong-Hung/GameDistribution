@@ -1,9 +1,13 @@
 import React from 'react'
+import GameList from '../../components/gameList/GameList'
+import UploadForm from '../../components/upload/UpLoadForm'
 
 function GamePage() {
   return (
-    <div>
-      <h1>Game Page</h1>
+    <div className="gamepage">
+      <div>
+        <GameList />
+      </div>
     </div>
   )
 }

@@ -1,0 +1,74 @@
+.gamelistcontainer {
+    .detailgamelist {
+        margin: 35px 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); // 4 columns layout like the image
+        gap: 20px; // Spacing between game cards
+        justify-items: center;
+    }
+    .game {
+        border: 2px solid yellow;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        padding: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); // Light shadow effect
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px); // Lift effect on hover
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); // More pronounced shadow on hover
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px; // Rounded corners on the image
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #888;
+        }
+    }
+
+    // Pagination styling (bottom right part)
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+        button {
+            background-color: #4a00e0;
+            border: none;
+            color: white;
+            font-size: 14px;
+            margin: 0 10px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #682ee5; // Slightly lighter purple on hover
+            }
+
+            &.active {
+                background-color: #fff;
+                color: #4a00e0;
+                border: 1px solid #4a00e0;
+            }
+        }
+    }
+
+}

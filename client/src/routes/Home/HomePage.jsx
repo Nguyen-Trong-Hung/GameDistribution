@@ -18,7 +18,10 @@ const HomePage = () => {
         <img src="/gamedistributionpublisher.png-removebg.png" alt="Game Distribution Publisher" />
       </div>
       <div className="gamelist">
-        <GameList />
+        <div className="titlegamelist">
+          <h1>Featured Game</h1>
+        </div>
+          <GameList />
       </div>
     </div>
   );

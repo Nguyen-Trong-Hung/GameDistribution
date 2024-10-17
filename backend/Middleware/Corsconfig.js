@@ -7,3 +7,5 @@ const corsOptions = {
 };
 
 export const corsMiddleware = cors(corsOptions);
+
+export default corsMiddleware;
