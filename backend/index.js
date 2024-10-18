@@ -18,7 +18,7 @@ app.use('/api/auth', authRoute);  // Auth routes
 app.use('/api', gameRoute); // Game routes
 
 // Route to handle file upload
-app.post('/api/upload', upload.single('image'), uploadImage);
+// app.post('/api/upload', upload.single('image'), uploadImage);
 
 // Start server
 app.listen(8800, () => {

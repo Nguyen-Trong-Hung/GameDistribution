@@ -1,0 +1,166 @@
+// UserProfile.scss
+.profile-container {
+    border-radius: 30px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 30px 50px;
+    background-color: #d5dbe1;
+
+    .breadcrumb {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+
+        h1 {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        button {
+            display: flex;
+            font-weight: bold;
+            background-color: rgb(37, 29, 199);
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            padding: 12px;
+        }
+    }
+
+    .profile-main {
+        display: flex;
+        align-items: stretch;
+        gap: 20px;
+
+        .profile-left {
+            border-radius: 30px;
+            width: 30%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+
+            .avatar img {
+                width: 100px;
+                border-radius: 50%;
+                margin-bottom: 10px;
+            }
+
+            h3 {
+                margin-top: 10px;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+
+            p {
+                color: #6c757d;
+                margin-bottom: 10px;
+            }
+
+            .profile-actions {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 20px;
+
+                .btn {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                .follow {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+
+                .message {
+                    background-color: #28a745;
+                    color: #fff;
+                }
+            }
+
+            .social-links {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    margin-bottom: 10px;
+                    font-size: 14px;
+
+                    a {
+                        color: #007bff;
+                        text-decoration: none;
+                    }
+                }
+            }
+
+            .user-info {
+                text-align: left;
+                border: 2px solid #007bff;
+                border-radius: 30px;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+                h4 {
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    font-size: 14px;
+                    color: #6c757d;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+
+        .profile-right {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .project-status {
+                border-radius: 30px;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+                .assignment {
+                    h5 {
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                    }
+
+                    .status-bar {
+                        margin-bottom: 15px;
+
+                        label {
+                            display: block;
+                            font-size: 14px;
+                            margin-bottom: 5px;
+                        }
+
+                        .progress-bar {
+                            background-color: #e9ecef;
+                            border-radius: 5px;
+                            height: 8px;
+                            position: relative;
+
+                            .progress {
+                                background-color: #007bff;
+                                height: 100%;
+                                border-radius: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

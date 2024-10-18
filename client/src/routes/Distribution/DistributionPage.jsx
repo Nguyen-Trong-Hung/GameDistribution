@@ -5,7 +5,8 @@ function DistributionPage() {
   return (
     <div>
       <div className='upload'>
-        <UploadForm />
+        {/* <UploadForm /> */}
+        <h1>Upload Form</h1>
       </div>
     </div>
   )

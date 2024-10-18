@@ -1,18 +1,29 @@
 import db from '../DB/db.js';
 
-const uploadImage = async (req, res) => {
-  const { gameId } = req.body; // Giả sử bạn gửi gameId cùng với yêu cầu upload
+const uploadImage = (req, res) => {
+  const { gameId } = req.body; // Nhận gameId từ client
 
-  try {
-    // Cập nhật trường Image với đường dẫn hoặc tên tệp của hình ảnh
-    const imagePath = `/uploads/${req.file.filename}`;
-    const [result] = await db.query('UPDATE games SET Image = ? WHERE GameID = ?', [imagePath, gameId]);
-
-    res.status(200).json({ success: true, filePath: imagePath });
-  } catch (error) {
-    console.error('Error uploading image:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
+  if (!req.file || !gameId) {
+    return res.status(400).json({ success: false, message: 'Invalid request, missing file or gameId' });
   }
+
+  // Tạo đường dẫn tới ảnh
+  const imagePath = `/uploads/${req.file.filename}`;
+
+  // Sử dụng callback để cập nhật database
+  db.query('UPDATE games SET Image = ? WHERE GameID = ?', [imagePath, gameId], (error, results) => {
+    if (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ success: false, message: 'Server error' });
+    }
+
+    // Kiểm tra kết quả để đảm bảo truy vấn đã thành công
+    if (results.affectedRows > 0) {
+      res.status(200).json({ success: true, filePath: imagePath });
+    } else {
+      res.status(404).json({ success: false, message: 'Game not found' });
+    }
+  });
 };
 
 export default uploadImage;

@@ -26,8 +26,9 @@ const Layout = () => {
         <div className='home'><Link to="/"><img src="/gamedistribution.png" alt="" /></Link></div>
         <div className='category'>
           <div><Link to="/games">Games</Link></div>
-          <div><Link to="/support">Support</Link></div>
+          <div><Link to="/userprofile">User</Link></div>
           {isLoggedIn && <div><Link to="/distribution">Distribution</Link></div>}
+          <div><Link to="/support">Support</Link></div>
         </div>
         <div className="search-container">
           <input type="text" placeholder="Search..." />
