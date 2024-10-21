@@ -1,20 +1,17 @@
 import jwt from 'jsonwebtoken';
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-
+export const verifyToken = (req, res, next) => {
+  const token = req.cookies.token; // Lấy token từ cookie
+  console.log(token);
   if (!token) {
-    return res.status(403).json({ success: false, message: 'No token provided' });
+    return res.status(401).json({ success: false, message: 'Access Denied' });
   }
 
-  jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res.status(500).json({ success: false, message: 'Failed to authenticate token' });
+      return res.status(403).json({ success: false, message: 'Invalid Token' });
     }
-
-    req.userId = decoded.id;
-    next();
+    req.user = user.id; // Gán thông tin người dùng vào request
+    next(); // Tiếp tục xử lý yêu cầu
   });
 };
-
-export default verifyToken;

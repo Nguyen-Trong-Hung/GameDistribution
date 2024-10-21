@@ -67,6 +67,21 @@
     padding-right: 50px;
     margin: 10px 0; /* Thêm margin để tạo khoảng cách xung quanh container */
   
+    .user-info {
+      position: relative;
+      display: flex;
+      align-items: center;
+      .user-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #09a8a5;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+    }
+    
     .login-button {
         display: flex;
         align-items: center;

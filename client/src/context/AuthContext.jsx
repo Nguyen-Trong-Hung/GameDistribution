@@ -1,23 +1,25 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+export const AuthContextProvider = ({ children }) => { 
+  // Định nghĩa một component provider cho AuthContext
+  const [isLoggedIn, setIsLoggedIn] = useState( 
+    // Khởi tạo state để quản lý trạng thái đăng nhập
+    JSON.parse(localStorage.getItem("user"))
+  );
 
-  const login = (userData) => {
-    setUser(userData);
-    setIsLoggedIn(true);
+  const login = (data) => { // Định nghĩa một hàm để cập nhật trạng thái đăng nhập
+    setIsLoggedIn(data); // Cập nhật state với trạng thái đăng nhập mới
   };
 
-  const logout = () => {
-    setUser(null);
-    setIsLoggedIn(false);
-  };
+  useEffect(() => { // Sử dụng useEffect để thực hiện các tác dụng phụ
+    localStorage.setItem("user", JSON.stringify(isLoggedIn)); 
+    // Lưu trạng thái đăng nhập vào localStorage mỗi khi nó thay đổi
+  }, [isLoggedIn]); // Mảng phụ thuộc để kích hoạt effect khi isLoggedIn thay đổi
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
+  return ( // Trả về context provider với state hiện tại và hàm login
+    <AuthContext.Provider value={{ isLoggedIn, login }}> 
       {children}
     </AuthContext.Provider>
   );

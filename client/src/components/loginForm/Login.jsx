@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'; // dùng axios để gửi POST request
 import './Login.scss';
 
-const Login = ({ onLoginSuccess }) => {
+const Login = ({ onLoginSuccess, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,9 +13,10 @@ const Login = ({ onLoginSuccess }) => {
       const res = await axios.post('http://localhost:8800/api/auth/login', { email, password }); // Gửi yêu cầu POST đến server
       console.log('Response:', res.data); // Xử lý kết quả từ server
       if (res.data.success) {
-        // Đăng nhập thành công, gọi hàm onLoginSuccess
+        // Đăng nhập thành công, gọi hàm onLoginSuccess và onClose
         console.log('Login successful');
-        onLoginSuccess(res.data.avatar); // Giả sử server trả về avatar của người dùng
+        onLoginSuccess(res.data); // Giả sử server trả về dữ liệu người dùng
+        onClose(); // Đóng overlay
       } else {
         // Thông báo lỗi đăng nhập
         console.log('Login failed');
@@ -38,8 +39,6 @@ const Login = ({ onLoginSuccess }) => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </div>
-        <div className="form-group">
           <h1>Password</h1>
           <input
             type="password"

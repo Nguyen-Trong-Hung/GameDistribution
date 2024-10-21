@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.scss'; // Import file CSS cho Register
 
-const Register = () => {
+const Register = ({ onClose }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,6 +27,7 @@ const Register = () => {
       if (response.ok) {
         // Xử lý khi đăng ký thành công
         console.log('Registration successful');
+        onClose(); // Đóng overlay
       } else {
         // Xử lý khi đăng ký thất bại
         console.error('Registration failed');

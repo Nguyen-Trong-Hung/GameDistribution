@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { IoIosSearch } from 'react-icons/io';
-import { FaUser } from "react-icons/fa6";
+import { FaUser } from 'react-icons/fa';
 import OverlayLogin from '../../components/loginForm/OverlayLogin';
+import { AuthContext } from '../../context/AuthContext';
 import './Layout.scss'; // Import file CSS cho Layout
 
 const Layout = () => {
   const [showFormLogin, setShowFormLogin] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userAvatar, setUserAvatar] = useState('');
 
   const toggleForm = () => {
     setShowFormLogin(!showFormLogin);
   };
 
-  const handleLoginSuccess = (avatar) => {
-    setIsLoggedIn(true);
-    setUserAvatar(avatar);
-    setShowFormLogin(false);
-  };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.reload();
+  }
+
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <div>
@@ -26,9 +26,7 @@ const Layout = () => {
         <div className='home'><Link to="/"><img src="/gamedistribution.png" alt="" /></Link></div>
         <div className='category'>
           <div><Link to="/games">Games</Link></div>
-          <div><Link to="/userprofile">User</Link></div>
-          {isLoggedIn && <div><Link to="/distribution">Distribution</Link></div>}
-          <div><Link to="/support">Support</Link></div>
+          <div><Link to="/distribution">Distribution</Link></div>
         </div>
         <div className="search-container">
           <input type="text" placeholder="Search..." />
@@ -36,14 +34,18 @@ const Layout = () => {
         </div>
         <div className='login-container'>
           {isLoggedIn ? (
-            <img src={userAvatar} alt="User Avatar" className='user-avatar' />
+            <div className='user-info'>
+              <Link to="/userprofile"><img src={isLoggedIn.userInfo.avatar || "DefaultAvatar.png"} 
+              className='user-avatar' /></Link>
+              <button className='logout' onClick={handleLogout}>Logout</button>
+            </div>
           ) : (
             <button className='login-button' onClick={toggleForm}>
               <FaUser className='login-icon' /> Login / Register
             </button>
           )}
         </div>
-        <OverlayLogin isOpen={showFormLogin} onClose={toggleForm} onLoginSuccess={handleLoginSuccess} />
+        <OverlayLogin isOpen={showFormLogin} onClose={toggleForm} />
       </div>
       <div>
         <Outlet />

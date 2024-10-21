@@ -8,20 +8,23 @@ import SupportPage from './routes/Support/SupportPage';
 import Footer from './routes/Layout/Footer';
 import DistributionPage from './routes/Distribution/DistributionPage';
 import UserProfile from './routes/UserProfile/UserProfile';
+import {AuthContextProvider} from './context/AuthContext';
 
 function App() {
   return (
-    <Router>
-      <Layout />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/games" element={<GamesPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="/distribution" element={<DistributionPage />} />
-        <Route path="/userprofile" element={<UserProfile/>} />
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthContextProvider>
+      <Router>
+        <Layout />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/distribution" element={<DistributionPage />} />
+          <Route path="/userprofile" element={<UserProfile />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthContextProvider>
   );
 }
 
