@@ -82,3 +82,11 @@ export const register = (req, res) => {
     });
   });
 };
+
+
+// Đăng xuất
+export const logout = (req, res) => {
+  res.clearCookie("token");
+  res.json({ success: true, message: 'Logout successful' }
+  )
+}

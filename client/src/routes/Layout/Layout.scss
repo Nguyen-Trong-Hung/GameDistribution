@@ -75,10 +75,38 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
+        cursor: pointer;
         object-fit: cover;
         border: 2px solid #09a8a5;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease;
+      }
+      .logout-button {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+        height: 28px;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #ff4d4d;
+
+        .logout-icon {
+          font-size: 20px;
+          color: white;
+          transition: color 0.3s ease;
+          margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+        }
+      }
+
+      button {
+        width: auto;
+        height: auto;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
       }
     }
     

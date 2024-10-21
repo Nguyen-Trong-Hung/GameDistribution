@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // dùng axios để gửi POST request
 import './Login.scss';
+import { AuthContext } from '../../context/AuthContext';
+
 
 const Login = ({ onLoginSuccess, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +20,9 @@ const Login = ({ onLoginSuccess, onClose }) => {
       if (res.data.success) {
         // Đăng nhập thành công, gọi hàm onLoginSuccess và onClose
         console.log('Login successful');
+        login(res.data); // Cập nhật trạng thái đăng nhập
         onLoginSuccess(res.data); // Giả sử server trả về dữ liệu người dùng
+        navigate("/userprofile");
         onClose(); // Đóng overlay
       } else {
         // Thông báo lỗi đăng nhập

@@ -9,6 +9,7 @@ import Footer from './routes/Layout/Footer';
 import DistributionPage from './routes/Distribution/DistributionPage';
 import UserProfile from './routes/UserProfile/UserProfile';
 import {AuthContextProvider} from './context/AuthContext';
+import AdminPage from './routes/Admin/AdminPage';
 
 function App() {
   return (
