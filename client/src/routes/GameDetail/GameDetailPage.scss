@@ -1,0 +1,85 @@
+.gamedetail {
+    flex-direction: column;
+    margin: 20px;
+
+    .game-info {
+        display: flex;
+        width: 100%;
+        .game-info-left {
+            width: 60%;
+            padding: 20px;
+            background-color: white;
+
+            .game-play {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+                p {
+                    font-size: 1.2rem;
+                    margin: 0;
+                    color: #333;
+                }
+
+                img {
+                    width: 200px; // Adjust width as necessary
+                    height: auto;
+                    margin-top: 150px;
+                    border-radius: 25px;
+                }
+
+                button {
+                    margin-top: 10px;
+                    margin-bottom: 150px;
+                    padding: 8px 16px;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                }
+            }
+
+            .descript {
+                flex-direction: column;
+                margin: 20px 0;
+                padding-left: 50px;
+                width: auto;
+                max-width: 1200px;
+                border: 1px solid #ddd;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                ;
+
+                p {
+                    padding-right: 20px;
+                    font-size: 1rem;
+                    color: #666;
+                }
+            }
+        }
+
+        .game-info-right {
+            flex: 1;
+            background-color: #ffffff;
+            .similar-game{
+                font-size: 2rem;
+            }
+            // Add your styles for the right side here
+        }
+    }
+
+    .collections {
+        margin-top: 20px;
+        h5{
+            font-size: 2rem;
+        }
+    }
+}

@@ -16,7 +16,7 @@ const Login = ({ onLoginSuccess, onClose }) => {
 
     try {
       const res = await axios.post('http://localhost:8800/api/auth/login', { email, password }); // Gửi yêu cầu POST đến server
-      console.log('Response:', res.data); // Xử lý kết quả từ server
+      // console.log('Response:', res.data); // Xử lý kết quả từ server
       if (res.data.success) {
         // Đăng nhập thành công, gọi hàm onLoginSuccess và onClose
         console.log('Login successful');

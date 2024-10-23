@@ -7,7 +7,7 @@ import { CiEdit } from "react-icons/ci";
 
 const UserProfile = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
   return (
     <div className="profile-container">
       <div className="breadcrumb">

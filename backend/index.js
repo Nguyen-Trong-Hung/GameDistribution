@@ -7,6 +7,7 @@ import gameRoute from './Routes/game.route.js';
 import upload from './Middleware/Multerconfig.js'; // Import cấu hình multer từ Middleware
 import uploadImage from './controllers/uploadImage.controller.js';
 import userRoute from './Routes/user.route.js';
+import authAdminRoute from './Routes/authAdmin.route.js';
 
 // Initialize the app
 const app = express();
@@ -18,6 +19,7 @@ app.use(cookieParser()); // Cookie parser
 
 // Routes
 app.use('/api/auth', authRoute);  // Auth routes
+app.use('/api/admin', authAdminRoute); // Admin routes
 app.use('/api', gameRoute); // Game routes
 app.use('/api', userRoute); // User routes
 

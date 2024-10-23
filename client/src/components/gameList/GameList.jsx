@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './GameList.scss';
 
 const GameList = () => {
   const [games, setGames] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -22,15 +24,18 @@ const GameList = () => {
     fetchGames(); // Gọi hàm fetchGames
   }, []);
 
+  const handleGameClick = (gameId) => {
+    navigate(`/game/${gameId}`); // Chuyển hướng đến trang chi tiết game
+  };
+
   return (
     <div className='gamelistcontainer'>
       <div className="detailgamelist">
         {Array.isArray(games) && games.map(game => (
-          <div className="game" key={game.GameID}> {/* Hiển thị từng game */}
+          <div className="game" key={game.GameID} onClick={() => handleGameClick(game.GameID)}> {/* Hiển thị từng game */}
             {game.Image && <img src={game.Image} alt={game.Name} />} {/* Hiển thị ảnh bìa nếu có */}
             <h2>{game.Name}</h2> {/* Hiển thị tiêu đề game */}
-            <p>{new Date(game.createAt).toLocaleDateString()}</p> {/* Hiển thị ngày tạo game */}
-          </div>
+          </div>  
         ))}
       </div>
     </div>

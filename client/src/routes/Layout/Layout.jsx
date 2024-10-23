@@ -19,7 +19,7 @@ const Layout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get('http://localhost:8800/api/auth/logout');
+      const res = await axios.get('http://localhost:8800/api/auth/logout', { withCredentials: true });
       console.log('Response:', res.data);
       if (res.data.success) {
         logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất
@@ -49,13 +49,12 @@ const Layout = () => {
           {isLoggedIn ? (
             <div className='user-info'>
               <div className='user-name'>
-              <Link to = "userprofile"><img src={isLoggedIn.userInfo.avatar || "DefaultAvatar.png"} 
-              className='user-avatar' /></Link>
+                <Link to="userprofile"><img src={isLoggedIn.userInfo.avatar ?? "DefaultAvatar.png"} className='user-avatar' /></Link>
               </div>
               <div className='logout-button' >
                 <button onClick={handleLogout}>Logout</button>
-                <IoIosLogOut className='logout-icon'/>
-                </div>
+                <IoIosLogOut className='logout-icon' />
+              </div>
             </div>
           ) : (
             <button className='login-button' onClick={toggleForm}>
