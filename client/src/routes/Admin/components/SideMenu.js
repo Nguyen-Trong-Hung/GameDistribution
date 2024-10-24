@@ -10,6 +10,8 @@ import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
+import { AuthContext } from "../../../context/AuthContext";
+import { useContext } from 'react';
 
 const drawerWidth = 240;
 
@@ -25,6 +27,10 @@ const Drawer = styled(MuiDrawer)({
 });
 
 export default function SideMenu() {
+
+  const {isLoggedIn} = useContext(AuthContext);
+  // console.log(isLoggedIn);
+
   return (
     <Drawer
       variant="permanent"
@@ -65,10 +71,10 @@ export default function SideMenu() {
         />
         <Box sx={{ mr: 'auto' }}>
           <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-            Riley Carter
+            {isLoggedIn.userInfo.username}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            riley@email.com
+            {isLoggedIn.userInfo.email}
           </Typography>
         </Box>
         <OptionsMenu />
