@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Chip from '@mui/material/Chip';
+// import Chip from '@mui/material/Chip';
 
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 
@@ -46,14 +46,14 @@ function renderSparklineCell(params) {
   );
 }
 
-function renderStatus(status) {
-  const colors = {
-    Online: 'success',
-    Offline: 'default',
-  };
+// function renderStatus(status) {
+//   const colors = {
+//     Online: 'success',
+//     Offline: 'default',
+//   };
 
-  return <Chip label={status} color={colors[status]} size="small" />;
-}
+//   return <Chip label={status} color={colors[status]} size="small" />;
+// }
 
 export function renderAvatar(params) {
   if (params.value == null) {
@@ -75,30 +75,30 @@ export function renderAvatar(params) {
 }
 
 export const columns = [
-  { field: 'pageTitle', headerName: 'Page Title', flex: 1.5, minWidth: 200 },
-  {
-    field: 'status',
-    headerName: 'Status',
-    flex: 0.5,
-    minWidth: 80,
-    renderCell: (params) => renderStatus(params.value),
-  },
+  { field: 'pageTitle', headerName: 'Game Title', flex: 1.5, minWidth: 200 },
+  // {
+  //   field: 'status',
+  //   headerName: 'Status',
+  //   flex: 0.5,
+  //   minWidth: 80,
+  //   renderCell: (params) => renderStatus(params.value),
+  // },
   {
     field: 'users',
-    headerName: 'Users',
+    headerName: 'Total Players',
     headerAlign: 'right',
     align: 'right',
     flex: 1,
     minWidth: 80,
   },
-  {
-    field: 'eventCount',
-    headerName: 'Event Count',
-    headerAlign: 'right',
-    align: 'right',
-    flex: 1,
-    minWidth: 100,
-  },
+    // {
+    //   field: 'eventCount',
+    //   headerName: 'Event Count',
+    //   headerAlign: 'right',
+    //   align: 'right',
+    //   flex: 1,
+    //   minWidth: 100,
+    // },
   {
     field: 'viewsPerUser',
     headerName: 'Views per User',

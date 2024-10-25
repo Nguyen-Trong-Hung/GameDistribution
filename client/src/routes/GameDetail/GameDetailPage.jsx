@@ -11,8 +11,12 @@ const GameDetailPage = () => {
     useEffect(() => {
         const fetchGameDetail = async () => {
             try {
-                const res = await fetch(`http://localhost:8800/api/game/${id}`);
+                const res = await fetch(`http://localhost:8800/api/game/${id}`, {
+                    method: 'GET',
+                    credentials: 'include', // Đảm bảo cookie được gửi đi
+                  });
                 const data = await res.json();
+
                 if (data.success) {
                     setGameDetail(data.data[0]); // Lấy phần tử đầu tiên của mảng data
                 } else {

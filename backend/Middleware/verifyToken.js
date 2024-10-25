@@ -3,8 +3,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const verifyToken = (req, res, next) => {
-  const token = req.cookies.token; // Lấy token từ cookie
-  console.log(token);
+
+  const token = req.cookies.token;
+
+  // console.log(token);
   if (!token) {
     return res.status(401).json({ success: false, message: 'Access Denied' });
   }
@@ -13,7 +15,7 @@ export const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(403).json({ success: false, message: 'Invalid Token' });
     }
-    req.user = user.id; // Gán thông tin người dùng vào request
-    next(); // Tiếp tục xử lý yêu cầu
+    req.user = user.id;
+    next();
   });
 };

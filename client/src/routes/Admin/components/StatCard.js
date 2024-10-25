@@ -4,7 +4,6 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
@@ -60,13 +59,13 @@ function StatCard({ title, value, interval, trend, data }) {
         : theme.palette.grey[700],
   };
 
-  const labelColors = {
-    up: 'success',
-    down: 'error',
-    // neutral: 'default',
-  };
+  // const labelColors = {
+  //   up: 'success',
+  //   down: 'error',
+  //   // neutral: 'default',
+  // };
 
-  const color = labelColors[trend];
+  // const color = labelColors[trend];
   const chartColor = trendColors[trend];
   // const trendValues = { up: '+25%', down: '-25%', neutral: '+5%' };
 

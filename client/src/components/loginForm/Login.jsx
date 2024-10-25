@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // dùng axios để gửi POST request
 import './Login.scss';
 import { AuthContext } from '../../context/AuthContext';
+import Cookies from 'js-cookie';
 
 
 const Login = ({ onLoginSuccess, onClose }) => {
@@ -18,6 +19,8 @@ const Login = ({ onLoginSuccess, onClose }) => {
       const res = await axios.post('http://localhost:8800/api/auth/login', { email, password }); // Gửi yêu cầu POST đến server
       // console.log('Response:', res.data); // Xử lý kết quả từ server
       if (res.data.success) {
+        Cookies.set('token', res.data.token, { expires: 1 });
+        // console.log(token);
         // Đăng nhập thành công, gọi hàm onLoginSuccess và onClose
         console.log('Login successful');
         login(res.data); // Cập nhật trạng thái đăng nhập

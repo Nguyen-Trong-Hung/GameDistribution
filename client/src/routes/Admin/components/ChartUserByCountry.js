@@ -126,7 +126,7 @@ export default function ChartUserByCountry() {
     >
       <CardContent>
         <Typography component="h2" variant="subtitle2">
-          Users by country
+        Ratio of game genres
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PieChart

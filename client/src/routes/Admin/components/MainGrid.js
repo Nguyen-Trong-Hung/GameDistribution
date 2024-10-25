@@ -6,7 +6,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
 import ChartUserByCountry from './ChartUserByCountry';
-import CustomizedTreeView from './CustomizedTreeView';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import PageViewsBarChart from './PageViewsBarChart';
 import SessionsChart from './SessionsChart';
@@ -39,14 +38,22 @@ export default function MainGrid() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8800/api/users');
-        const result = await response.json();
-        if (result.success) {
-          const totalUsers = result.data.length; // Get the total users from the response
-          // Update the Users card value
+        const [usersResponse, gamesResponse] = await Promise.all([
+          fetch('http://localhost:8800/api/users'),
+          fetch('http://localhost:8800/api/game')
+        ]);
+
+        const usersResult = await usersResponse.json();
+        const gamesResult = await gamesResponse.json();
+
+        if (usersResult.success && gamesResult.success) {
+          const totalUsers = usersResult.data.length;
+          const totalGames = gamesResult.data.length;
+
           setData((prevData) => {
             const updatedData = [...prevData];
-            updatedData[0].value = totalUsers; // Update the Users card
+            updatedData[0].value = totalUsers;
+            updatedData[1].value = totalGames;
             return updatedData;
           });
         }
@@ -84,7 +91,7 @@ export default function MainGrid() {
         </Grid>
       </Grid>
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Details
+        Hot Games
       </Typography>
       <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 12, lg: 9 }}>
@@ -92,7 +99,6 @@ export default function MainGrid() {
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
           <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
-            <CustomizedTreeView />
             <ChartUserByCountry />
           </Stack>
         </Grid>
@@ -101,44 +107,3 @@ export default function MainGrid() {
     </Box>
   );
 }
-
-
-// export default function MainGrid() {
-//   useEffect(() => {
-//     // Gọi API để lấy dữ liệu
-//     fetch('http://localhost:8800/api/users')
-//       .then((response) => response.json())
-//       .then((result) => {
-//         if (result.success) {
-//           data[0].value = result.data.length;
-//           setData(result.data);  // Cập nhật dữ liệu khi thành công
-//         }
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching data:', error);
-//       });
-//   }, [data]);
-
-//   // Tính tổng số người dùng
-//   const totalUsers = data.length;
-
-//   return (
-//     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-//       {/* Hiển thị tổng số người dùng */}
-//       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-//         Total Users: {totalUsers}
-//       </Typography>
-//       <Grid container spacing={2} columns={12} sx={{ mb: (theme) => theme.spacing(2) }}>
-//         {Array.isArray(data) && data.length > 0 ? (
-//           data.map((user, index) => (
-//             <Grid key={index} size={{ xs: 12, sm: 6, lg: 3 }}>
-//               <Typography>{user.username}</Typography>
-//             </Grid>
-//           ))
-//         ) : (
-//           <Typography>Loading...</Typography>
-//         )}
-//       </Grid>
-//     </Box>
-//   );
-// }

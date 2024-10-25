@@ -53,7 +53,7 @@ export default function SessionsChart() {
     <Card variant="outlined" sx={{ width: '100%' }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom>
-          Sessions
+          Publisher of the year
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
           <Stack
@@ -70,7 +70,7 @@ export default function SessionsChart() {
             <Chip size="small" color="success" label="+35%" />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Sessions per day for the last 30 days
+            Games by publisher for the last 1 year
           </Typography>
         </Stack>
         <LineChart
