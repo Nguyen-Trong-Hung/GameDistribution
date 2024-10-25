@@ -1,4 +1,7 @@
 import * as React from 'react';
+import axios from 'axios';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Divider, { dividerClasses } from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
@@ -9,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+import { AuthContext } from '../../../context/AuthContext';
 import MenuButton from './MenuButton';
 
 const MenuItem = styled(MuiMenuItem)({
@@ -17,7 +21,23 @@ const MenuItem = styled(MuiMenuItem)({
 
 export default function OptionsMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get('http://localhost:8800/api/admin/logoutAdmin', { withCredentials: true });
+      console.log('Response:', res.data);
+      if (res.data.success) {
+        logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất
+        navigate('/admin') // Chuyển hướng về trang chủ
+      } else {
+        console.log('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -68,7 +88,7 @@ export default function OptionsMenu() {
             },
           }}
         >
-          <ListItemText>Logout</ListItemText>
+          <ListItemText onClick={handleLogout}>Logout</ListItemText>
           <ListItemIcon>
             <LogoutRoundedIcon fontSize="small" />
           </ListItemIcon>

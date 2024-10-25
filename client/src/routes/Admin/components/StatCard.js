@@ -63,12 +63,12 @@ function StatCard({ title, value, interval, trend, data }) {
   const labelColors = {
     up: 'success',
     down: 'error',
-    neutral: 'default',
+    // neutral: 'default',
   };
 
   const color = labelColors[trend];
   const chartColor = trendColors[trend];
-  const trendValues = { up: '+25%', down: '-25%', neutral: '+5%' };
+  // const trendValues = { up: '+25%', down: '-25%', neutral: '+5%' };
 
   return (
     <Card variant="outlined" sx={{ height: '100%', flexGrow: 1 }}>
@@ -88,7 +88,6 @@ function StatCard({ title, value, interval, trend, data }) {
               <Typography variant="h4" component="p">
                 {value}
               </Typography>
-              <Chip size="small" color={color} label={trendValues[trend]} />
             </Stack>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
               {interval}
@@ -124,7 +123,7 @@ StatCard.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   interval: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
+  // trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
   value: PropTypes.string.isRequired,
 };
 
