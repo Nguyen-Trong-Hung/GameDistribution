@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './GameDetailPage.scss';
 import { useParams } from 'react-router-dom';
+import { BiLike } from "react-icons/bi";
 import GameList from '../../components/gameList/GameList';
 
 const GameDetailPage = () => {
@@ -14,7 +15,7 @@ const GameDetailPage = () => {
                 const res = await fetch(`http://localhost:8800/api/game/${id}`, {
                     method: 'GET',
                     credentials: 'include', // Đảm bảo cookie được gửi đi
-                  });
+                });
                 const data = await res.json();
 
                 if (data.success) {
@@ -43,6 +44,7 @@ const GameDetailPage = () => {
                         <p>by {gameDetailPage?.Publisher || "No Pub"}</p>
                         <button>Play now</button>
                     </div>
+                    <BiLike />
                     <div className="descript">
                         <p>Game Title: {gameDetailPage?.Name || "name"}</p>
                         <p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p>

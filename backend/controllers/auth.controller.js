@@ -30,7 +30,7 @@ export const login = (req, res) => {
       const age = 24 * 60 * 60;
 
       if (isMatch) {
-        const token = jwt.sign({ id: user.id, isAdmin: 0 }, process.env.JWT_SECRET, { expiresIn: age });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: age });
       
         const { password, ...userInfo } = user;
       
@@ -69,7 +69,7 @@ export const register = (req, res) => {
       }
 
       // Tạo đối tượng người dùng mới
-      const newUser = { email, password: hashedPassword, username, isAdmin: 0 };
+      const newUser = { email, password: hashedPassword, username };
 
       const createUserSql = 'INSERT INTO users SET ?';
 
