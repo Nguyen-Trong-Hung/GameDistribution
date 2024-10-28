@@ -12,6 +12,8 @@ import { AuthContextProvider } from './context/AuthContext';
 import AdminPage from './routes/Admin/AdminPage';
 import GameDetailPage from './routes/GameDetail/GameDetailPage';
 import AdminLogin from './components/loginForm/AdminLogin';
+import Users from './routes/Admin/components/Users';
+import Games from './routes/Admin/components/Games';
 
 function App() {
   return (
@@ -26,6 +28,14 @@ function App() {
             path="/dashboard"
             element={<AdminPage />}
           />
+          <Route
+            path="/dashboard/users"
+            element={<Users/>}
+            />
+          <Route
+            path="/dashboard/games"
+            element={<Games/>}
+            />
           <Route
             path="*"
             element={

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -16,8 +18,8 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon /> },
   { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-  { text: 'Clients', icon: <PeopleRoundedIcon /> },
-  { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
+  // { text: 'Clients', icon: <PeopleRoundedIcon /> },
+  // { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
 ];
 
 const secondaryListItems = [
@@ -26,15 +28,36 @@ const secondaryListItems = [
   { text: 'Feedback', icon: <HelpRoundedIcon /> },
 ];
 
+const subItems = [
+  { text: 'Users', path: '/dashboard/users' },
+  { text: 'Games', path: '/dashboard/games' },
+];
+
 export default function MenuContent() {
+  const [showSubItems, setShowSubItems] = useState(false);
+
+  const handleAnalyticsClick = () => {
+    setShowSubItems((prev) => !prev);
+  };
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={index === 0}>
+            <ListItemButton
+              selected={index === 0}
+              onClick={index === 1 ? handleAnalyticsClick : undefined}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        {showSubItems && subItems.map((subItem, index) => (
+          <ListItem key={index} disablePadding sx={{ pl: 4, display: 'block' }}>
+            <ListItemButton component={Link} to={subItem.path}>
+              <ListItemText primary={subItem.text} />
             </ListItemButton>
           </ListItem>
         ))}

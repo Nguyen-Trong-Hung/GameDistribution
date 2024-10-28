@@ -18,7 +18,7 @@ const uploadImage = (req, res) => {
     }
 
     // Kiểm tra kết quả để đảm bảo truy vấn đã thành công
-    if (results.affectedRows > 0) {
+    if (results.affectedRows > 0) { 
       res.status(200).json({ success: true, filePath: imagePath });
     } else {
       res.status(404).json({ success: false, message: 'Game not found' });

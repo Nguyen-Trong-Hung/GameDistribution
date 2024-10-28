@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './SupportPage.scss';
 
 const SupportPage = () => {
+  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',

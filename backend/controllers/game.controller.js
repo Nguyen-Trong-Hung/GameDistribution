@@ -22,3 +22,15 @@ export const getGames = (req, res) => {
       return res.json({ success: true, data: result });
     });
   };
+
+  export const deleteGamebyId = (req, res) => {
+    const sql = "DELETE FROM game WHERE GameID = ?";
+    db.query(sql, req.params.id, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.json({ success: false, message: 'Server error' });
+      }
+      
+      return res.json({ success: true, message: 'Game deleted' });
+    });
+  }

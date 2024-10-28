@@ -32,9 +32,9 @@ const GameList = () => {
     <div className='gamelistcontainer'>
       <div className="detailgamelist">
         {Array.isArray(games) && games.map(game => (
-          <div className="game" key={game.GameID} onClick={() => handleGameClick(game.GameID)}> {/* Hiển thị từng game */}
-            {game.Image && <img src={game.Image} alt={game.Name} />} {/* Hiển thị ảnh bìa nếu có */}
-            <h2>{game.Name}</h2> {/* Hiển thị tiêu đề game */}
+          <div className="game" key={game.GameID} onClick={() => handleGameClick(game.GameID)}>
+            {game.Image && <img src={game.Image} alt={game.Name} />}
+            <h2>{game.Name}</h2>
           </div>  
         ))}
       </div>

@@ -22,9 +22,6 @@ app.use('/api/admin', authAdminRoute);
 app.use('/api', gameRoute);
 app.use('/api', userRoute);
 
-// Route to handle file upload
-// app.post('/api/upload', upload.single('image'), uploadImage);
-
 // Start server
 app.listen(8800, () => {
   console.log('Server is running on port 8800.');
