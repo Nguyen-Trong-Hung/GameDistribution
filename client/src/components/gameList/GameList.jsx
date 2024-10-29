@@ -31,7 +31,7 @@ const GameList = () => {
   return (
     <div className='gamelistcontainer'>
       <div className="detailgamelist">
-        {Array.isArray(games) && games.map(game => (
+        {games.map(game => (
           <div className="game" key={game.GameID} onClick={() => handleGameClick(game.GameID)}>
             {game.Image && <img src={game.Image} alt={game.Name} />}
             <h2>{game.Name}</h2>

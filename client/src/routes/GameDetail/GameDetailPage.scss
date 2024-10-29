@@ -5,6 +5,7 @@
     .game-info {
         display: flex;
         width: 100%;
+
         .game-info-left {
             width: 60%;
             padding: 20px;
@@ -46,22 +47,11 @@
                 }
             }
 
-            svg {
-                margin-top: 10px;
-                padding-left: 0;
-                padding-right: 100px;
-                font-size: 2rem;
-                color: #007bff;
-                cursor: pointer;
-                transition: color 0.3s;
 
-                &:hover {
-                  color: #007bff;
-                }
-              }
 
             .descript {
-                flex-direction: column;
+                display: flex;
+                justify-content: space-between; // Add this line to push des-right to the right
                 margin: 20px 0;
                 padding-left: 50px;
                 width: auto;
@@ -71,10 +61,37 @@
                 overflow: hidden;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-                p {
-                    padding-right: 20px;
-                    font-size: 1rem;
-                    color: #666;
+                .des-left {
+                    p {
+                        padding-right: 20px;
+                        font-size: 1rem;
+                        color: #666;
+                    }
+                }
+
+                .des-right {
+                    margin-top: 10px;
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    display: grid;
+                    border: 1px solid #ddd;
+                    border-radius: 15px;
+                    height: 20%;
+                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                    display: flex;
+                    margin-right: 250px;
+                    svg {
+                        margin-top: 10px;
+                        margin-right: 10px;
+                        font-size: 2rem;
+                        color: #007bff;
+                        cursor: pointer;
+                        transition: color 0.3s;
+
+                        &:hover {
+                            color: #007bff;
+                        }
+                    }
                 }
             }
         }
@@ -82,16 +99,19 @@
         .game-info-right {
             flex: 1;
             background-color: #ffffff;
-            .similar-game{
+
+            .similar-game {
                 font-size: 2rem;
             }
+
             // Add your styles for the right side here
         }
     }
 
     .collections {
         margin-top: 20px;
-        h5{
+
+        h5 {
             font-size: 2rem;
         }
     }

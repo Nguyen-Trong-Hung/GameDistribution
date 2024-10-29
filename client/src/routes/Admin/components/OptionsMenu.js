@@ -31,6 +31,7 @@ export default function OptionsMenu() {
       if (res.data.success) {
         logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất
         navigate('/admin') // Chuyển hướng về trang chủ
+        alert('Logout successful');
       } else {
         console.log('Logout failed');
       }

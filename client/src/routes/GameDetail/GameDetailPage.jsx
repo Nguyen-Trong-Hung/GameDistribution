@@ -44,11 +44,16 @@ const GameDetailPage = () => {
                         <p>by {gameDetailPage?.Publisher || "No Pub"}</p>
                         <button>Play now</button>
                     </div>
-                    <BiLike />
                     <div className="descript">
-                        <p>Game Title: {gameDetailPage?.Name || "name"}</p>
-                        <p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p>
-                        <p>Created At: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p>
+                        <div className="des-left">
+                            <p>Game Title: {gameDetailPage?.Name || "name"}</p>
+                            <p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p>
+                            <p>Created At: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p>
+                        </div>
+                        <div className="des-right">
+                            <BiLike />
+                            <p>{gameDetailPage?.Like}</p>
+                        </div>
                     </div>
                 </div>
                 <div className="game-info-right">
