@@ -25,13 +25,15 @@ export default function OptionsMenu() {
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleLogout = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (!confirmLogout) return;
     try {
       const res = await axios.get('http://localhost:8800/api/admin/logoutAdmin', { withCredentials: true });
       console.log('Response:', res.data);
       if (res.data.success) {
         logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất
-        navigate('/admin') // Chuyển hướng về trang chủ
-        alert('Logout successful');
+        navigate('/admin')
+        // alert('Logout successful');
       } else {
         console.log('Logout failed');
       }

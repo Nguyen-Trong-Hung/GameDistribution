@@ -18,12 +18,15 @@ const Layout = () => {
   };
 
   const handleLogout = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (!confirmLogout) return;
+
     try {
       const res = await axios.get('http://localhost:8800/api/auth/logout', { withCredentials: true });
       console.log('Response:', res.data);
       if (res.data.success) {
         logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất
-        navigate('/') // Chuyển hướng về trang chủ
+        navigate('/')
       } else {
         console.log('Logout failed');
       }
@@ -49,7 +52,7 @@ const Layout = () => {
           {isLoggedIn ? (
             <div className='user-info'>
               <div className='user-name'>
-                <Link to="userprofile"><img src={isLoggedIn.userInfo.avatar ?? "DefaultAvatar.png"} className='user-avatar' /></Link>
+                <Link to="userprofile"><img src={isLoggedIn.userInfo.avatar ?? "DefaultAvatar.png"} className='user-avatar' alt="User Avatar" /></Link>
               </div>
               <div className='logout-button' >
                 <button onClick={handleLogout}>Logout</button>
