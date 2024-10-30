@@ -39,7 +39,7 @@ export default function MainGrid() {
     const fetchData = async () => {
       try {
         const [usersResponse, gamesResponse] = await Promise.all([
-          fetch('http://localhost:8800/api/users'),
+          fetch('http://localhost:8800/api/user/users'),
           fetch('http://localhost:8800/api/game')
         ]);
 

@@ -3,8 +3,6 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authRoute from './Routes/auth.route.js';
 import gameRoute from './Routes/game.route.js';
-import upload from './Middleware/Multerconfig.js';
-import uploadImage from './controllers/uploadImage.controller.js';
 import userRoute from './Routes/user.route.js';
 import authAdminRoute from './Routes/authAdmin.route.js';
 
@@ -19,8 +17,8 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', authRoute);
 app.use('/api/admin', authAdminRoute);
-app.use('/api', gameRoute);
-app.use('/api', userRoute);
+app.use('/api/game', gameRoute);
+app.use('/api/user', userRoute);
 
 // Start server
 app.listen(8800, () => {

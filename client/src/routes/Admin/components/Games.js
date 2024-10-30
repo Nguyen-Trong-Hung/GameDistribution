@@ -32,6 +32,25 @@ const Games = () => {
     setSearchText(value);
   };
 
+  const handleDelete = async (gameID) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete this game?`);
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await axios.delete(`http://localhost:8800/api/game/delete/${gameID}`);
+      if (response.data.success) {
+        setGames((prevGames) => prevGames.filter((game) => game.GameID !== gameID));
+
+        alert('Game deleted successfully');
+        
+      } else {
+        console.error('Failed to delete game:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error deleting game:', error);
+    }
+  };
+
   const columns = [
     {
       title: 'Game Name',
@@ -51,7 +70,7 @@ const Games = () => {
       render: (record) => (
         <div>
           <Button type="primary" size="small" style={{backgroundColor: 'green'}}>Update</Button>
-          <Button type="danger" size="small" style={{ backgroundColor: '#FF0000', color: "white" }}>
+          <Button type="danger" size="small" style={{ backgroundColor: '#FF0000', color: "white" }} onClick={() => handleDelete(record.GameID)}>
             Delete
           </Button>
         </div>

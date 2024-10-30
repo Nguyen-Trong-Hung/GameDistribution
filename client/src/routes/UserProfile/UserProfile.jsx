@@ -25,7 +25,7 @@ const UserProfile = () => {
         alert("New password and confirm new password do not match");
         return;
       }
-      const res = await axios.post('http://localhost:8800/api/change-password', { userId, currentPassword, newPassword, confirmNewPassword }, { withCredentials: true });
+      const res = await axios.post('http://localhost:8800/api/user/change-password', { userId, currentPassword, newPassword, confirmNewPassword }, { withCredentials: true });
       // console.log(res.data);
       if (res.data.success) {
         alert("Password changed successfully");

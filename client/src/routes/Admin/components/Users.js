@@ -13,7 +13,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/api/users');
+        const response = await axios.get('http://localhost:8800/api/user/users');
         if (response.data.success) {
           setUsers(response.data.data);
         } else {
