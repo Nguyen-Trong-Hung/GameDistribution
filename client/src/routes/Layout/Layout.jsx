@@ -10,6 +10,8 @@ import './Layout.scss';
 
 const Layout = () => {
   const [showFormLogin, setShowFormLogin] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const { isLoggedIn, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -35,6 +37,23 @@ const Layout = () => {
     }
   };
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get('http://localhost:8800/api/search/search-game', {
+        params: { q: searchInput },
+      });
+      setSearchResults(response.data); // Lưu kết quả tìm kiếm
+    } catch (error) {
+      console.error('Lỗi khi kết nối với backend:', error);
+    }
+  };
+
+  const handleGameClick = (gameId) => {
+    navigate(`/game/${gameId}`);
+    setSearchInput('');
+    setSearchResults([]);
+  };
+
   return (
     <div>
       <div className="gameBar">
@@ -44,9 +63,27 @@ const Layout = () => {
           <div><Link to="/support">Support</Link></div>
           {isLoggedIn && <div><Link to="/distribution">Distribution</Link></div>}
         </div>
-        <div className="search-container">
-          <input type="text" placeholder="Search..." />
-          <IoIosSearch className="search-icon" />
+        <div className="search-group">
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <IoIosSearch className="search-icon" onClick={handleSearch} />
+          </div>
+          <div className="search-results">
+            {searchResults.map((game) => (
+              <div key={game.GameID} className="result-item" onClick={() => handleGameClick(game.GameID)}>
+                <img src={game.Image} alt={game.Name} className="result-image" />
+                <div className="result-info">
+                  <h4 className="result-publisher">{game.Publisher}</h4>
+                  <p className="result-name">{game.Name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className='login-container'>
           {isLoggedIn ? (

@@ -5,6 +5,7 @@ import authRoute from './Routes/auth.route.js';
 import gameRoute from './Routes/game.route.js';
 import userRoute from './Routes/user.route.js';
 import authAdminRoute from './Routes/authAdmin.route.js';
+import searchRoute from './Routes/search.route.js';
 
 // Initialize the app
 const app = express();
@@ -19,6 +20,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/admin', authAdminRoute);
 app.use('/api/game', gameRoute);
 app.use('/api/user', userRoute);
+app.use('/api/search', searchRoute);
 
 // Start server
 app.listen(8800, () => {

@@ -1,38 +1,39 @@
-/* src/components/Layout/Layout.scss */
 .gameBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(246, 246, 246);
+  color: white;
+
+  .home {
+    img {
+      padding-left: 100px;
+      max-height: 50px;
+      margin-right: 20px; // Thêm khoảng cách giữa img và các mục khác
+    }
+  }
+
+  .category {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: rgb(246, 246, 246);
-    color: white;
-  
-    .home {
-      img {
-        padding-left: 100px;
-        max-height: 50px;
-        margin-right: 20px; // Thêm khoảng cách giữa img và các mục khác
-      }
+  }
+
+  a {
+    color: black; // Màu chữ
+    text-decoration: none; // Loại bỏ gạch chân
+    margin-right: 20px; // Khoảng cách giữa các mục
+    font-size: 1.2rem; // Kích thước chữ
+    position: relative; // Để sử dụng cho hiệu ứng con hổ
+    transition: color 0.3s, transform 0.3s; // Hiệu ứng chuyển đổi cho màu sắc và phóng to
+
+    &:hover {
+      color: #007bff; // Màu chữ khi hover
+      transform: scale(1.1); // Phóng to chữ khi hover
     }
-  
-    .category {
-      display: flex;
-      align-items: center;
-    }
-  
-    a {
-      color: black; // Màu chữ
-      text-decoration: none; // Loại bỏ gạch chân
-      margin-right: 20px; // Khoảng cách giữa các mục
-      font-size: 1.2rem; // Kích thước chữ
-      position: relative; // Để sử dụng cho hiệu ứng con hổ
-      transition: color 0.3s, transform 0.3s; // Hiệu ứng chuyển đổi cho màu sắc và phóng to
-  
-      &:hover {
-        color: #007bff; // Màu chữ khi hover
-        transform: scale(1.1); // Phóng to chữ khi hover
-      }
-    }
-  
+  }
+
+  .search-group {
+    position: relative;
     .search-container {
       display: flex;
       align-items: center;
@@ -40,7 +41,7 @@
       border-radius: 12px;
       border: 3px solid rgb(45, 11, 184);
       padding: 5px 10px;
-  
+
       input {
         border: none;
         background: none;
@@ -48,84 +49,146 @@
         padding: 5px;
         font-size: 1rem;
         outline: none;
-  
+
         &::placeholder {
           color: #ccc;
         }
       }
-  
+
       .search-icon {
         color: rgb(45, 11, 184);
         font-size: 2rem;
       }
     }
-  }
-  .login-container {
-    display: flex;
-    border-radius: 5px; /* Bán kính viền */
-    padding: 10px; /* Tăng padding để làm cho container to ra */
-    padding-right: 50px;
-    margin: 10px 0; /* Thêm margin để tạo khoảng cách xung quanh container */
-  
-    .user-info {
-      position: relative;
-      display: flex;
-      align-items: center;
-      .user-avatar {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-        object-fit: cover;
-        border: 2px solid #09a8a5;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-      }
-      .logout-button {
+
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 300px;
+      overflow-y: auto;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-top: 8px;
+
+      .result-item {
         display: flex;
         align-items: center;
-        margin-left: 20px;
-        height: 28px;
-        border-radius: 10px;
+        padding: 8px;
         cursor: pointer;
-        background-color: #ff4d4d;
+        transition: background-color 0.2s;
 
-        .logout-icon {
-          font-size: 20px;
-          color: white;
-          transition: color 0.3s ease;
-          margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+        &:hover {
+          background-color: #f1f1f1;
+        }
+
+        .result-image {
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          object-fit: cover;
+          margin-right: 8px;
+        }
+
+        .result-info {
+          .result-publisher {
+            font-size: 12px;
+            color: #888;
+            margin: 0;
+          }
+
+          .result-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+          }
         }
       }
-
-      button {
-        width: auto;
-        height: auto;
-        background-color: #ff4d4d;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-    }
-    
-    .login-button {
-        display: flex;
-        align-items: center;
-        color: white;
-        border-radius: 12px; /* Tăng bán kính viền */
-        padding: 6px 12px; /* Tăng padding để làm cho nút to ra */
-        margin: 0 10px; /* Khoảng cách giữa các mục */
-        background-color: rgb(45, 11, 184); /* Sử dụng lại màu của container */
-        font-size: 1rem; /* Tăng kích thước chữ */
-        font-weight: bold;
-        cursor: pointer;
-      }
-  
-    .login-icon {
-      color: white;
-      font-size: 0.7rem; /* Tăng kích thước biểu tượng */
-      margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
     }
   }
+}
+
+.login-container {
+  display: flex;
+  border-radius: 5px;
+  /* Bán kính viền */
+  padding: 10px;
+  /* Tăng padding để làm cho container to ra */
+  padding-right: 50px;
+  margin: 10px 0;
+  /* Thêm margin để tạo khoảng cách xung quanh container */
+
+  .user-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      object-fit: cover;
+      border: 2px solid #09a8a5;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .logout-button {
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+      height: 35px;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #ff4d4d;
+
+      .logout-icon {
+        font-size: 20px;
+        color: white;
+        transition: color 0.3s ease;
+        margin-right: 8px;
+        /* Khoảng cách giữa icon và chữ */
+      }
+    }
+
+    button {
+      width: auto;
+      height: auto;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  }
+
+  .login-button {
+    display: flex;
+    align-items: center;
+    color: white;
+    border-radius: 12px;
+    /* Tăng bán kính viền */
+    padding: 6px 12px;
+    /* Tăng padding để làm cho nút to ra */
+    margin: 0 10px;
+    /* Khoảng cách giữa các mục */
+    background-color: rgb(45, 11, 184);
+    /* Sử dụng lại màu của container */
+    font-size: 1rem;
+    /* Tăng kích thước chữ */
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .login-icon {
+    color: white;
+    font-size: 0.7rem;
+    /* Tăng kích thước biểu tượng */
+    margin-right: 8px;
+    /* Khoảng cách giữa biểu tượng và chữ */
+  }
+}
