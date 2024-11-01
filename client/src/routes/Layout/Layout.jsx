@@ -57,11 +57,11 @@ const Layout = () => {
   return (
     <div>
       <div className="gameBar">
-        <div className='home'><Link to="/"><img src="/gamedistribution.png" alt="" /></Link></div>
+        <div className='home'><Link to="/"><img src="/Logo_XGame-03.png" alt="" /></Link></div>
         <div className='category'>
           <div><Link to="/games">Games</Link></div>
-          <div><Link to="/support">Support</Link></div>
           {isLoggedIn && <div><Link to="/distribution">Distribution</Link></div>}
+          <div><Link to="/support">Support</Link></div>
         </div>
         <div className="search-group">
           <div className="search-container">
@@ -70,6 +70,7 @@ const Layout = () => {
               placeholder="Search..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             />
             <IoIosSearch className="search-icon" onClick={handleSearch} />
           </div>

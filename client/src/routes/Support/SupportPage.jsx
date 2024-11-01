@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import './SupportPage.scss';
 
 const SupportPage = () => {
-  
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,82 +26,79 @@ const SupportPage = () => {
 
   return (
     <div className="contact-form">
-      <h1>Contact GameDistribution</h1>
+      <h1>Contact XGame</h1>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Your name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Amunra"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Your email address</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="amunra&&yooyun@gmail.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Please choose a category for your inquiry</label>
-          <div className="categories">
-            {[
-              'NEW PUBLISHER',
-              'GAME ACTIVATION',
-              'FINANCE',
-              'TECHNICAL',
-              'GAME BUG REPORT',
-              'BUSINESS OPPORTUNITIES',
-              'SITE BUILDER',
-              'GENERAL',
-            ].map((category) => (
-              <button
-                type="button"
-                key={category}
-                className={`category-button ${
-                  formData.category === category ? 'active' : ''
-                }`}
-                onClick={() => setFormData({ ...formData, category })}
-              >
-                {category}
-              </button>
-            ))}
+        <div className="form-left">
+          <div className="form-group">
+            <label>Your name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Amunra"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Your email address</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="amunra&&yooyun@gmail.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Please choose a category for your inquiry</label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a category</option>
+              {[
+                'NEW PUBLISHER',
+                'GAME ACTIVATION',
+                'FINANCE',
+                'TECHNICAL',
+                'GAME BUG REPORT',
+                'BUSINESS OPPORTUNITIES',
+                'SITE BUILDER',
+                'GENERAL',
+              ].map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-
-        <div className="form-group">
-          <label>Please tell us more about your inquiry</label>
-          <textarea
-            name="message"
-            placeholder="Please also include your Developer or Publisher name. If your question concerns a specific game, please add the game name and GameID as well."
-            value={formData.message}
-            onChange={handleChange}
-            required
-          ></textarea>
+        <div className="form-right">
+          <div className="form-group">
+            <label>Your message</label>
+            <textarea
+              name="message"
+              placeholder="Enter your message here"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Attach a file</label>
+            <input
+              type="file"
+              name="file"
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit">Submit</button>
         </div>
-
-        <div className="form-group">
-          <label>Attach file (optional)</label>
-          <input type="file" name="file" onChange={handleChange} />
-        </div>
-
-        <button type="submit" className="submit-button">
-          Send
-        </button>
       </form>
-      <div className="faq-links">
-        <a href="/developers">For Developers</a> - <a href="/publishers">For Publishers</a>
-      </div>
     </div>
   );
 };

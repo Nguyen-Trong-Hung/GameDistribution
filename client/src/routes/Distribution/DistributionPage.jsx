@@ -47,7 +47,7 @@ const DistributionPage = () => {
   };
 
   return (
-    <div className="contact-form">
+    <div className="distribute-form">
       <h1>Please distribute your game</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -62,6 +62,7 @@ const DistributionPage = () => {
           />
         </div>
         <div className="form-group">
+          <label>Your publisher name</label>
           <input
             type="text"
             name="PublisherName"
@@ -119,7 +120,7 @@ const DistributionPage = () => {
         </div>
 
         <button type="submit" className="submit-button">
-          Send
+          Send your game to us - Thank you very much for your contribution!
         </button>
       </form>
     </div>

@@ -5,9 +5,12 @@ import { BiLike } from "react-icons/bi";
 import GameList from '../../components/gameList/GameList';
 
 const GameDetailPage = () => {
-    const { id } = useParams();  // Lấy GameID từ URL
+    const { slug } = useParams();
     const [gameDetailPage, setGameDetail] = useState(null);
     const [loading, setLoading] = useState(true);  // Trạng thái loading
+
+    // Tách ID từ slug
+    const id = slug.split("-").pop();
 
     useEffect(() => {
         const fetchGameDetail = async () => {
