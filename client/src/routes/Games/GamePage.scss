@@ -84,6 +84,7 @@
 
             .search-group {
                 display: flex;
+
                 .search-bar {
                     padding: 10px 15px;
                     background-color: #fff;
@@ -108,23 +109,49 @@
                 }
             }
 
-            .sort-button {
-                background-color: #fff;
-                display: flex;
-                color: #4a00e0;
-                border: none;
-                border-radius: 25px;
-                padding: 8px 12px;
-                cursor: pointer;
-                box-shadow: 0 2px 5px #4a00e0;
-                transition: background-color 0.3s;
-
-                .icon {
-                    padding-top: 5%;
-                    margin: 5px auto;
-                    font-size: 1.5em;
+            .Sort-group {
+                position: relative;
+                display: inline-block;
+              
+                .sort-button {
+                  padding: 10px 15px;
+                  border: none;
+                  border-radius: 25px;
+                  background-color: #007bff;
+                  color: white;
+                  cursor: pointer;
+                  transition: background-color 0.3s;
+              
+                  &.active {
+                    background-color: #0056b3;
+                  }
+              
+                  &:hover {
+                    background-color: #0056b3;
+                  }
                 }
-            }
+              
+                .sort-options {
+                  position: absolute;
+                  top: 100%;
+                  left: 0;
+                  background-color: white;
+                  border: 1px solid #ccc;
+                  border-radius: 4px;
+                  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                  z-index: 10;
+              
+                  .option {
+                    padding: 10px 15px;
+                    cursor: pointer;
+              
+                    &:hover {
+                      background-color: #f0f0f0;
+                    }
+                  }
+                }
+              }
+              
         }
 
         .game-list {
@@ -159,6 +186,34 @@
                     font-size: 16px;
                     margin: 0;
                     color: #333;
+                }
+            }
+        }
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            justify-content: center;
+            margin-top: 10px;
+            
+
+            li {
+                margin: 0 5px;
+                cursor: pointer;
+                padding: 8px 12px;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s, color 0.3s;
+
+                &:hover {
+                    background-color: #e9ecef;
+                }
+
+                &.active {
+                    background-color: #007bff;
+                    color: white;
+                    font-weight: bold;
                 }
             }
         }

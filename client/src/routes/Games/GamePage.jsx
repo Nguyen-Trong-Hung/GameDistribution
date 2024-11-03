@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createSlug } from '../../util';
 import axios from "axios";
 import { IoIosSearch } from "react-icons/io";
+import ReactPaginate from 'react-paginate';
 import "./GamePage.scss";
 
 const GamePage = () => {
@@ -11,6 +12,9 @@ const GamePage = () => {
   const [games, setGames] = useState([]);
   const [genres, setGenres] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [sortOrder, setSortOrder] = useState("Newest");
+  const [currentPage, setCurrentPage] = useState(0);
+  const gamesPerPage = 12;
 
   const navigate = useNavigate();
 
@@ -77,7 +81,6 @@ const GamePage = () => {
       try {
         const response = await axios.get('http://localhost:8800/api/game');
         if (response.data.success) {
-          // console.log('Games:', response.data.data);
           setGames(response.data.data);
         } else {
           console.error('Failed to fetch games:', response.data.message);
@@ -103,6 +106,24 @@ const GamePage = () => {
       handleSearch();
     }
   };
+
+  const handleSort = (order) => {
+    setSortOrder(order);
+    const sortedGames = [...games].sort((a, b) => {
+      const dateA = new Date(a.createAt);
+      const dateB = new Date(b.createAt);
+      return order === "Newest" ? dateB - dateA : dateA - dateB;
+    });
+    setGames(sortedGames);
+    toggleSortBy();
+  };
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+
+  const offset = currentPage * gamesPerPage;
+  const currentGames = games.slice(offset, offset + gamesPerPage);
 
   return (
     <div className="game-page">
@@ -156,18 +177,18 @@ const GamePage = () => {
             />
             {showSortBy && (
               <div className="sort-options">
-                <div>Oldest</div>
-                <div>Newest</div>
+                <div className="option" onClick={() => handleSort("Newest")}>Newest</div>
+                <div className="option" onClick={() => handleSort("Oldest")}>Oldest</div>
               </div>
             )}
           </div>
         </div>
         <div className="game-list">
-          {games.map((game) => (
+          {currentGames.map((game) => (
             <div className="game-item" key={game.GameID} onClick={() => handleGameClick(game)}>
               {game.Image && <img src={game.Image} alt={game.Name} />}
               <h1>{game.Name}</h1>
-              <h3>{game.createAt}</h3>
+              {/* <h3>{game.createAt}</h3> */}
             </div>
           ))}
         </div>
@@ -176,6 +197,20 @@ const GamePage = () => {
             No games available. Please try adjusting your filters.
           </div>
         )}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={Math.ceil(games.length / gamesPerPage)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+          forcePage={currentPage}
+        />
       </div>
     </div>
   );
