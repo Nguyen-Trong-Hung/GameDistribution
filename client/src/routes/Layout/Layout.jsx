@@ -42,6 +42,9 @@ const Layout = () => {
       const response = await axios.get('http://localhost:8800/api/search/search-game', {
         params: { q: searchInput },
       });
+      if (response.data.length === 0) {
+        alert('No results found');
+      }
       setSearchResults(response.data); // Lưu kết quả tìm kiếm
     } catch (error) {
       console.error('Lỗi khi kết nối với backend:', error);

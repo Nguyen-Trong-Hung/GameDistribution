@@ -2,14 +2,31 @@ import db from '../DB/db.js';
 import upload from '../Middleware/Multerconfig.js';
 
 export const getGames = (req, res) => {
-  const sql = 'SELECT * FROM game';
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.json({ success: false, message: 'Server error' });
-    }
-    return res.json({ success: true, data: result });
-  });
+  const genreIds = req.query.genreId ? req.query.genreId.split(',').map(id => parseInt(id)) : null;
+  if (!genreIds) {
+    const sql = 'SELECT * FROM game';
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, message: 'Server error' });
+      }
+      return res.json({ success: true, data: result });
+    });
+  } else {
+    const placeholders = genreIds.map(() => '?').join(',');
+    const query = `
+      SELECT Game.* FROM Game
+      JOIN Game_Genres ON Game.GameID = Game_Genres.game_id
+      WHERE Game_Genres.genre_id IN (${placeholders})
+    `;
+    db.query(query, genreIds, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, message: 'Server error' });
+      }
+      return res.json({ success: true, data: result });
+    });
+  }
 };
 
 export const getGameById = (req, res) => {
@@ -59,10 +76,10 @@ export const createNewGame = async (req, res) => {
         console.error(err);
         return res.status(500).json({ success: false, message: 'Server error' });
       }
-    
+
       return res.status(201).json({ success: true, message: 'Game created successfully', gameId: result.insertId });
     });
-    
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: 'An unexpected error occurred' });
