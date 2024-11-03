@@ -1,10 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DistributionPage.scss';
 
 const DistributionPage = () => {
   const navigate = useNavigate();
+  const [genres, setGenres] = useState([]);
   const [formData, setFormData] = useState({
     GameName: '',
     PublisherName: '',
@@ -13,6 +14,24 @@ const DistributionPage = () => {
     file: null,
   });
 
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const res = await axios.get('http://localhost:8800/api/genres');
+        if (res.data.success) {
+          // console.log('Genres:', res.data.data);
+          setGenres(res.data.data);
+        } else {
+          console.error('Failed to fetch genres:', res.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching genres:', error);
+      }
+    };
+    
+    fetchGenres();
+  }, []);
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({
@@ -76,23 +95,19 @@ const DistributionPage = () => {
         <div className="form-group">
           <label>Choose your game genre</label>
           <div className="categories">
-            {[
-              'NEW PUBLISHER',
-              'GAME ACTIVATION',
-              'FINANCE',
-              'TECHNICAL',
-              'GAME BUG REPORT',
-              'BUSINESS OPPORTUNITIES',
-              'SITE BUILDER',
-              'GENERAL',
-            ].map((category) => (
+            {genres.map((genre) => (
               <button
                 type="button"
-                key={category}
-                className={`category-button ${formData.GameGenres === category ? 'active' : ''}`}
-                onClick={() => setFormData({ ...formData, GameGenres: category })}
+                key={genre.id}
+                className={`category-button ${formData.GameGenres.includes(genre.name) ? 'active' : ''}`}
+                onClick={() => {
+                  const newGenres = formData.GameGenres.includes(genre.name)
+                    ? formData.GameGenres.filter((g) => g !== genre.name)
+                    : [...formData.GameGenres, genre.name];
+                  setFormData({ ...formData, GameGenres: newGenres });
+                }}
               >
-                {category}
+                {genre.name}
               </button>
             ))}
           </div>
@@ -115,7 +130,6 @@ const DistributionPage = () => {
             type="file"
             name="file"
             onChange={handleChange}
-            multiple
           />
         </div>
 

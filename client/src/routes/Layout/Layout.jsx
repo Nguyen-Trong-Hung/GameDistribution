@@ -45,7 +45,7 @@ const Layout = () => {
       if (response.data.length === 0) {
         alert('No results found');
       }
-      setSearchResults(response.data); // Lưu kết quả tìm kiếm
+      setSearchResults(response.data);
     } catch (error) {
       console.error('Lỗi khi kết nối với backend:', error);
     }
