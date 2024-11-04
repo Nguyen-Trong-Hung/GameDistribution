@@ -101,10 +101,37 @@
             background-color: #ffffff;
 
             .similar-game {
-                font-size: 2rem;
+                margin: 35px 0;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); // Luôn tạo 2 cột
+                grid-template-rows: repeat(3, 1fr); // Luôn tạo 3 hàng
+                gap: 20px;
+                justify-items: center;
+            
+                .similar-game-item {
+                    cursor: pointer;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    text-align: center;
+                    padding: 3px;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+            
+                .similar-game-item:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 5px 6px 15px rgba(0, 0, 0, 0.2);
+                    border: 5px solid #a3b1cf;
+                }
+            
+                .similar-game-item img {
+                    width: 100%;
+                    height: 150px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
             }
-
-            // Add your styles for the right side here
+            
         }
     }
 

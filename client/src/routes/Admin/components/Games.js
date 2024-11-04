@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Games = () => {
   const [games, setGames] = useState([]);
+  const [genres, setGenres] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
 
@@ -14,7 +15,10 @@ const Games = () => {
       try {
         const response = await axios.get('http://localhost:8800/api/game');
         if (response.data.success) {
-          setGames(response.data.data);
+          const gamesData = response.data.data;
+          setGames(gamesData);
+          const genrePromises = gamesData.map(game => fetchGenres(game.GameID));
+          await Promise.all(genrePromises);
         } else {
           console.error('Failed to fetch games:', response.data.message);
         }
@@ -24,9 +28,26 @@ const Games = () => {
         setLoading(false);
       }
     };
-
+  
     fetchGames();
   }, []);
+  
+
+  const fetchGenres = async (gameId) => {
+    try {
+      const response = await axios.get(`http://localhost:8800/api/genres/${gameId}`);
+      if (response.data.success) {
+        setGenres(prevGenres => ({
+          ...prevGenres,
+          [gameId]: response.data.data
+        }));
+      } else {
+        console.error('Failed to fetch genres:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching genres:', error);
+    }
+  };
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -40,9 +61,7 @@ const Games = () => {
       const response = await axios.delete(`http://localhost:8800/api/game/delete/${gameID}`);
       if (response.data.success) {
         setGames((prevGames) => prevGames.filter((game) => game.GameID !== gameID));
-
         alert('Game deleted successfully');
-        
       } else {
         console.error('Failed to delete game:', response.data.message);
       }
@@ -58,7 +77,11 @@ const Games = () => {
     },
     {
       title: 'Genre',
-      dataIndex: 'Genre',
+      dataIndex: 'GameID',
+      render: (gameId) => {
+        const genreList = genres[gameId];
+        return genreList ? genreList.map(genre => genre.name).join(', ') : 'Loading...';
+      },
     },
     {
       title: 'Release Date',
