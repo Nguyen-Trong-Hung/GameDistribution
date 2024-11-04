@@ -1,19 +1,17 @@
 .gamelistcontainer {
     .detailgamelist {
-        margin: 35px 0;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        justify-items: center;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
     }
 
     .game {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
         cursor: pointer;
-        background-color: #fff;
-        border-radius: 10px;
-        overflow: hidden;
         text-align: center;
-        padding: 15px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
 
         &:hover {

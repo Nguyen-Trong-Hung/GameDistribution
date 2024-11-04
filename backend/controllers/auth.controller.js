@@ -20,6 +20,7 @@ export const login = (req, res) => {
     }
 
     const user = result[0];
+    // console.log(user);
 
     // So sánh mật khẩu bằng bcrypt
     bcrypt.compare(password, user.password, (err, isMatch) => {

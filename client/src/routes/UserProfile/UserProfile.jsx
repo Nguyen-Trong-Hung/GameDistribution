@@ -4,16 +4,40 @@ import "./UserProfile.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { CiEdit } from "react-icons/ci";
 import { createSlug } from "../../util";
+import LockUserForm from "../../components/LockUserForm/LockUserForm";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 
 const UserProfile = () => {
   const { isLoggedIn } = useContext(AuthContext);
+  // console.log(isLoggedIn);
+  // console.log(isLoggedIn.userInfo.is_locked);
   const [isPasswordFormOpen, setIsPasswordFormOpen] = useState(false);
+  const [isLockFormOpen, setIsLockFormOpen] = useState(false);
   const [userGames, setUserGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const gamesPerPage = 5;
+  const gamesPerPage = 4;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkLockStatus = async () => {
+      if (isLoggedIn.userInfo.is_locked) {
+        setIsLockFormOpen(true);
+      }
+    };
+
+    const fetchUserGames = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`);
+        setUserGames(res.data.data);
+      } catch (error) {
+        console.error("Error fetching user games:", error);
+      }
+    };
+
+    checkLockStatus(); // Kiểm tra trạng thái khóa
+    fetchUserGames(); // Lấy danh sách trò chơi
+  }, [isLoggedIn.userInfo.id, isLoggedIn.userInfo.is_locked]);
 
   const handlePasswordChangeClick = () => {
     setIsPasswordFormOpen(!isPasswordFormOpen);
@@ -42,19 +66,6 @@ const UserProfile = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchUserGames = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`);
-        setUserGames(res.data.data);
-      } catch (error) {
-        console.error("Error fetching user games:", error);
-      }
-    };
-
-    fetchUserGames();
-  }, [isLoggedIn.userInfo.id]);
-
   const handleGameClick = (game) => {
     navigate(`/game/${createSlug(game.Name, game.GameID)}`);
   };
@@ -67,74 +78,77 @@ const UserProfile = () => {
   const currentGames = userGames.slice(offset, offset + gamesPerPage);
 
   return (
-    <div className="profile-container">
-      <div className="breadcrumb">
-        <h1>My Profile</h1>
-        <button onClick={handlePasswordChangeClick}>
-          Change Password <CiEdit className="icon" />
-        </button>
-      </div>
-
-      <div className="profile-main">
-        <div className="profile-left">
-          <div className="avatar">
-            <img src="DefaultAvatar.png" alt="User Avatar" />
-          </div>
-          <h1>{isLoggedIn.userInfo.username}</h1>
-          <div className="user-info">
-            <h1>My Account</h1>
-            <h4>Full Name: <input value={isLoggedIn.userInfo.username} readOnly style={{ border: "none", fontSize: "1rem" }} /></h4>
-            <h4>Email: {isLoggedIn.userInfo.email}</h4>
-          </div>
+    <>
+      {isLockFormOpen && <LockUserForm isOpen={isLockFormOpen} onClose={() => setIsLockFormOpen(false)} />}
+      <div className="profile-container">
+        <div className="breadcrumb">
+          <h1>My Profile</h1>
+          <button onClick={handlePasswordChangeClick}>
+            Change Password <CiEdit className="icon" />
+          </button>
         </div>
 
-        <div className="profile-right">
-          <div className="project-status">
-            <div className="assignment">
-              <h1>My Game</h1>
-              <div className="gamelist">
-                {currentGames.map((game) => (
-                  <div className="game" key={game.GameID} onClick={() => handleGameClick(game)}>
-                    <img src={game.Image} alt={game.Name} />
-                    <h1>{game.Name}</h1>
-                  </div>
-                ))}
+        <div className="profile-main">
+          <div className="profile-left">
+            <div className="avatar">
+              <img src="DefaultAvatar.png" alt="User Avatar" />
+            </div>
+            <h1>{isLoggedIn.userInfo.username}</h1>
+            <div className="user-info">
+              <h1>My Account</h1>
+              <h4>Full Name: <input value={isLoggedIn.userInfo.username} readOnly style={{ border: "none", fontSize: "1rem" }} /></h4>
+              <h4>Email: {isLoggedIn.userInfo.email}</h4>
+            </div>
+          </div>
+
+          <div className="profile-right">
+            <div className="project-status">
+              <div className="assignment">
+                <h1>My Game</h1>
+                <div className="gamelist">
+                  {currentGames.map((game) => (
+                    <div className="game" key={game.GameID} onClick={() => handleGameClick(game)}>
+                      <img src={game.Image} alt={game.Name} />
+                      <h1>{game.Name}</h1>
+                    </div>
+                  ))}
+                </div>
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={Math.ceil(userGames.length / gamesPerPage)}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                  forcePage={currentPage}
+                />
               </div>
-              <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                breakClassName={"break-me"}
-                pageCount={Math.ceil(userGames.length / gamesPerPage)}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-                forcePage={currentPage}
-              />
             </div>
           </div>
         </div>
-      </div>
 
-      {isPasswordFormOpen && (
-        <div className="password-form">
-          <form onSubmit={handlePasswordSubmit}>
-            <h2>Change Password</h2>
-            <label>Current Password:</label>
-            <input type="password" required />
-            <label>New Password:</label>
-            <input type="password" required />
-            <label>Confirm New Password:</label>
-            <input type="password" required />
-            <button type="submit">Submit</button>
-            <button type="button" onClick={() => setIsPasswordFormOpen(false)}>Cancel</button>
-          </form>
-        </div>
-      )}
-    </div>
+        {isPasswordFormOpen && (
+          <div className="password-form">
+            <form onSubmit={handlePasswordSubmit}>
+              <h2>Change Password</h2>
+              <label>Current Password:</label>
+              <input type="password" required />
+              <label>New Password:</label>
+              <input type="password" required />
+              <label>Confirm New Password:</label>
+              <input type="password" required />
+              <button type="submit">Submit</button>
+              <button type="button" onClick={() => setIsPasswordFormOpen(false)}>Cancel</button>
+            </form>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

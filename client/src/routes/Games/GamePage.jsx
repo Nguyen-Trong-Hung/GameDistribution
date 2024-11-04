@@ -14,7 +14,7 @@ const GamePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [sortOrder, setSortOrder] = useState("Newest");
   const [currentPage, setCurrentPage] = useState(0);
-  const gamesPerPage = 12;
+  const gamesPerPage = 10;
 
   const navigate = useNavigate();
 

@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import LockUserForm from "../../components/LockUserForm/LockUserForm";
 import './DistributionPage.scss';
 
 const DistributionPage = () => {
   const navigate = useNavigate();
   const [genres, setGenres] = useState([]);
+  const [isLockFormOpen, setIsLockFormOpen] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
   // console.log(isLoggedIn);
   const [formData, setFormData] = useState({
@@ -16,6 +18,16 @@ const DistributionPage = () => {
     GameDescription: '',
     file: null,
   });
+
+  useEffect(() => {
+    const checkLockStatus = async () => {
+      if (isLoggedIn.userInfo.is_locked) {
+        setIsLockFormOpen(true);
+      }
+    };
+
+    checkLockStatus();
+  }, [isLoggedIn.userInfo.is_locked]);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -78,6 +90,7 @@ const DistributionPage = () => {
 
   return (
     <div className="distribute-form">
+      {isLockFormOpen && <LockUserForm isOpen={isLockFormOpen} onClose={() => setIsLockFormOpen(false)} />}
       <h1>Please distribute your game</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
