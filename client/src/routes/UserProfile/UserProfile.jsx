@@ -1,14 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./UserProfile.scss";
-import GameList from "../../components/gameList/GameList";
 import { AuthContext } from "../../context/AuthContext";
 import { CiEdit } from "react-icons/ci";
+import { createSlug } from "../../util";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
 const UserProfile = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  // console.log(isLoggedIn);
   const [isPasswordFormOpen, setIsPasswordFormOpen] = useState(false);
+  const [userGames, setUserGames] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const gamesPerPage = 5;
+  const navigate = useNavigate();
 
   const handlePasswordChangeClick = () => {
     setIsPasswordFormOpen(!isPasswordFormOpen);
@@ -26,7 +31,6 @@ const UserProfile = () => {
         return;
       }
       const res = await axios.post('http://localhost:8800/api/user/change-password', { userId, currentPassword, newPassword, confirmNewPassword }, { withCredentials: true });
-      // console.log(res.data);
       if (res.data.success) {
         alert("Password changed successfully");
         setIsPasswordFormOpen(false);
@@ -37,6 +41,30 @@ const UserProfile = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const fetchUserGames = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`);
+        setUserGames(res.data.data);
+      } catch (error) {
+        console.error("Error fetching user games:", error);
+      }
+    };
+
+    fetchUserGames();
+  }, [isLoggedIn.userInfo.id]);
+
+  const handleGameClick = (game) => {
+    navigate(`/game/${createSlug(game.Name, game.GameID)}`);
+  };
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * gamesPerPage;
+  const currentGames = userGames.slice(offset, offset + gamesPerPage);
 
   return (
     <div className="profile-container">
@@ -50,7 +78,7 @@ const UserProfile = () => {
       <div className="profile-main">
         <div className="profile-left">
           <div className="avatar">
-            <img src={isLoggedIn.userInfo.avatar || "DefaultAvatar.png"} alt="User Avatar" />
+            <img src="DefaultAvatar.png" alt="User Avatar" />
           </div>
           <h1>{isLoggedIn.userInfo.username}</h1>
           <div className="user-info">
@@ -63,8 +91,29 @@ const UserProfile = () => {
         <div className="profile-right">
           <div className="project-status">
             <div className="assignment">
-              <h1>My World</h1>
-              <GameList />
+              <h1>My Game</h1>
+              <div className="gamelist">
+                {currentGames.map((game) => (
+                  <div className="game" key={game.GameID} onClick={() => handleGameClick(game)}>
+                    <img src={game.Image} alt={game.Name} />
+                    <h1>{game.Name}</h1>
+                  </div>
+                ))}
+              </div>
+              <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={Math.ceil(userGames.length / gamesPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                forcePage={currentPage}
+              />
             </div>
           </div>
         </div>

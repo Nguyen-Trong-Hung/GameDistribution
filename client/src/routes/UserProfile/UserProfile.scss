@@ -130,30 +130,60 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
                 .assignment {
-                    h5 {
-                        font-size: 18px;
-                        margin-bottom: 10px;
+                    .gamelist {
+                        margin: 35px 0;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 20px;
                     }
+                    .game {
+                        cursor: pointer;
+                        background-color: #fff;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        text-align: center;
+                        padding: 15px;
+                        transition: transform 0.3s ease, box-shadow 0.3s ease;
+                        flex: 0 0 250px;
 
-                    .status-bar {
-                        margin-bottom: 15px;
-
-                        label {
-                            display: block;
-                            font-size: 14px;
-                            margin-bottom: 5px;
+                        &:hover {
+                            transform: translateY(-5px);
+                            box-shadow: 5px 6px 15px rgba(0, 0, 0, 0.2);
+                            border: 5px solid #a3b1cf;
                         }
-
-                        .progress-bar {
-                            background-color: #e9ecef;
+                        img {
+                            width: 100%;
+                            height: 200px;
+                            object-fit: cover;
+                            border-radius: 10px;
+                            margin-bottom: 10px;
+                        }
+                    }
+                    .pagination {
+                        display: flex;
+                        list-style: none;
+                        padding: 0;
+                        justify-content: center;
+                        margin-top: 10px;
+                        
+            
+                        li {
+                            margin: 0 5px;
+                            cursor: pointer;
+                            padding: 8px 12px;
                             border-radius: 5px;
-                            height: 8px;
-                            position: relative;
-
-                            .progress {
+                            background-color: #f8f9fa;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                            transition: background-color 0.3s, color 0.3s;
+            
+                            &:hover {
+                                background-color: #e9ecef;
+                            }
+            
+                            &.active {
                                 background-color: #007bff;
-                                height: 100%;
-                                border-radius: 5px;
+                                color: white;
+                                font-weight: bold;
                             }
                         }
                     }

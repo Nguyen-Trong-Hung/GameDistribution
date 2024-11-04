@@ -1,14 +1,17 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import './DistributionPage.scss';
 
 const DistributionPage = () => {
   const navigate = useNavigate();
   const [genres, setGenres] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  // console.log(isLoggedIn);
   const [formData, setFormData] = useState({
     GameName: '',
-    PublisherName: '',
+    PublisherName: isLoggedIn.userInfo.username,
     GameGenres: [],
     GameDescription: '',
     file: null,
@@ -97,6 +100,7 @@ const DistributionPage = () => {
             value={formData.PublisherName}
             onChange={handleChange}
             required
+            disabled
           />
         </div>
 
