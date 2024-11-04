@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './GameDetailPage.scss';
 import { useParams, useNavigate } from 'react-router-dom';
-import { BiLike } from "react-icons/bi";
-import GameList from '../../components/gameList/GameList';
 import { createSlug } from '../../util';
-
 
 const GameDetailPage = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
     const [gameDetailPage, setGameDetail] = useState(null);
+    const [genres, setGenres] = useState({});
     const [similarGames, setSimilarGames] = useState([]);
-    const [loading, setLoading] = useState(true);  // Trạng thái loading
+    const [loading, setLoading] = useState(true);
 
-    // Tách ID từ slug
     const id = slug.split("-").pop();
 
     useEffect(() => {
@@ -21,23 +19,44 @@ const GameDetailPage = () => {
             try {
                 const res = await fetch(`http://localhost:8800/api/game/${id}`, {
                     method: 'GET',
-                    credentials: 'include', // Đảm bảo cookie được gửi đi
+                    credentials: 'include',
                 });
                 const data = await res.json();
-
                 if (data.success) {
-                    setGameDetail(data.data[0]); // Lấy phần tử đầu tiên của mảng data
+                    setGameDetail(data.data[0]);
                 } else {
                     console.error("Failed to fetch game detail:", data.message);
                 }
             } catch (err) {
                 console.error("Error fetching game detail:", err);
             } finally {
-                setLoading(false);  // Cập nhật trạng thái loading
+                setLoading(false);
             }
         };
         fetchGameDetail();
     }, [id]);
+
+    useEffect(() => {
+        if (gameDetailPage?.GameID) {
+            const fetchGenres = async (gameId) => {
+                try {
+                    const response = await axios.get(`http://localhost:8800/api/genres/${gameId}`);
+                    if (response.data.success) {
+                        setGenres(prevGenres => ({
+                            ...prevGenres,
+                            [gameId]: response.data.data
+                        }));
+                    } else {
+                        console.error('Failed to fetch genres:', response.data.message);
+                    }
+                } catch (error) {
+                    console.error('Error fetching genres:', error);
+                }
+            };
+
+            fetchGenres(gameDetailPage.GameID); // Gọi hàm fetchGenres với GameID
+        }
+    }, [gameDetailPage]);
 
     useEffect(() => {
         const fetchGameSimilarGenres = async () => {
@@ -66,8 +85,7 @@ const GameDetailPage = () => {
 
     const handleGameClick = (game) => {
         navigate(`/game/${createSlug(game.Name, game.GameID)}`);
-      };
-
+    };
 
     if (loading) return <p>Loading...</p>;
 
@@ -83,37 +101,46 @@ const GameDetailPage = () => {
                     </div>
                     <div className="descript">
                         <div className="des-left">
-                            <p>Game Title: {gameDetailPage?.Name || "name"}</p>
-                            <p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p>
-                            <p>Created At: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p>
-                        </div>
-                        <div className="des-right">
-                            <BiLike />
-                            <p>{gameDetailPage?.Like}</p>
+                            <div className='left-1'><p>Game Title: {gameDetailPage?.Name || "name"}</p></div>
+                            <div className='left-1'><p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p></div>
+                            <div className='left-1'><p>Created at: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p></div>
+                            <div className='left-1'><p>Description: {gameDetailPage?.Description || "N/A"}</p></div>
+                            <div className='left-1'>
+                                <p>
+                                    Genres: {genres[gameDetailPage?.GameID]
+                                        ? genres[gameDetailPage.GameID].map(genre => genre.name).join(', ')
+                                        : 'Loading...'}
+                                </p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div className="game-info-right">
-                    <h1>Similar Game</h1>
+                    <h1>Similar Games</h1>
                     <div className="similar-game">
-                        {loading ? (
-                            <p>Loading similar games...</p> // Thông báo khi đang tải
-                        ) : (
-                            <ul>
-                                {similarGames.slice(0, 6).map((game) => (
-                                    <div className="similar-game-item" key={game.GameID} onClick={() => handleGameClick(game)}>
-                                        <img src={game.Image} alt={game.Name} />
-                                        <p>{game.Name}</p>
-                                    </div>
-                                ))}
-                            </ul>
-                        )}
+                        {similarGames.length > 0
+                            ? similarGames.slice(0, 6).map((game, index) => (
+                                <div
+                                    className="similar-game-item"
+                                    key={game.GameID}
+                                    onClick={() => handleGameClick(game)}
+                                >
+                                    <img src={game.Image} alt={game.Name} />
+                                    <p>{game.Name}</p>
+                                </div>
+                            ))
+                            : null
+                        }
+                        {similarGames.length < 6 &&
+                            Array.from({ length: 6 - similarGames.length }).map((_, index) => (
+                                <div className="similar-game-item empty" key={`empty-${index}`}>
+                                    <p>No Game</p>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
-            </div>
-            <div className="collections">
-                <h5>Collections</h5>
-                <GameList />
             </div>
         </div>
     );

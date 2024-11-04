@@ -14,7 +14,7 @@ export const getGenres = (req, res) => {
 
 export const getGenreByGame = (req, res) => {
     const gameId = req.params.gameid;
-    console.log(gameId);
+    // console.log(gameId);
     const sql = `
       SELECT genres.* FROM genres
       JOIN game_genres ON genres.id = game_genres.genre_id

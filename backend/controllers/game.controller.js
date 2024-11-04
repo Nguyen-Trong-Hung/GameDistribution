@@ -13,10 +13,14 @@ export const getGames = (req, res) => {
     });
   } else {
     const placeholders = genreIds.map(() => '?').join(',');
+    const number_of_genres = genreIds.length;
     const query = `
-      SELECT DISTINCT Game.* FROM Game
+      SELECT Game.*
+      FROM Game
       JOIN Game_Genres ON Game.GameID = Game_Genres.game_id
       WHERE Game_Genres.genre_id IN (${placeholders})
+      GROUP BY Game.GameID
+      HAVING COUNT(DISTINCT Game_Genres.genre_id) = ${number_of_genres}
     `;
     db.query(query, genreIds, (err, result) => {
       if (err) {
@@ -43,8 +47,6 @@ export const getGameById = (req, res) => {
 
 export const getSimilarGamesByGenres = (req, res) => {
   const { gameId } = req.params;
-
-  // Truy vấn để lấy các thể loại của game hiện tại
   const genreSql = `
     SELECT genre_id FROM game_genres WHERE game_id = ?
   `;
@@ -103,7 +105,7 @@ export const createNewGame = async (req, res) => {
     }
 
     const { GameName, PublisherName, GameGenresId, GameDescription } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     if (!GameName || !PublisherName || !GameDescription) {
       return res.status(400).json({ success: false, message: 'Invalid request' });
@@ -171,7 +173,7 @@ export const createNewGame = async (req, res) => {
 export const deleteGame = (req, res) => {
   const sql = "DELETE FROM game WHERE GameID = ?";
   const sql2 = "DELETE FROM game_genres WHERE game_id = ?";
-  
+
   db.query(sql, [req.params.id], (err, result) => {
     if (err) {
       console.error("Error executing query:", err);

@@ -53,7 +53,7 @@
                 display: flex;
                 justify-content: space-between; // Add this line to push des-right to the right
                 margin: 20px 0;
-                padding-left: 50px;
+                // padding-left: 50px;
                 width: auto;
                 max-width: 1200px;
                 border: 1px solid #ddd;
@@ -62,10 +62,16 @@
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
                 .des-left {
-                    p {
-                        padding-right: 20px;
-                        font-size: 1rem;
-                        color: #666;
+                    width: 100%;
+                    .left-1 {
+                        padding-left: 30px;
+                        border: 1px solid #ddd;
+                        p {
+                            padding: 10px;
+                            font-weight: bold;
+                            font-size: 1rem;
+                            color: #666;
+                        }
                     }
                 }
 
@@ -80,6 +86,7 @@
                     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
                     display: flex;
                     margin-right: 250px;
+
                     svg {
                         margin-top: 10px;
                         margin-right: 10px;
@@ -97,42 +104,63 @@
         }
 
         .game-info-right {
-            flex: 1;
-            background-color: #ffffff;
+            margin-top: 20px;
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
 
             .similar-game {
-                margin: 35px 0;
                 display: grid;
-                grid-template-columns: repeat(2, 1fr); // Luôn tạo 2 cột
-                grid-template-rows: repeat(3, 1fr); // Luôn tạo 3 hàng
+                grid-template-columns: repeat(2, 1fr); // 2 cột
+                grid-template-rows: repeat(3, 1fr); // 3 hàng
                 gap: 20px;
-                justify-items: center;
-            
+                padding: 10px;
+
                 .similar-game-item {
                     cursor: pointer;
                     background-color: #fff;
                     border-radius: 10px;
                     overflow: hidden;
                     text-align: center;
-                    padding: 3px;
+                    padding: 15px;
                     transition: transform 0.3s ease, box-shadow 0.3s ease;
-                }
-            
-                .similar-game-item:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 5px 6px 15px rgba(0, 0, 0, 0.2);
-                    border: 5px solid #a3b1cf;
-                }
-            
-                .similar-game-item img {
-                    width: 100%;
-                    height: 150px;
-                    object-fit: cover;
-                    border-radius: 10px;
+
+                    img {
+                        width: 100%;
+                        height: 150px;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        margin-bottom: 10px;
+                    }
+
+                    p {
+                        font-size: 14px;
+                        color: #333;
+                        margin: 5px 0;
+                    }
+
+                    &:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 5px 6px 15px rgba(0, 0, 0, 0.2);
+                        border: 5px solid #a3b1cf;
+                    }
+
+                    &.empty {
+                        background-color: #f5f5f5;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        p {
+                            color: #aaa;
+                        }
+                    }
                 }
             }
-            
         }
+
     }
 
     .collections {
