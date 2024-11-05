@@ -1,9 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Input, Button } from 'antd';
+import { Table, Input } from 'antd';
 import { Stack } from '@mui/material';
 import AppNavbar from './AppNavbar';
 import MenuContent from './MenuContent';
+import { styled } from '@mui/material/styles';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import axios from 'axios';
+
+const Android12Switch = styled(Switch)(({ theme }) => ({
+  padding: 8,
+  '& .MuiSwitch-track': {
+    borderRadius: 22 / 2,
+    backgroundColor: theme.palette.error.dark,
+    '&::before, &::after': {
+      content: '""',
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      width: 16,
+      height: 16,
+    },
+    '&::before': {
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+        theme.palette.getContrastText(theme.palette.error.dark),
+      )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
+      left: 12,
+    },
+    '&::after': {
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+        theme.palette.getContrastText(theme.palette.error.dark),
+      )}" d="M19,13H5V11H19V13Z" /></svg>')`,
+      right: 12,
+    },
+  },
+  '& .Mui-checked .MuiSwitch-track': {
+    backgroundColor: theme.palette.success.dark,
+  },
+  '& .MuiSwitch-thumb': {
+    boxShadow: 'none',
+    width: 16,
+    height: 16,
+    margin: 2,
+  },
+}));
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -33,6 +73,46 @@ const Users = () => {
     setSearchText(value);
   };
 
+  const handleLockUser = async (userId) => {
+    if (!window.confirm('Are you sure you want to lock this user?')) {
+      return;
+    }
+    try {
+      const response = await axios.post(`http://localhost:8800/api/user/lock-user`, { userId });
+      if (response.data.success) {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, is_locked: user.is_locked === 0 ? 1 : 0 } : user
+          )
+        );
+      } else {
+        console.error('Failed to lock user:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error locking user:', error);
+    }
+  };
+
+  const handleUnlockUser = async (userId) => {
+    if (!window.confirm('Are you sure you want to unlock this user?')) {
+      return;
+    }
+    try {
+      const response = await axios.post(`http://localhost:8800/api/user/unlock-user`, { userId });
+      if (response.data.success) {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, is_locked: user.is_locked === 0 ? 1 : 0 } : user
+          )
+        );
+      } else {
+        console.error('Failed to unlock user:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error unlocking user:', error);
+    }
+  };
+
   const columns = [
     {
       title: 'Username',
@@ -48,13 +128,17 @@ const Users = () => {
       render: (text) => new Date(text).toLocaleDateString(),
     },
     {
-      title: 'Actions',
+      title: 'Status',
       render: (record) => (
         <div>
-          <Button type="primary" size="small" style={{backgroundColor: 'green'}}>Update</Button>
-          <Button type="danger" size="small" style={{ backgroundColor: '#FF0000', color: "white" }}>
-            Delete
-          </Button>
+          <FormControlLabel
+            control={
+              <Android12Switch
+                checked={record.is_locked === 0}
+                onClick={() => record.is_locked === 0 ? handleLockUser(record.id) : handleUnlockUser(record.id)}
+              />
+            }
+          />
         </div>
       ),
     },

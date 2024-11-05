@@ -92,7 +92,7 @@ const Games = () => {
       title: 'Actions',
       render: (record) => (
         <div>
-          <Button type="primary" size="small" style={{backgroundColor: 'green'}}>Update</Button>
+          {/* <Button type="primary" size="small" style={{backgroundColor: 'green'}}>Update</Button> */}
           <Button type="danger" size="small" style={{ backgroundColor: '#FF0000', color: "white" }} onClick={() => handleDelete(record.GameID)}>
             Delete
           </Button>

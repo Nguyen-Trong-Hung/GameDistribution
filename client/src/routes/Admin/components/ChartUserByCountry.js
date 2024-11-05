@@ -10,45 +10,15 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-import {
-  IndiaFlag,
-  UsaFlag,
-  BrazilFlag,
-  GlobeFlag,
-} from '../internals/components/CustomIcons';
+// Các biểu tượng cho các quốc gia (hoặc có thể dùng bất kỳ icon nào cho thể loại game)
+// import { IndiaFlag, UsaFlag, BrazilFlag, GlobeFlag } from '../internals/components/CustomIcons';
 
-const data = [
-  { label: 'India', value: 50000 },
-  { label: 'USA', value: 35000 },
-  { label: 'Brazil', value: 10000 },
-  { label: 'Other', value: 5000 },
-];
-
-const countries = [
-  {
-    name: 'India',
-    value: 50,
-    flag: <IndiaFlag />,
-    color: 'hsl(220, 25%, 65%)',
-  },
-  {
-    name: 'USA',
-    value: 35,
-    flag: <UsaFlag />,
-    color: 'hsl(220, 25%, 45%)',
-  },
-  {
-    name: 'Brazil',
-    value: 10,
-    flag: <BrazilFlag />,
-    color: 'hsl(220, 25%, 30%)',
-  },
-  {
-    name: 'Other',
-    value: 5,
-    flag: <GlobeFlag />,
-    color: 'hsl(220, 25%, 20%)',
-  },
+const colors = [
+  '#4B0082',
+  '#4682B4',
+  '#2F4F4F',
+  '#4169E1',
+  '#191970',
 ];
 
 const StyledText = styled('text', {
@@ -111,22 +81,59 @@ PieCenterLabel.propTypes = {
   secondaryText: PropTypes.string.isRequired,
 };
 
-const colors = [
-  'hsl(220, 20%, 65%)',
-  'hsl(220, 20%, 42%)',
-  'hsl(220, 20%, 35%)',
-  'hsl(220, 20%, 25%)',
-];
-
 export default function ChartUserByCountry() {
+  const [genreData, setGenreData] = React.useState([]);
+  const [totalGames, setTotalGames] = React.useState(0);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const genreResponse = await fetch('http://localhost:8800/api/genres');
+        const genreResult = await genreResponse.json();
+
+        if (genreResult.success) {
+          const genrePromises = genreResult.data.map(async (genre) => {
+            const gameResponse = await fetch(`http://localhost:8800/api/game?genreId=${genre.id}`);
+            const gameResult = await gameResponse.json();
+            const gameIDs = new Set();
+            gameResult.data.forEach((game) => {
+              gameIDs.add(game.GameID); // Thêm GameID vào set (set sẽ tự loại bỏ trùng)
+            });
+
+            // Cập nhật số lượng game cho mỗi thể loại
+            return { label: genre.name, value: gameIDs.size, gameIDs: Array.from(gameIDs) };
+          });
+
+          // Sau khi lấy xong số lượng game cho mỗi thể loại
+          const genreGamesData = await Promise.all(genrePromises);
+
+          // Tính tổng số game (loại bỏ game trùng lặp)
+          const allGameIDs = new Set();
+          genreGamesData.forEach((genre) => {
+            genre.gameIDs.forEach((gameID) => {
+              allGameIDs.add(gameID);
+            });
+          });
+
+          setTotalGames(allGameIDs.size);
+          setGenreData(genreGamesData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Card
       variant="outlined"
-      sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}
+      sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1, backgroundColor: 'rgba(137, 186, 208, 0.17)' }}
     >
       <CardContent>
         <Typography component="h2" variant="subtitle2">
-        Ratio of game genres
+          Ratio of Game Genres
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PieChart
@@ -139,7 +146,7 @@ export default function ChartUserByCountry() {
             }}
             series={[
               {
-                data,
+                data: genreData,
                 innerRadius: 75,
                 outerRadius: 100,
                 paddingAngle: 0,
@@ -152,16 +159,15 @@ export default function ChartUserByCountry() {
               legend: { hidden: true },
             }}
           >
-            <PieCenterLabel primaryText="98.5K" secondaryText="Total" />
+            <PieCenterLabel primaryText={totalGames} secondaryText="Total Games" />
           </PieChart>
         </Box>
-        {countries.map((country, index) => (
+        {genreData.map((genre, index) => (
           <Stack
             key={index}
             direction="row"
             sx={{ alignItems: 'center', gap: 2, pb: 2 }}
           >
-            {country.flag}
             <Stack sx={{ gap: 1, flexGrow: 1 }}>
               <Stack
                 direction="row"
@@ -172,19 +178,19 @@ export default function ChartUserByCountry() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: '500' }}>
-                  {country.name}
+                  {genre.label}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {country.value}%
+                  {genre.value} games
                 </Typography>
               </Stack>
               <LinearProgress
                 variant="determinate"
-                aria-label="Number of users by country"
-                value={country.value}
+                aria-label="Number of games by genre"
+                value={(genre.value / totalGames) * 100}
                 sx={{
                   [`& .${linearProgressClasses.bar}`]: {
-                    backgroundColor: country.color,
+                    backgroundColor: colors[index % colors.length],
                   },
                 }}
               />

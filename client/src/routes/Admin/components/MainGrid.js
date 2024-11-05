@@ -6,10 +6,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
 import ChartUserByCountry from './ChartUserByCountry';
-import CustomizedDataGrid from './CustomizedDataGrid';
-import PageViewsBarChart from './PageViewsBarChart';
-import SessionsChart from './SessionsChart';
 import StatCard from './StatCard';
+import { subDays, isSameDay } from 'date-fns';
 
 export default function MainGrid() {
 
@@ -19,19 +17,14 @@ export default function MainGrid() {
       value: 0,
       interval: 'Last 30 days',
       trend: 'neutral',
-      data: [
-        1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30
-      ],
+      data: [], // Dữ liệu ngày
     },
     {
       title: 'Games',
-      value: '0',
+      value: 0,
       interval: 'Last 30 days',
       trend: 'neutral',
-      data: [
-        1640, 1250, 970, 1130, 1050, 900, 720, 1080, 900, 450, 920, 820, 840, 600, 820,
-        780, 800, 760, 380, 740, 660, 620, 840, 500, 520, 480, 400, 360, 300, 220,
-      ],
+      data: [], // Dữ liệu ngày
     },
   ]);
 
@@ -42,18 +35,29 @@ export default function MainGrid() {
           fetch('http://localhost:8800/api/user/users'),
           fetch('http://localhost:8800/api/game')
         ]);
-
+  
         const usersResult = await usersResponse.json();
         const gamesResult = await gamesResponse.json();
-
+  
+        console.log("Users Data:", usersResult.data); // Kiểm tra dữ liệu users
+        console.log("Games Data:", gamesResult.data); // Kiểm tra dữ liệu games
+  
         if (usersResult.success && gamesResult.success) {
           const totalUsers = usersResult.data.length;
           const totalGames = gamesResult.data.length;
-
+  
+          const userData = groupUsersByDay(usersResult.data);
+          const gameData = groupGamesByDay(gamesResult.data);
+  
+          console.log("Grouped Users Data:", userData); // Kiểm tra dữ liệu người dùng đã nhóm
+          console.log("Grouped Games Data:", gameData); // Kiểm tra dữ liệu game đã nhóm
+  
           setData((prevData) => {
             const updatedData = [...prevData];
             updatedData[0].value = totalUsers;
             updatedData[1].value = totalGames;
+            updatedData[0].data = userData;
+            updatedData[1].data = gameData;
             return updatedData;
           });
         }
@@ -61,48 +65,68 @@ export default function MainGrid() {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []);
-
-
+  
+  const groupGamesByDay = (games) => {
+    const today = new Date();
+    // Lấy danh sách 30 ngày gần nhất
+    const last30Days = Array.from({ length: 30 }, (_, i) => subDays(today, i));
+    
+    // Tạo một mảng với 30 phần tử, mỗi phần tử là số game của một ngày
+    const result = new Array(30).fill(0);
+  
+    games.forEach((game) => {
+      const gameDate = new Date(game.createAt); // Chuyển đổi createAt thành Date
+      const dayIndex = last30Days.findIndex((date) => isSameDay(date, gameDate));
+      if (dayIndex >= 0) {
+        result[dayIndex]++; // Tăng số lượng game vào ngày tương ứng
+      }
+    });
+  
+    return result.reverse(); // Đảo lại để ngày mới nhất ở cuối
+  };
+  
+  const groupUsersByDay = (users) => {
+    const today = new Date();
+    // Lấy danh sách 30 ngày gần nhất
+    const last30Days = Array.from({ length: 30 }, (_, i) => subDays(today, i));
+  
+    const result = new Array(30).fill(0); // Mảng số lượng người dùng mỗi ngày
+  
+    users.forEach((user) => {
+      const userDate = new Date(user.createAt); // Chuyển đổi createAt thành Date
+      const dayIndex = last30Days.findIndex((date) => isSameDay(date, userDate));
+      if (dayIndex >= 0) {
+        result[dayIndex]++;
+      }
+    });
+  
+    return result.reverse(); // Đảo lại để ngày mới nhất ở cuối
+  };
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       {/* cards */}
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
         Overview
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        columns={12}
-        sx={{ mb: (theme) => theme.spacing(2) }}
-      >
+      <Grid container spacing={2} columns={12} sx={{ mb: (theme) => theme.spacing(2) }}>
         {data.map((card, index) => (
           <Grid key={index} size={{ xs: 18, sm: 9, lg: 6 }}>
             <StatCard {...card} />
           </Grid>
         ))}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <SessionsChart />
-        </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <PageViewsBarChart />
-        </Grid>
       </Grid>
-      <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Hot Games
-      </Typography>
+
       <Grid container spacing={2} columns={12}>
-        <Grid size={{ xs: 12, lg: 9 }}>
-          <CustomizedDataGrid />
-        </Grid>
-        <Grid size={{ xs: 12, lg: 3 }}>
+        <Grid size={{ xs: 12, lg: 12 }}>
           <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
             <ChartUserByCountry />
           </Stack>
         </Grid>
       </Grid>
+
       <Copyright sx={{ my: 4 }} />
     </Box>
   );

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { IoIosLogOut } from "react-icons/io";
+// import { IoIosLogOut } from "react-icons/io";
 import { AuthContext } from '../../context/AuthContext';
 import './LockUserForm.scss';
 
@@ -33,7 +33,7 @@ const LockUserForm = ({ isOpen, onClose }) => {
         <div className="modal-overlay">
             <div className="modal-content">
                 <h2>Tài Khoản Đã Bị Khóa</h2>
-                <p>Chúc mừng!! Tài khoản của bạn đã bị khóa. Vui lòng nạp VIP cho XGame để hưởng sự khoan hồng 🤝🫰</p>
+                <p>Vui thôi đừng vui quá!! Tài khoản của bạn đã bị khóa. Vui lòng nạp VIP cho XGame để hưởng sự khoan hồng 🤝🫰</p>
                 <div className='logout-button'>
                     <button onClick={handleLogout}>Logout</button>
                 </div>

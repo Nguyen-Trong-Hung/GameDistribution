@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -30,14 +29,13 @@ export default function Dashboard(props) {
       <Box sx={{ display: 'flex' }}>
         <SideMenu />
         <AppNavbar />
-        {/* Main content */}
         <Box
           component="main"
           sx={(theme) => ({
             flexGrow: 1,
             backgroundColor: theme.vars
-              ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-              : alpha(theme.palette.background.default, 1),
+              ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.9)`
+              : alpha(theme.palette.background.default, 0.9),
             overflow: 'auto',
           })}
         >
