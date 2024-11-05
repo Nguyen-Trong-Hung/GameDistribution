@@ -81,23 +81,23 @@ const Games = () => {
       render: (gameId) => {
         const genreList = genres[gameId];
         return genreList ? genreList.map(genre => genre.name).join(', ') : 'Loading...';
-            },
-          },
-          {
-            title: 'Image',
-            dataIndex: 'Image',
-            render: (image) => (
+      },
+    },
+    {
+      title: 'Image',
+      dataIndex: 'Image',
+      render: (image) => (
         <img src={image} alt="Game" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
-            ),
-          },
-          {
-            title: 'Release Date',
-            dataIndex: 'createAt',
-            render: (text) => new Date(text).toLocaleDateString(),
-          },
-          {
-            title: 'Actions',
-            render: (record) => (
+      ),
+    },
+    {
+      title: 'Release Date',
+      dataIndex: 'createAt',
+      render: (text) => new Date(text).toLocaleDateString(),
+    },
+    {
+      title: 'Actions',
+      render: (record) => (
         <div>
           {/* <Button type="primary" size="small" style={{backgroundColor: 'green'}}>Update</Button> */}
           <Button type="danger" size="small" style={{ backgroundColor: '#FF0000', color: "white" }} onClick={() => handleDelete(record.GameID)}>

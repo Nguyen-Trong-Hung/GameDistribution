@@ -129,6 +129,7 @@
                     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
                     img {
+                        width: 100%;
                         max-width: 220px;
                         height: 140px;
                         object-fit: cover;

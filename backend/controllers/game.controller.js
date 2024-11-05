@@ -99,18 +99,6 @@ export const getSimilarGamesByGenres = (req, res) => {
 };
 
 
-export const deleteGamebyId = (req, res) => {
-  const sql = "DELETE FROM game WHERE GameID = ?";
-  db.query(sql, req.params.id, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.json({ success: false, message: 'Server error' });
-    }
-
-    return res.json({ success: true, message: 'Game deleted' });
-  });
-}
-
 export const createNewGame = async (req, res) => {
   try {
     if (!req.file) {
@@ -184,25 +172,32 @@ export const createNewGame = async (req, res) => {
 
 
 export const deleteGame = (req, res) => {
-  const sql = "DELETE FROM game WHERE GameID = ?";
+  const gameId = req.params.id;
+
+  //Xóa game_genres
   const sql2 = "DELETE FROM game_genres WHERE game_id = ?";
 
-  db.query(sql, [req.params.id], (err, result) => {
+  db.query(sql2, [gameId], (err, result) => {
     if (err) {
-      console.error("Error executing query:", err);
-      return res.status(500).json({ success: false, message: 'Server error', error: err.message });
+      console.error("Error executing query to delete game_genres:", err);
+      return res.status(500).json({ success: false, message: 'Server error while deleting genres', error: err.message });
     }
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ success: false, message: 'Game not found' });
-    }
+    //Sau khi xóa game_genres, xóa game
+    const sql = "DELETE FROM game WHERE GameID = ?";
 
-    db.query(sql2, [req.params.id], (err, result) => {
+    db.query(sql, [gameId], (err, result) => {
       if (err) {
-        console.error("Error executing query:", err);
-        return res.status(500).json({ success: false, message: 'Server error', error: err.message });
+        console.error("Error executing query to delete game:", err);
+        return res.status(500).json({ success: false, message: 'Server error while deleting game', error: err.message });
       }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ success: false, message: 'Game not found' });
+      }
+
       res.json({ success: true, message: 'Game and associated genres deleted' });
     });
   });
 };
+
