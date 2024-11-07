@@ -15,6 +15,9 @@ const OverlayLogin = ({ isOpen, onClose }) => {
       <div className="overlay-background" onClick={onClose} />
       <div className="overlay-container">
         <div className="overlay-login">
+          <div className="title">
+            <h3>Sign up if you want to contribute your games to us</h3>
+          </div>
           <div className="overlay-tabs">
             <h1 className={isLogin ? 'active' : ''} onClick={() => setIsLogin(true)}>Login</h1>
             <h1 className={!isLogin ? 'active' : ''} onClick={() => setIsLogin(false)}>Register</h1>

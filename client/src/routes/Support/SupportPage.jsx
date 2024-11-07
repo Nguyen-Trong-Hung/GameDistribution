@@ -5,9 +5,8 @@ const SupportPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    category: '',
+    subject: '',
     message: '',
-    file: null,
   });
 
   const handleChange = (e) => {
@@ -45,36 +44,22 @@ const SupportPage = () => {
             <input
               type="email"
               name="email"
-              placeholder="amunra&&yooyun@gmail.com"
+              placeholder="amunra@example.com"
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
           <div className="form-group">
-            <label>Please choose a category for your inquiry</label>
-            <select
-              name="category"
-              value={formData.category}
+            <label>Subject</label>
+            <input
+              type="text"
+              name="subject"
+              placeholder="Enter the Subject"
+              value={formData.subject}
               onChange={handleChange}
               required
-            >
-              <option value="">Select a category</option>
-              {[
-                'NEW PUBLISHER',
-                'GAME ACTIVATION',
-                'FINANCE',
-                'TECHNICAL',
-                'GAME BUG REPORT',
-                'BUSINESS OPPORTUNITIES',
-                'SITE BUILDER',
-                'GENERAL',
-              ].map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+            />
           </div>
         </div>
         <div className="form-right">
@@ -86,14 +71,6 @@ const SupportPage = () => {
               value={formData.message}
               onChange={handleChange}
               required
-            />
-          </div>
-          <div className="form-group">
-            <label>Attach a file</label>
-            <input
-              type="file"
-              name="file"
-              onChange={handleChange}
             />
           </div>
           <button type="submit">Submit</button>

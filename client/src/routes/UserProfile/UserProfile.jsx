@@ -28,7 +28,7 @@ const UserProfile = () => {
 
     const fetchUserGames = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`);
+        const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`, { withCredentials: true });
         setUserGames(res.data.data);
       } catch (error) {
         console.error("Error fetching user games:", error);
@@ -106,12 +106,16 @@ const UserProfile = () => {
               <div className="assignment">
                 <h1>My Game</h1>
                 <div className="gamelist">
-                  {currentGames.map((game) => (
-                    <div className="game" key={game.GameID} onClick={() => handleGameClick(game)}>
-                      <img src={game.Image} alt={game.Name} />
-                      <h1>{game.Name}</h1>
-                    </div>
-                  ))}
+                  {currentGames.length === 0 ? (
+                    <p>Hiện tại tài khoản của bạn chưa có game nào</p>
+                  ) : (
+                    currentGames.map((game) => (
+                      <div className="game" key={game.GameID} onClick={() => handleGameClick(game)}>
+                        <img src={game.Image} alt={game.Name} />
+                        <h1>{game.Name}</h1>
+                      </div>
+                    ))
+                  )}
                 </div>
                 <ReactPaginate
                   previousLabel={"Previous"}

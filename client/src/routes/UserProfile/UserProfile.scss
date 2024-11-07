@@ -142,12 +142,16 @@
                         padding: 10px;
                         cursor: pointer;
                         text-align: center;
-                        transition: transform 0.3s ease, box-shadow 0.3s ease;        
+                        // transition: transform 0.3s ease, box-shadow 0.3s ease;  
+                        border: 5px solid transparent;
+                        box-sizing: border-box;
+                        transition: border-color 0.3s ease;
 
                         &:hover {
-                            transform: translateY(-5px);
-                            box-shadow: 5px 6px 15px rgba(0, 0, 0, 0.2);
-                            border: 5px solid #a3b1cf;
+                            // transform: scale(1.1);
+                            // box-shadow: 5px 6px 15px rgba(0, 0, 0, 0.2);
+                            // border: 5px solid #a3b1cf;
+                            border-color: #a3b1cf;
                         }
                         
                         img {

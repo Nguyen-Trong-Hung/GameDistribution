@@ -14,7 +14,7 @@ const HomePage = () => {
           <p>Discover the advantages of </p>
           <p>partnering with GameDistribution</p>
         </div>
-        <button>Show More</button>
+        <button onClick={() => window.location.href="https://xgamestudio.com/"}>Show More</button>
         <img src="/gamedistributionpublisher.png-removebg.png" alt="Game Distribution Publisher" />
       </div>
       <div className="gamelist">

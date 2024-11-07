@@ -3,6 +3,7 @@ import axios from 'axios';
 import './AdminLogin.scss';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const AdminLogin = () => {
     const { login } = useContext(AuthContext);
@@ -15,6 +16,7 @@ const AdminLogin = () => {
         try {
             const res = await axios.post('http://localhost:8800/api/admin/loginAdmin', { email, password });
             if (res.data.success) {
+                Cookies.set('token', res.data.token, { expires: 1 });
                 console.log('Login successful');
                 // console.log(res.data);
                 login(res.data);

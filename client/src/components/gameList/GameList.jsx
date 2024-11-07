@@ -8,7 +8,7 @@ import { createSlug } from '../../util';
 const GameList = () => {
   const [games, setGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [countdown, setCountdown] = useState(5); // Đếm ngược 5 giây
+  const [countdown, setCountdown] = useState(20);
   const gamesPerPage = 8;
   const navigate = useNavigate();
 
@@ -32,21 +32,27 @@ const GameList = () => {
   // Xử lý sự kiện khi người dùng nhấn vào trang
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
-    setCountdown(5); // Đặt lại đếm ngược khi chuyển trang
   };
+
+  // Countdown logic riêng, chỉ phụ thuộc vào `countdown`
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
           setCurrentPage((prevPage) => (prevPage + 1) % Math.ceil(games.length / gamesPerPage));
-          return 5;
+          return 20; // Đặt lại đếm ngược về 20 giây khi chuyển trang
         }
         return prev - 1;
       });
     }, 1000);
-
+  
     return () => clearInterval(timer); // Dọn dẹp timer
-  }, [currentPage, games.length]);
+  }, [games.length]); // Chỉ có `games.length` làm dependencies
+
+  // Khi `currentPage` thay đổi, reset `countdown`
+  useEffect(() => {
+    setCountdown(20);
+  }, [currentPage]);
 
   // Lấy danh sách game cho trang hiện tại
   const currentGames = games.slice(
@@ -69,7 +75,7 @@ const GameList = () => {
         ))}
       </div>
       <div className="countdown-bar">
-        <div className="progress" style={{ width: `${(countdown / 5) * 100}%` }}></div>
+        <div className="progress" style={{ width: `${(countdown / 20) * 100}%` }}></div>
         {/* Phân trang */}
         <ReactPaginate
           previousLabel={"Previous"}
@@ -78,7 +84,7 @@ const GameList = () => {
           breakClassName={"break-me"}
           pageCount={Math.ceil(games.length / gamesPerPage)}
           marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={20}
           onPageChange={handlePageClick}
           containerClassName={"pagination"}
           subContainerClassName={"pages pagination"}

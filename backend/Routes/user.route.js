@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/users', getUser);
 router.post('/change-password',verifyToken, changePassword);
-router.post('/lock-user', lockUser);
-router.post('/unlock-user', unlockUser);
+router.post('/lock-user',verifyToken, lockUser);
+router.post('/unlock-user',verifyToken, unlockUser);
 
 export default router;

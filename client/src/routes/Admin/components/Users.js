@@ -78,7 +78,7 @@ const Users = () => {
       return;
     }
     try {
-      const response = await axios.post(`http://localhost:8800/api/user/lock-user`, { userId });
+      const response = await axios.post(`http://localhost:8800/api/user/lock-user`, { userId }, { withCredentials: true });
       if (response.data.success) {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -98,7 +98,7 @@ const Users = () => {
       return;
     }
     try {
-      const response = await axios.post(`http://localhost:8800/api/user/unlock-user`, { userId });
+      const response = await axios.post(`http://localhost:8800/api/user/unlock-user`, { userId }, { withCredentials: true });
       if (response.data.success) {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
