@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './GameDetailPage.scss';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AiFillLike } from "react-icons/ai";
 import { createSlug } from '../../util';
 
 const GameDetailPage = () => {
@@ -11,6 +12,7 @@ const GameDetailPage = () => {
     const [genres, setGenres] = useState({});
     const [similarGames, setSimilarGames] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isLiked, setIsLiked] = useState(false);
 
     const id = slug.split("-").pop();
 
@@ -87,6 +89,11 @@ const GameDetailPage = () => {
         navigate(`/game/${createSlug(game.Name, game.GameID)}`);
     };
 
+    const handleLikeClick = () => {
+        setIsLiked(prevIsLiked => !prevIsLiked); // Chuyển đổi trạng thái
+        console.log('Like button clicked');
+    };
+
     if (loading) return <p>Loading...</p>;
 
     return (
@@ -101,7 +108,10 @@ const GameDetailPage = () => {
                     </div>
                     <div className="descript">
                         <div className="des-left">
-                            <div className='left-1'><p>Game Title: {gameDetailPage?.Name || "name"}</p></div>
+                            <div className='left-1-like'><p>Game Title: {gameDetailPage?.Name || "name"}</p> <AiFillLike
+                                className={`icon ${isLiked ? 'liked' : ''}`}
+                                onClick={handleLikeClick}
+                            /></div>
                             <div className='left-1'><p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p></div>
                             <div className='left-1'><p>Created at: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p></div>
                             <div className='left-1'><p>Description: {gameDetailPage?.Description || "N/A"}</p></div>
@@ -120,7 +130,7 @@ const GameDetailPage = () => {
                     <h1>Similar Games</h1>
                     <div className="similar-game">
                         {similarGames.length > 0
-                            ? similarGames.slice(0, 6).map((game, index) => (
+                            ? similarGames.slice(0, 6).map((game) => (
                                 <div
                                     className="similar-game-item"
                                     key={game.GameID}

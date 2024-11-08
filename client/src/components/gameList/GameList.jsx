@@ -9,8 +9,23 @@ const GameList = () => {
   const [games, setGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [countdown, setCountdown] = useState(20);
-  const gamesPerPage = 8;
+  const [gamesPerPage, setGamesPerPage] = useState(12);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const updateGamesPerPage = () => {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        setGamesPerPage(4);
+      } else {
+        setGamesPerPage(12);
+      }
+    };
+
+    updateGamesPerPage(); // Set lần đầu
+    window.addEventListener("resize", updateGamesPerPage); // Cập nhật khi thay đổi kích thước
+
+    return () => window.removeEventListener("resize", updateGamesPerPage);
+  }, []);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -45,20 +60,19 @@ const GameList = () => {
         return prev - 1;
       });
     }, 1000);
-  
-    return () => clearInterval(timer); // Dọn dẹp timer
-  }, [games.length]); // Chỉ có `games.length` làm dependencies
 
-  // Khi `currentPage` thay đổi, reset `countdown`
+    return () => clearInterval(timer);
+  }, [games.length, gamesPerPage]);
+
   useEffect(() => {
     setCountdown(20);
   }, [currentPage]);
 
-  // Lấy danh sách game cho trang hiện tại
   const currentGames = games.slice(
     currentPage * gamesPerPage,
     (currentPage + 1) * gamesPerPage
   );
+
 
   const handleGameClick = (game) => {
     navigate(`/game/${createSlug(game.Name, game.GameID)}`);
@@ -76,20 +90,17 @@ const GameList = () => {
       </div>
       <div className="countdown-bar">
         <div className="progress" style={{ width: `${(countdown / 20) * 100}%` }}></div>
-        {/* Phân trang */}
         <ReactPaginate
-          previousLabel={"Previous"}
+          previousLabel={"Prev"}
           nextLabel={"Next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
           pageCount={Math.ceil(games.length / gamesPerPage)}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={20}
+          marginPagesDisplayed={0}  // Không hiển thị margin pages
+          pageRangeDisplayed={0}    // Không hiển thị các trang số
           onPageChange={handlePageClick}
           containerClassName={"pagination"}
           subContainerClassName={"pages pagination"}
           activeClassName={"active"}
-          forcePage={currentPage}
+          forcePage={currentPage}   // Giữ trang hiện tại
         />
       </div>
     </div>

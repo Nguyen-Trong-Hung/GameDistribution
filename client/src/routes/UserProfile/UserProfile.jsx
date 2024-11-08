@@ -118,18 +118,16 @@ const UserProfile = () => {
                   )}
                 </div>
                 <ReactPaginate
-                  previousLabel={"Previous"}
+                  previousLabel={"Prev"}
                   nextLabel={"Next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
                   pageCount={Math.ceil(userGames.length / gamesPerPage)}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
+                  marginPagesDisplayed={0}  // Không hiển thị margin pages
+                  pageRangeDisplayed={0}    // Không hiển thị các trang số
                   onPageChange={handlePageClick}
                   containerClassName={"pagination"}
                   subContainerClassName={"pages pagination"}
                   activeClassName={"active"}
-                  forcePage={currentPage}
+                  forcePage={currentPage}   // Giữ trang hiện tại
                 />
               </div>
             </div>

@@ -48,7 +48,8 @@ export const login = (req, res) => {
 
 // Đăng ký user mới
 export const register = (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, role } = req.body;
+  // console.log(req.body);
 
   // Kiểm tra xem email đã tồn tại chưa
   const findUserSql = 'SELECT * FROM users WHERE email = ?';
@@ -68,9 +69,8 @@ export const register = (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Server error' });
       }
-
       // Tạo đối tượng người dùng mới
-      const newUser = { email, password: hashedPassword, username };
+      const newUser = { email, password: hashedPassword, username, isDeveloper: role === 'developer' ? 1 : 0 };
 
       const createUserSql = 'INSERT INTO users SET ?';
 

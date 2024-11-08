@@ -14,7 +14,7 @@ const GamePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [sortOrder, setSortOrder] = useState("Newest");
   const [currentPage, setCurrentPage] = useState(0);
-  const gamesPerPage = 10;
+  const gamesPerPage = 12;
 
   const navigate = useNavigate();
 
@@ -199,18 +199,16 @@ const GamePage = () => {
         )}
         {games.length > 0 && (
           <ReactPaginate
-            previousLabel={"Previous"}
+            previousLabel={"Prev"}
             nextLabel={"Next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
             pageCount={Math.ceil(games.length / gamesPerPage)}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
+            marginPagesDisplayed={0}  // Không hiển thị margin pages
+            pageRangeDisplayed={0}    // Không hiển thị các trang số
             onPageChange={handlePageClick}
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}
-            forcePage={currentPage}
+            forcePage={currentPage}   // Giữ trang hiện tại
           />
         )}
       </div>

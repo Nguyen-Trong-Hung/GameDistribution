@@ -1,3 +1,5 @@
+@import "../../responsive.scss";
+
 .game-page {
     display: flex;
     padding: 20px;
@@ -7,6 +9,10 @@
     .sidebar {
         width: 20%;
         padding: 20px;
+
+        @include sm{
+            display: none;
+        }
 
         h1 {
             color: #4a00e0;
@@ -72,11 +78,33 @@
         width: 80%;
         padding: 20px;
 
+        @include sm {
+            width: 100%;
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+
+            @include sm {
+                flex-direction: column;
+
+                h1 {
+                    order: -1;
+                    margin-bottom: 10px;
+                }
+
+                .search-group, .Sort-group {
+                    order: 1;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 10px;
+                    align-items: center;
+                }
+            }
 
             h1 {
                 color: #4a00e0;
@@ -159,6 +187,10 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
 
+            @include sm {
+                grid-template-columns: repeat(2, 1fr); // Hiển thị 2 cột khi ở màn hình nhỏ
+              }
+
             .game-item {
                 background-color: white;
                 border-radius: 15px;
@@ -184,12 +216,20 @@
                     object-fit: cover;
                     border-radius: 5px;
                     margin-bottom: 10px;
+
+                    @include sm {
+                        height: 100px;
+                    }
                 }
 
                 h1 {
                     font-size: 16px;
                     margin: 0;
                     color: #333;
+
+                    @include sm {
+                        font-size: 14px;
+                    }
                 }
             }
         }

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import './Register.scss'; // Import file CSS cho Register
+import './Register.scss';
 
 const Register = ({ onClose }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,7 +13,8 @@ const Register = ({ onClose }) => {
     const user = {
       username,
       email,
-      password
+      password,
+      role
     };
 
     try {
@@ -25,11 +27,10 @@ const Register = ({ onClose }) => {
       });
 
       if (response.ok) {
-        // Xử lý khi đăng ký thành công
+        alert('Registration successful');
         console.log('Registration successful');
-        onClose(); // Đóng overlay
+        onClose();
       } else {
-        // Xử lý khi đăng ký thất bại
         console.error('Registration failed');
       }
     } catch (error) {
@@ -72,6 +73,31 @@ const Register = ({ onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+        </div>
+        <div className='role-group'>
+          <h1>Role</h1>
+          <div className="role">
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="user"
+                checked={role === 'user'}
+                onChange={(e) => setRole(e.target.value)}
+              />
+              User
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="developer"
+                checked={role === 'developer'}
+                onChange={(e) => setRole(e.target.value)}
+              />
+              Developer
+            </label>
+          </div>
         </div>
         <div className='form-actions'>
           <button type="submit">Registration</button>

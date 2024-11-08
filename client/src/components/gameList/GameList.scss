@@ -1,8 +1,13 @@
+@import "../../responsive.scss";
+
 .gamelistcontainer {
     .detailgamelist {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 15px;
+        @include sm {
+            grid-template-columns: repeat(2, 1fr); // Hiển thị 2 cột khi ở màn hình nhỏ
+          }
     }
 
     .game {
@@ -30,18 +35,17 @@
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 10px;
+
+            @include sm {
+                height: 120px;
+            }
         }
 
-        h2 {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        p {
-            font-size: 14px;
-            color: #888;
+        h1 {
+            color: black;
+            @include sm {
+                font-size: 14px;
+            }
         }
     }
 
@@ -77,7 +81,7 @@
                 background-color: #f8f9fa;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 transition: background-color 0.3s, color 0.3s;
-
+                
                 &:hover {
                     background-color: #e9ecef;
                 }

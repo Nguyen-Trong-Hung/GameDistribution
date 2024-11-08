@@ -27,8 +27,7 @@
 
                 img {
                     width: 200px;
-                    height: auto;
-                    max-height: 170px;
+                    height: 120px;
                     margin-top: 150px;
                     border-radius: 25px;
                 }
@@ -64,14 +63,39 @@
 
                 .des-left {
                     width: 100%;
+
                     .left-1 {
                         padding-left: 30px;
                         border: 1px solid #ddd;
+
                         p {
                             padding: 10px;
                             font-weight: bold;
                             font-size: 1rem;
                             color: #666;
+                        }
+                    }
+                    .left-1-like {
+                        display: flex;
+                        padding-left: 30px;
+                        align-items: center;
+                        padding-right: 300px;
+                        p {
+                            padding: 10px;
+                            font-weight: bold;
+                            font-size: 1rem;
+                            color: #666;
+                        }
+                        .icon {
+                            margin-left: auto;
+                            color: #666;
+                            font-size: 3rem;
+                            cursor: pointer;
+                            transition: color 0.3s ease;
+
+                            &.liked {
+                                color: #007bff; // Màu xanh khi đã nhấn
+                            }
                         }
                     }
                 }

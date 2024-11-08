@@ -2,34 +2,58 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f9fa; // Màu nền cho container
+  background-color: #f8f9fa;
 
   form {
     background: white;
-    padding: 20px;
+    padding: 0 20px;
     width: 100%;
     .form-group {
       margin-bottom: 15px;
 
-      h1{
-        margin-bottom: 20px;
-        color: black ;
+      h1 {
+        color: black;
         font-size: 1.2rem;
       }
 
       input {
         width: 100%;
-        padding: 10px; // Khoảng cách bên trong cho input
+        padding: 10px;
         box-sizing: border-box;
-        border: 1px solid #ccc; // Đường viền cho input
-        border-radius: 4px; // Bo tròn các góc cho input
-        font-size: 1rem; // Kích thước chữ cho input
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+      }  
+    }
+
+    .role-group {
+      display: flex;
+      margin-bottom: 15px;
+
+      h1 {
+      color: black;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      }
+
+      .role {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      margin: 10px 0;
+
+      label {
+        margin-left: 70px;
+        margin-right: 70px;
+        color: black;
+      }
       }
     }
 
     .form-actions {
       display: flex;
-      justify-content: center; // Căn giữa nút đăng ký
+      justify-content: center;
 
       button {
         height: 40px;
@@ -45,7 +69,7 @@
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: #0056b3;
+          background-color: #0056b3;
         }
       }
     }
