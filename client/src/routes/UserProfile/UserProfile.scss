@@ -18,6 +18,17 @@
         }
     }
 
+    @include md{
+        padding: 30px 20px;
+        flex-direction: column;
+        .profile-main {
+            flex-direction: column;
+            .profile-left, .profile-right {
+                width: 100%;
+            }
+        }
+    }
+
     .breadcrumb {
         display: flex;
         justify-content: space-between;
@@ -59,12 +70,23 @@
                 padding: 10px 20px;
             }
 
+            @include md {
+                width: 90%;
+                margin: 0 auto;
+                padding: 10px 20px;
+            }
+
             .avatar img {
                 width: 100px;
                 border-radius: 50%;
                 margin-bottom: 10px;
 
                 @include sm {
+                    width: 80px;
+                    margin: 0 auto;
+                }
+
+                @include md {
                     width: 80px;
                     margin: 0 auto;
                 }
@@ -119,6 +141,11 @@
                 width: 100%;
             }
 
+            @include md {
+                width: 95%;
+                margin: 0 auto;
+            }
+
             .project-status {
                 border-radius: 30px;
                 background-color: #fff;
@@ -132,6 +159,11 @@
                         gap: 15px;
 
                         @include sm {
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 0;
+                          }
+
+                        @include md {
                             grid-template-columns: repeat(2, 1fr);
                             gap: 0;
                           }

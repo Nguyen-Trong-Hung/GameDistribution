@@ -3,7 +3,7 @@ import db from '../DB/db.js';
 export const getGames = (req, res) => {
   const genreIds = req.query.genreId ? req.query.genreId.split(',').map(id => parseInt(id)) : null;
   if (!genreIds) {
-    const sql = 'SELECT * FROM game';
+    const sql = 'SELECT * FROM game WHERE Approved = 1';
     db.query(sql, (err, result) => {
       if (err) {
         console.log(err);
@@ -173,8 +173,6 @@ export const createNewGame = async (req, res) => {
 
 export const deleteGame = (req, res) => {
   const gameId = req.params.id;
-
-  //Xóa game_genres
   const sql2 = "DELETE FROM game_genres WHERE game_id = ?";
 
   db.query(sql2, [gameId], (err, result) => {
@@ -201,3 +199,45 @@ export const deleteGame = (req, res) => {
   });
 };
 
+export const getGamesNeedApproved = (req, res) => {
+  const genreIds = req.query.genreId ? req.query.genreId.split(',').map(id => parseInt(id)) : null;
+  if (!genreIds) {
+    const sql = 'SELECT * FROM game WHERE Approved = 0';
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, message: 'Server error' });
+      }
+      return res.json({ success: true, data: result });
+    });
+  } else {
+    const placeholders = genreIds.map(() => '?').join(',');
+    const number_of_genres = genreIds.length;
+    const query = `
+      SELECT Game.*
+      FROM Game
+      JOIN Game_Genres ON Game.GameID = Game_Genres.game_id
+      WHERE Game_Genres.genre_id IN (${placeholders})
+      GROUP BY Game.GameID
+      HAVING COUNT(DISTINCT Game_Genres.genre_id) = ${number_of_genres}
+    `;
+    db.query(query, genreIds, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, message: 'Server error' });
+      }
+      return res.json({ success: true, data: result });
+    });
+  }
+};
+
+export const approveGame = (req, res) => {
+  const sql = 'UPDATE game SET Approved = 1 WHERE GameID = ?';
+  db.query(sql, req.params.id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ success: false, message: 'Server error' });
+    }
+    return res.json({ success: true, message: 'Game approved' });
+  });
+};

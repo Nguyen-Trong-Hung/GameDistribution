@@ -12,8 +12,8 @@ const Layout = () => {
   const [showFormLogin, setShowFormLogin] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, logout } = useContext(AuthContext);
-  // console.log(isLoggedIn.userInfo.isDeveloper);
   const navigate = useNavigate();
 
   const toggleForm = () => {
@@ -28,7 +28,7 @@ const Layout = () => {
       const res = await axios.get('http://localhost:8800/api/auth/logout', { withCredentials: true });
       console.log('Response:', res.data);
       if (res.data.success) {
-        logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất
+        logout();
         navigate('/')
       } else {
         console.log('Logout failed');
@@ -56,6 +56,10 @@ const Layout = () => {
     navigate(`/game/${gameId}`);
     setSearchInput('');
     setSearchResults([]);
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
 
   return (
@@ -94,12 +98,22 @@ const Layout = () => {
           {isLoggedIn ? (
             <div className='user-info'>
               <div className='user-name'>
-                <Link to="userprofile"><img src={"DefaultAvatar.png"} className='user-avatar' alt="User Avatar" /></Link>
+                <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar' alt="User Avatar" /></Link>
               </div>
               <div className='logout-button' >
                 <button onClick={handleLogout}>Logout</button>
                 <IoIosLogOut className='logout-icon' />
               </div>
+              <div className="menu" onClick={toggleDropdown}><img src='menu.png' alt="Menu" /></div>
+              {showDropdown && (
+                <div className="dropdown-menu">
+                  <ul>
+                    <div><Link to="/games">Games</Link></div>
+                    {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution">Distribution</Link></div>}
+                    <div><Link to="/support">Support</Link></div>
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <button className='login-button' onClick={toggleForm}>

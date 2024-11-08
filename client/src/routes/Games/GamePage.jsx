@@ -133,7 +133,7 @@ const GamePage = () => {
           type="button"
           className="genre-button"
         >
-          <h3>Genres you like:</h3>
+          <h3>Genres you want to play:</h3>
         </button>
         <div className="filter-section">
           <div className="genre-list">

@@ -78,7 +78,7 @@ const DistributionPage = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        alert('Game created successfully');
+        alert('Thank you for your contribution! Let\'s wait for Admin to approve your game.');
         navigate("/");
       } else {
         console.error('Failed to create game:', res.data.message);

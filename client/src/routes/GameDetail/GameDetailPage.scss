@@ -1,15 +1,39 @@
+@import "../../responsive.scss";
+
 .gamedetail {
     flex-direction: column;
     margin: 20px;
+
+    @include sm {
+        margin: 0;
+    }
 
     .game-info {
         display: flex;
         width: 100%;
 
+        @include sm {
+            flex-direction: column;
+            width: 90%;
+        }
+
+        @include md {
+            flex-direction: column;
+            width: 90%;
+        }
+
         .game-info-left {
             width: 60%;
             padding: 20px;
             background-color: white;
+
+            @include sm {
+                width: 100%;
+            }
+
+            @include md {
+                width: 100%;
+            }
 
             .game-play {
                 display: flex;
@@ -18,6 +42,7 @@
                 border-radius: 15px;
                 overflow: hidden;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                background-color: #d1cdcd;
 
                 p {
                     font-size: 1.2rem;
@@ -80,6 +105,10 @@
                         padding-left: 30px;
                         align-items: center;
                         padding-right: 300px;
+
+                        @include sm {
+                            padding-right: 0;
+                        }
                         p {
                             padding: 10px;
                             font-weight: bold;
@@ -94,7 +123,12 @@
                             transition: color 0.3s ease;
 
                             &.liked {
-                                color: #007bff; // Màu xanh khi đã nhấn
+                                color: #007bff;
+                            }
+
+                            @include sm {
+                                font-size: 2.5rem;
+                                padding-right: 10px;
                             }
                         }
                     }
@@ -131,6 +165,10 @@
         .game-info-right {
             margin-top: 20px;
 
+            @include sm {
+                margin-left: 20px;
+            }
+
             h1 {
                 font-size: 24px;
                 margin-bottom: 20px;
@@ -142,6 +180,12 @@
                 grid-template-rows: repeat(3, 1fr); // 3 hàng
                 gap: 20px;
                 padding: 10px;
+
+                @include sm {
+                    grid-template-columns: repeat(2, 1fr); 
+                    gap: 0;
+                    padding: 0;
+                  }
 
                 .similar-game-item {
                     cursor: pointer;
@@ -155,6 +199,10 @@
                     box-sizing: border-box;
                     transition: border-color 0.3s ease;
 
+                    @include sm {
+                        padding: 5px;
+                    }
+
                     img {
                         width: 100%;
                         max-width: 220px;
@@ -162,6 +210,10 @@
                         object-fit: cover;
                         border-radius: 5px;
                         margin-bottom: 10px;
+
+                        @include sm {
+                            height: 100px;
+                        }
                     }
 
                     p {
@@ -169,6 +221,10 @@
                         color: #333;
                         margin: 5px 0;
                         font-weight: bold;
+
+                        @include sm {
+                            font-size: 14px;
+                        }
                     }
 
                     &:hover {
@@ -192,13 +248,5 @@
             }
         }
 
-    }
-
-    .collections {
-        margin-top: 20px;
-
-        h5 {
-            font-size: 2rem;
-        }
     }
 }

@@ -14,6 +14,7 @@ import GameDetailPage from './routes/GameDetail/GameDetailPage';
 import AdminLogin from './components/loginForm/AdminLogin';
 import Users from './routes/Admin/components/Users';
 import Games from './routes/Admin/components/Games';
+import GamesApproved from './routes/Admin/components/GamesApproved';
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
           <Route
             path="/dashboard/games"
             element={<Games/>}
+            />
+          <Route
+            path="/dashboard/games-approved"
+            element={<GamesApproved/>}
             />
           <Route
             path="*"

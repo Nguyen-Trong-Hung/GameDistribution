@@ -18,8 +18,8 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon />, path: '/dashboard' },
   { text: 'Analytics', icon: <AnalyticsRoundedIcon />, path: '' },
-  // { text: 'Clients', icon: <PeopleRoundedIcon /> },
-  // { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
+  // { text: 'Clients', icon: <PeopleRoundedIcon />, path: '/dashboard/clients' },
+  // { text: 'Tasks', icon: <AssignmentRoundedIcon />, path: '/dashboard/tasks' },
 ];
 
 const secondaryListItems = [
@@ -31,6 +31,7 @@ const secondaryListItems = [
 const subItems = [
   { text: 'Users', path: '/dashboard/users' },
   { text: 'Games', path: '/dashboard/games' },
+  { text: 'Approve Game', path: '/dashboard/games-approved' },
 ];
 
 export default function MenuContent() {
