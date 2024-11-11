@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './routes/Layout/Layout';
@@ -15,6 +14,7 @@ import AdminLogin from './components/loginForm/AdminLogin';
 import Users from './routes/Admin/components/Users';
 import Games from './routes/Admin/components/Games';
 import GamesApproved from './routes/Admin/components/GamesApproved';
+import PrivateRoute from './components/Private/PrivateRoute'; // Import PrivateRoute component
 
 function App() {
   return (
@@ -25,22 +25,39 @@ function App() {
             path="/admin"
             element={<AdminLogin />}
           />
+          {/* Bảo vệ các route của admin */}
           <Route
             path="/dashboard"
-            element={<AdminPage />}
+            element={
+              <PrivateRoute requiredRole="admin">
+                <AdminPage />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/dashboard/users"
-            element={<Users/>}
-            />
+            element={
+              <PrivateRoute requiredRole="admin">
+                <Users />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/dashboard/games"
-            element={<Games/>}
-            />
+            element={
+              <PrivateRoute requiredRole="admin">
+                <Games />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/dashboard/games-approved"
-            element={<GamesApproved/>}
-            />
+            element={
+              <PrivateRoute requiredRole="admin">
+                <GamesApproved />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="*"
             element={
@@ -52,7 +69,15 @@ function App() {
                   <Route path="/game/:slug" element={<GameDetailPage />} />
                   <Route path="/support" element={<SupportPage />} />
                   <Route path="/distribution" element={<DistributionPage />} />
-                  <Route path="/userprofile" element={<UserProfile />} />
+                  {/* Bảo vệ route người dùng */}
+                  <Route
+                    path="/userprofile"
+                    element={
+                      <PrivateRoute requiredRole="user">
+                        <UserProfile />
+                      </PrivateRoute>
+                    }
+                  />
                 </Routes>
                 <Footer />
               </>

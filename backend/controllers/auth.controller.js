@@ -28,11 +28,12 @@ export const login = (req, res) => {
         return res.json({ success: false, message: 'Server error' });
       }
 
-      const age = 24 * 60 * 60;
+      const age = 2 * 60 * 60;
 
       if (isMatch) {
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: age });
-      
+        const token = jwt.sign({ id: user.id, role: "user" }, process.env.JWT_SECRET, { expiresIn: age });
+        const decodedToken = jwt.decode(token);
+        console.log(decodedToken);
         const { password, ...userInfo } = user;
       
         // Gửi cookie và JSON response

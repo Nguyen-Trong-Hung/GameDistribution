@@ -24,7 +24,7 @@ export const loginAdmin = (req, res) => {
     // So sánh mật khẩu bằng bcrypt
     if (password === user.password) {
       const age = 24 * 60 * 60;
-      const token = jwt.sign({ id: user.id}, process.env.JWT_SECRET, { expiresIn: age });
+      const token = jwt.sign({ id: user.id, role: "admin"}, process.env.JWT_SECRET, { expiresIn: age });
       
       const { password, ...userInfo } = user;
       
