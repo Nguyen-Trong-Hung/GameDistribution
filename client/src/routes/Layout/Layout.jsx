@@ -68,7 +68,7 @@ const Layout = () => {
         <div className='home'><Link to="/"><img src="/Logo_XGame-03.png" alt="" /></Link></div>
         <div className='category'>
           <div><Link to="/games">Games</Link></div>
-          {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution">Distribution</Link></div>}
+          {isLoggedIn && isLoggedIn.userInfo.isDeveloper ? <div><Link to="/distribution">Distribution</Link></div> : null}
           <div><Link to="/support">Support</Link></div>
         </div>
         <div className="search-group">

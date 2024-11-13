@@ -100,35 +100,46 @@
                             color: #666;
                         }
                     }
+
                     .left-1-like {
                         display: flex;
                         padding-left: 30px;
                         align-items: center;
-                        padding-right: 300px;
 
                         @include sm {
                             padding-right: 0;
                         }
+
                         p {
                             padding: 10px;
                             font-weight: bold;
                             font-size: 1rem;
                             color: #666;
                         }
-                        .icon {
-                            margin-left: auto;
-                            color: #666;
-                            font-size: 3rem;
-                            cursor: pointer;
-                            transition: color 0.3s ease;
-
-                            &.liked {
-                                color: #007bff;
-                            }
+                        .custom-box {
+                            margin-left: 300px;
+                            padding: 16px;
+                            display: flex;
 
                             @include sm {
-                                font-size: 2.5rem;
-                                padding-right: 10px;
+                                margin-left: 0;
+                            }
+                    
+                            .custom-rating {
+                                display: flex;
+                                align-items: center;
+                    
+                                svg {
+                                    font-size: 2.5rem;
+                                    color: #f8d61e;
+                                }
+                            }
+                    
+                            p {
+                                font-size: 2.8rem;
+                                font-weight: bold;
+                                color: #333;
+                                margin: 0;  
                             }
                         }
                     }
@@ -182,10 +193,10 @@
                 padding: 10px;
 
                 @include sm {
-                    grid-template-columns: repeat(2, 1fr); 
+                    grid-template-columns: repeat(2, 1fr);
                     gap: 0;
                     padding: 0;
-                  }
+                }
 
                 .similar-game-item {
                     cursor: pointer;

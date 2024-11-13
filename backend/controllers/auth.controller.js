@@ -33,7 +33,7 @@ export const login = (req, res) => {
       if (isMatch) {
         const token = jwt.sign({ id: user.id, role: "user" }, process.env.JWT_SECRET, { expiresIn: age });
         const decodedToken = jwt.decode(token);
-        console.log(decodedToken);
+        // console.log(decodedToken);
         const { password, ...userInfo } = user;
       
         // Gửi cookie và JSON response

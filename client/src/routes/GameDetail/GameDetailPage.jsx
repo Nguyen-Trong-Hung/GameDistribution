@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import './GameDetailPage.scss';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AiFillLike } from "react-icons/ai";
+import { AuthContext } from '../../context/AuthContext';
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
 import { createSlug } from '../../util';
 
 const GameDetailPage = () => {
     const { slug } = useParams();
+    const { isLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [ratingValue, setRatingValue] = useState(0);
     const [gameDetailPage, setGameDetail] = useState(null);
     const [genres, setGenres] = useState({});
+    const [ratings, setRatings] = useState({});
     const [similarGames, setSimilarGames] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isLiked, setIsLiked] = useState(false);
 
     const id = slug.split("-").pop();
 
@@ -55,8 +59,7 @@ const GameDetailPage = () => {
                     console.error('Error fetching genres:', error);
                 }
             };
-
-            fetchGenres(gameDetailPage.GameID); // Gọi hàm fetchGenres với GameID
+            fetchGenres(gameDetailPage.GameID);
         }
     }, [gameDetailPage]);
 
@@ -69,7 +72,6 @@ const GameDetailPage = () => {
                     credentials: 'include',
                 });
                 const data = await res.json();
-
                 if (data.success) {
                     setSimilarGames(data.data);
                 } else {
@@ -81,21 +83,82 @@ const GameDetailPage = () => {
                 setLoading(false);
             }
         };
-
         fetchGameSimilarGenres();
     }, [id]);
+
+    useEffect(() => {
+        const fetchAverageRating = async (gameId) => {
+            try {
+                const response = await axios.get(`http://localhost:8800/api/rating/${gameId}`);
+                if (response.data.success) {
+                    const ratings = response.data.data;
+                    const averageRating = (ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length).toFixed(1);
+                    setRatings(prevRatings => ({
+                        ...prevRatings,
+                        [gameId]: parseFloat(averageRating)
+                    }));
+                } else {
+                    console.error('Failed to fetch average rating:', response.data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching average rating:', error);
+            }
+        };
+
+        if (gameDetailPage?.GameID) {
+            fetchAverageRating(gameDetailPage.GameID);
+        }
+    }, [gameDetailPage]);
+
 
     const handleGameClick = (game) => {
         navigate(`/game/${createSlug(game.Name, game.GameID)}`);
     };
 
-    const handleLikeClick = () => {
-        setIsLiked(prevIsLiked => !prevIsLiked); // Chuyển đổi trạng thái
-        console.log('Like button clicked');
+    const handleRatingChange = (newValue) => {
+        if (newValue >= 1 && newValue <= 5) {
+            setRatingValue(newValue);
+            submitRating(gameDetailPage?.GameID, isLoggedIn.userInfo.id, newValue);
+        } else {
+            console.error("Invalid rating value. Please select a rating between 1 and 5.");
+        }
     };
 
-    if (loading) return <p>Loading...</p>;
+    const submitRating = async (GameID, UserID, ratingValue) => {
+        if (!isLoggedIn || !isLoggedIn.userInfo) {
+            console.error("User is not logged in.");
+            return;
+        }
 
+        try {
+            const response = await fetch('http://localhost:8800/api/rating', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    rating: ratingValue,
+                    gameId: GameID,
+                    userId: UserID,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                console.log("Rating submitted successfully!");
+                setRatings(prevRatings => ({
+                    ...prevRatings,
+                    [GameID]: ratingValue
+                }));
+            } else {
+                console.error("Failed to submit rating:", data.message);
+            }
+        } catch (err) {
+            console.error("Error submitting rating:", err);
+        }
+    };
+
+
+    if (loading) return <p>Loading...</p>;
     return (
         <div className='gamedetail'>
             <div className="game-info">
@@ -108,10 +171,20 @@ const GameDetailPage = () => {
                     </div>
                     <div className="descript">
                         <div className="des-left">
-                            <div className='left-1-like'><p>Game Title: {gameDetailPage?.Name || "name"}</p> <AiFillLike
-                                className={`icon ${isLiked ? 'liked' : ''}`}
-                                onClick={handleLikeClick}
-                            /></div>
+                            <div className='left-1-like'>
+                                <p>Game Title: {gameDetailPage?.Name || "name"}</p>
+                                <Box className="custom-box">
+                                    <Rating
+                                        key={ratings[gameDetailPage?.GameID]}
+                                        className="custom-rating"
+                                        name="game-rating"
+                                        value={ratings[gameDetailPage?.GameID]}
+                                        precision={1}
+                                        onChange={(event, newValue) => handleRatingChange(newValue)}
+                                    />
+                                    <p>{ratings[gameDetailPage?.GameID] ? ratings[gameDetailPage.GameID].toFixed(1) : 'N/R'}</p>
+                                </Box>
+                            </div>
                             <div className='left-1'><p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p></div>
                             <div className='left-1'><p>Created at: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p></div>
                             <div className='left-1'><p>Description: {gameDetailPage?.Description || "N/A"}</p></div>
@@ -122,7 +195,6 @@ const GameDetailPage = () => {
                                         : 'Loading...'}
                                 </p>
                             </div>
-
                         </div>
                     </div>
                 </div>
