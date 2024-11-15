@@ -19,254 +19,260 @@
     }
   }
 
-  .category {
+  .game-bar-right {
     display: flex;
     align-items: center;
 
-    a {
-      color: black;
-      text-decoration: none;
-      margin-right: 20px;
-      font-size: 1.2rem;
+    .category {
+      display: flex;
+      align-items: center;
+      margin-right: 50px;
+      a {
+        color: rgb(104, 100, 100);
+        text-decoration: none;
+        margin-right: 60px;
+        font-size: 1.1rem;
+        font-weight: 650;
+        position: relative;
+        transition: color 0.3s, transform 0.3s;
+
+        @include sm {
+          display: none;
+        }
+
+        &:hover {
+          color: #007bff; // Màu chữ khi hover
+          transform: scale(1.1); // Phóng to chữ khi hover
+        }
+      }
+    }
+
+    .search-group {
       position: relative;
-      transition: color 0.3s, transform 0.3s; // Hiệu ứng chuyển đổi cho màu sắc và phóng to
 
       @include sm {
         display: none;
       }
 
-      &:hover {
-        color: #007bff; // Màu chữ khi hover
-        transform: scale(1.1); // Phóng to chữ khi hover
-      }
-    }
-  }
-
-  .search-group {
-    position: relative;
-
-    @include sm{
-      display: none;
-    }
-
-    @include md {
-      display: none;
-    }
-
-    .search-container {
-      display: flex;
-      align-items: center;
-      background-color: rgb(246, 246, 246);
-      border-radius: 12px;
-      border: 3px solid rgb(45, 11, 184);
-      padding: 5px 10px;
-
-      input {
-        border: none;
-        background: none;
-        color: black;
-        padding: 5px;
-        font-size: 1rem;
-        outline: none;
-
-        &::placeholder {
-          color: #ccc;
-        }
+      @include md {
+        display: none;
       }
 
-      .search-icon {
-        color: rgb(45, 11, 184);
-        font-size: 2rem;
-      }
-    }
-
-    .search-results {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      max-height: 300px;
-      overflow-y: auto;
-      background-color: #fff;
-      border-radius: 8px;
-      margin-top: 8px;
-
-      .result-item {
+      .search-container {
         display: flex;
         align-items: center;
-        padding: 8px;
-        cursor: pointer;
-        transition: background-color 0.2s;
+        background-color: rgb(246, 246, 246);
+        border-radius: 12px;
+        border: 3px solid rgb(45, 11, 184);
+        padding: 5px 10px;
 
-        &:hover {
-          background-color: #f1f1f1;
-        }
-
-        .result-image {
-          width: 40px;
-          height: 40px;
-          border-radius: 4px;
-          object-fit: cover;
-          margin-right: 8px;
-        }
-
-        .result-info {
-          .result-publisher {
-            font-size: 12px;
-            color: #888;
-            margin: 0;
-          }
-
-          .result-name {
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0;
-            color: #333;
-          }
-        }
-      }
-    }
-  }
-}
-
-.login-container {
-  display: flex;
-  border-radius: 5px;
-  padding: 10px;
-  padding-right: 50px;
-  margin: 10px 0;
-
-  @include sm {
-    padding-right: 20px;
-  }
-
-  .user-info {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    @include sm {
-      padding-left: 0;
-    }
-
-    .user-avatar {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      cursor: pointer;
-      object-fit: cover;
-      border: 2px solid #09a8a5;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .logout-button {
-      display: flex;
-      align-items: center;
-      margin-left: 20px;
-      height: 35px;
-      border-radius: 10px;
-      cursor: pointer;
-      background-color: #ff4d4d;
-
-      .logout-icon {
-        font-size: 20px;
-        color: white;
-        transition: color 0.3s ease;
-        margin-right: 8px;
-        /* Khoảng cách giữa icon và chữ */
-      }
-    }
-
-    button {
-      width: auto;
-      height: auto;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-  }
-
-  .login-button {
-    display: flex;
-    align-items: center;
-    color: white;
-    border-radius: 12px;
-    /* Tăng bán kính viền */
-    padding: 6px 12px;
-    margin: 0 10px;
-    background-color: rgb(45, 11, 184);
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .menu {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  
-    @include sm{
-      display: block;
-      margin-left: 10px;
-    }
-  
-    img {
-      width: 24px;
-      height: 24px;
-    }
-  
-    &:hover {
-      background-color: #f0f0f0; // Màu nền khi di chuột vào
-      transform: scale(1.1); // Phóng to nhẹ khi hover
-    }
-  
-    &:active {
-      background-color: #e0e0e0; // Màu nền khi nhấn vào
-      transform: scale(0.95); // Thu nhỏ nhẹ khi nhấn
-    }
-  }
-
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    z-index: 1000;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      div {
-        margin-bottom: 10px;
-
-        a {
+        input {
+          border: none;
+          background: none;
           color: black;
-          text-decoration: none;
+          padding: 5px;
+          font-size: 1rem;
+          outline: none;
+
+          &::placeholder {
+            color: #ccc;
+          }
+        }
+
+        .search-icon {
+          color: rgb(45, 11, 184);
+          font-size: 2rem;
+        }
+      }
+
+      .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: #fff;
+        border-radius: 8px;
+        margin-top: 8px;
+
+        .result-item {
+          display: flex;
+          align-items: center;
+          padding: 8px;
+          cursor: pointer;
+          transition: background-color 0.2s;
 
           &:hover {
-            text-decoration: none;
+            background-color: #f1f1f1;
+          }
+
+          .result-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            object-fit: cover;
+            margin-right: 8px;
+          }
+
+          .result-info {
+            .result-publisher {
+              font-size: 12px;
+              color: #888;
+              margin: 0;
+            }
+
+            .result-name {
+              font-size: 14px;
+              font-weight: bold;
+              margin: 0;
+              color: #333;
+            }
           }
         }
       }
     }
   }
 
-  .login-icon {
-    color: white;
-    font-size: 0.7rem;
-    margin-right: 8px;
+  .login-container {
+    display: flex;
+    border-radius: 5px;
+    padding: 10px;
+    padding-right: 50px;
+    margin: 10px 0;
+
+    @include sm {
+      padding-right: 20px;
+    }
+
+    .user-info {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      @include sm {
+        padding-left: 0;
+      }
+
+      .user-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        object-fit: cover;
+        border: 2px solid #09a8a5;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .logout-button {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+        height: 35px;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #ff4d4d;
+
+        .logout-icon {
+          font-size: 20px;
+          color: white;
+          transition: color 0.3s ease;
+          margin-right: 8px;
+          /* Khoảng cách giữa icon và chữ */
+        }
+      }
+
+      button {
+        width: auto;
+        height: auto;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+    }
+
+    .login-button {
+      display: flex;
+      align-items: center;
+      color: white;
+      border-radius: 12px;
+      /* Tăng bán kính viền */
+      padding: 6px 12px;
+      margin: 0 10px;
+      background-color: rgb(45, 11, 184);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+
+      @include sm {
+        display: block;
+        margin-left: 10px;
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+
+      &:hover {
+        background-color: #f0f0f0;
+        transform: scale(1.1); // Phóng to nhẹ khi hover
+      }
+
+      &:active {
+        background-color: #e0e0e0;
+        transform: scale(0.95);
+      }
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        div {
+          margin-bottom: 10px;
+
+          a {
+            color: black;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+
+    .login-icon {
+      color: white;
+      font-size: 0.7rem;
+      margin-right: 8px;
+    }
   }
 }

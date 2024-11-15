@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
     text-align: center;
     background-color: #e8e7e7; // Màu nền cho toàn bộ section
 
@@ -52,12 +51,11 @@
   }
 
   .gamelist {
-    width: 90%;
-    margin: 0 auto;
+    background-color: #f1ecec;
     .titlegamelist {
-        margin: 20px 0;
+        margin: 0 30px;
         h1 {
-            width: 50%;
+            padding-top: 3%;
             font-size: 24px;
             font-weight: bold;
             color: #4a00e0; // Similar to the purple used in the image

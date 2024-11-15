@@ -115,20 +115,7 @@ const GameDetailPage = () => {
         navigate(`/game/${createSlug(game.Name, game.GameID)}`);
     };
 
-    const handleRatingChange = (newValue) => {
-        if (newValue >= 1 && newValue <= 5) {
-            setRatingValue(newValue);
-            submitRating(gameDetailPage?.GameID, isLoggedIn.userInfo.id, newValue);
-        } else {
-            console.error("Invalid rating value. Please select a rating between 1 and 5.");
-        }
-    };
-
     const submitRating = async (GameID, UserID, ratingValue) => {
-        if (!isLoggedIn || !isLoggedIn.userInfo) {
-            console.error("User is not logged in.");
-            return;
-        }
 
         try {
             const response = await fetch('http://localhost:8800/api/rating', {
@@ -157,6 +144,19 @@ const GameDetailPage = () => {
         }
     };
 
+    
+    const handleRatingChange = (newValue) => {
+        if (newValue >= 1 && newValue <= 5) {
+            setRatingValue(newValue);
+            if (!isLoggedIn || !isLoggedIn.userInfo) {
+                alert("Please log in to submit a rating.");
+                return;
+            }
+            submitRating(gameDetailPage?.GameID, isLoggedIn.userInfo.id, newValue);
+        } else {
+            console.error("Invalid rating value. Please select a rating between 1 and 5.");
+        }
+    };
 
     if (loading) return <p>Loading...</p>;
     return (
@@ -182,7 +182,7 @@ const GameDetailPage = () => {
                                         precision={1}
                                         onChange={(event, newValue) => handleRatingChange(newValue)}
                                     />
-                                    <p>{ratings[gameDetailPage?.GameID] ? ratings[gameDetailPage.GameID].toFixed(1) : 'N/R'}</p>
+                                    <p>{ratings[gameDetailPage?.GameID] ? ratings[gameDetailPage.GameID].toFixed(1) : '0.0'}</p>
                                 </Box>
                             </div>
                             <div className='left-1'><p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p></div>

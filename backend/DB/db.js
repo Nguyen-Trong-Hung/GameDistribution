@@ -1,18 +1,22 @@
 import mysql from 'mysql';
-// Create MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'InternProject',
+import dotenv from 'dotenv';
+dotenv.config();
+
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  connectionLimit: process.env.DB_CONNECTION_LIMIT || 10,
 });
 
-// Test MySQL connection when the server starts
-db.connect((err) => {
+
+db.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to MySQL:', err.message);
   } else {
     console.log('Connected to MySQL');
+    connection.release();
   }
 });
 

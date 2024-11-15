@@ -66,60 +66,62 @@ const Layout = () => {
     <div>
       <div className="gameBar">
         <div className='home'><Link to="/"><img src="/Logo_XGame-03.png" alt="" /></Link></div>
-        <div className='category'>
-          <div><Link to="/games">Games</Link></div>
-          {isLoggedIn && isLoggedIn.userInfo.isDeveloper ? <div><Link to="/distribution">Distribution</Link></div> : null}
-          <div><Link to="/support">Support</Link></div>
-        </div>
-        <div className="search-group">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            />
-            <IoIosSearch className="search-icon" onClick={handleSearch} />
+        <div className="game-bar-right">
+          <div className='category'>
+            <div><Link to="/games">Games</Link></div>
+            {isLoggedIn && isLoggedIn.userInfo.isDeveloper ? <div><Link to="/distribution">Distribution</Link></div> : null}
+            <div><Link to="/support">Support</Link></div>
           </div>
-          <div className="search-results">
-            {searchResults.map((game) => (
-              <div key={game.GameID} className="result-item" onClick={() => handleGameClick(game.GameID)}>
-                <img src={game.Image} alt={game.Name} className="result-image" />
-                <div className="result-info">
-                  <h4 className="result-publisher">{game.Publisher}</h4>
-                  <p className="result-name">{game.Name}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className='login-container'>
-          {isLoggedIn ? (
-            <div className='user-info'>
-              <div className='user-name'>
-                <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar' alt="User Avatar" /></Link>
-              </div>
-              <div className='logout-button' >
-                <button onClick={handleLogout}>Logout</button>
-                <IoIosLogOut className='logout-icon' />
-              </div>
-              <div className="menu" onClick={toggleDropdown}><img src='menu.png' alt="Menu" /></div>
-              {showDropdown && (
-                <div className="dropdown-menu">
-                  <ul>
-                    <div><Link to="/games">Games</Link></div>
-                    {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution">Distribution</Link></div>}
-                    <div><Link to="/support">Support</Link></div>
-                  </ul>
-                </div>
-              )}
+          <div className="search-group">
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              />
+              <IoIosSearch className="search-icon" onClick={handleSearch} />
             </div>
-          ) : (
-            <button className='login-button' onClick={toggleForm}>
-              <FaUser className='login-icon' /> Login / Register
-            </button>
-          )}
+            <div className="search-results">
+              {searchResults.map((game) => (
+                <div key={game.GameID} className="result-item" onClick={() => handleGameClick(game.GameID)}>
+                  <img src={game.Image} alt={game.Name} className="result-image" />
+                  <div className="result-info">
+                    <h4 className="result-publisher">{game.Publisher}</h4>
+                    <p className="result-name">{game.Name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className='login-container'>
+            {isLoggedIn ? (
+              <div className='user-info'>
+                <div className='user-name'>
+                  <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar' alt="User Avatar" /></Link>
+                </div>
+                <div className='logout-button' >
+                  <button onClick={handleLogout}>Logout</button>
+                  <IoIosLogOut className='logout-icon' />
+                </div>
+                <div className="menu" onClick={toggleDropdown}><img src='menu.png' alt="Menu" /></div>
+                {showDropdown && (
+                  <div className="dropdown-menu">
+                    <ul>
+                      <div><Link to="/games">Games</Link></div>
+                      {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution">Distribution</Link></div>}
+                      <div><Link to="/support">Support</Link></div>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button className='login-button' onClick={toggleForm}>
+                <FaUser className='login-icon' /> Login / Register
+              </button>
+            )}
+          </div>
         </div>
         <OverlayLogin isOpen={showFormLogin} onClose={toggleForm} />
       </div>
