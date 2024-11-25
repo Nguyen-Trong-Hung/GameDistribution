@@ -86,13 +86,11 @@ export const getSimilarGamesByGenres = (req, res) => {
       GROUP BY game.GameID
       ORDER BY commonGenres DESC
     `;
-
     db.query(similarGamesSql, [genreIds, gameId], (err, gameResults) => {
       if (err) {
         console.error("Error fetching similar games:", err);
         return res.status(500).json({ success: false, message: "Database error" });
       }
-
       res.status(200).json({ success: true, data: gameResults });
     });
   });

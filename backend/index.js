@@ -8,6 +8,7 @@ import authAdminRoute from './Routes/authAdmin.route.js';
 import genresRoute from './Routes/genres.route.js';
 import searchRoute from './Routes/search.route.js';
 import ratingRoute from './Routes/rating.route.js';
+import commentsRoute from './Routes/comments.route.js';
 
 // Initialize the app
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/user', userRoute);
 app.use('/api/search', searchRoute);
 app.use('/api/genres', genresRoute);
 app.use('/api/rating', ratingRoute);
+app.use('/api/comments', commentsRoute);
 
 
 // Start server

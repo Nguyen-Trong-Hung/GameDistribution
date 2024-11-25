@@ -185,9 +185,9 @@ const GameDetailPage = () => {
                                     <p>{ratings[gameDetailPage?.GameID] ? ratings[gameDetailPage.GameID].toFixed(1) : '0.0'}</p>
                                 </Box>
                             </div>
-                            <div className='left-1'><p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p></div>
+                            <div className='left-1' style={{ backgroundColor: 'rgba(0, 0, 255, 0.03)'}}><p>Publisher by : {gameDetailPage?.Publisher || "No Pub"}</p></div>
                             <div className='left-1'><p>Created at: {gameDetailPage ? (new Date(gameDetailPage.createAt)).toDateString() : "N/A"}</p></div>
-                            <div className='left-1'><p>Description: {gameDetailPage?.Description || "N/A"}</p></div>
+                            <div className='left-1' style={{ backgroundColor: 'rgba(0, 0, 255, 0.03)'}}><p>Description: {gameDetailPage?.Description || "N/A"}</p></div>
                             <div className='left-1'>
                                 <p>
                                     Genres: {genres[gameDetailPage?.GameID]

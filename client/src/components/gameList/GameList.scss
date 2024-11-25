@@ -2,7 +2,7 @@
 
 .gamelistcontainer {
     .detailgamelist {
-        margin: 5%;
+        margin: 2%;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 15px;
@@ -52,12 +52,13 @@
 
     .countdown-bar {
         position: relative;
-        margin: 10px auto;
-        width: 50%;
-        border-radius: 15px;
+        margin: 0 auto;
+        width: 300px;
+        border-radius: 15px;    
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         border: 1px solid #8d9fb1;
         overflow: hidden;
+        // margin: 30px;
 
         .progress {
             height: 5px;

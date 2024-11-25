@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaMapMarkerAlt, FaLinkedin } from 'react-icons/fa';
-import './Footer.scss'; // Import file SCSS cho Footer
+import './Footer.scss';
 
 function Footer() {
     return (
@@ -29,7 +29,6 @@ function Footer() {
                     </div>
                 </div>
                 <div className="footer-policy">
-                    {/* Additional footer content */}
                 </div>
             </footer>
         </div>

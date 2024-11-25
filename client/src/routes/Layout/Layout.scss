@@ -4,8 +4,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(246, 246, 246);
+  background-color: white;
   color: white;
+  border: 1px solid #ccc;
 
   .home {
     img {
@@ -15,6 +16,10 @@
 
       @include sm {
         padding-left: 20px;
+      }
+
+      @include md {
+        padding-left: 20%;
       }
     }
   }
@@ -37,6 +42,10 @@
         transition: color 0.3s, transform 0.3s;
 
         @include sm {
+          display: none;
+        }
+
+        @include md {
           display: none;
         }
 

@@ -40,6 +40,10 @@ const Layout = () => {
 
   const handleSearch = async () => {
     try {
+      if (searchInput.trim() === '') {
+        alert('Please enter your request');
+        return;
+      }
       const response = await axios.get('http://localhost:8800/api/search/search-game', {
         params: { q: searchInput },
       });
@@ -71,6 +75,8 @@ const Layout = () => {
             <div><Link to="/games">Games</Link></div>
             {isLoggedIn && isLoggedIn.userInfo.isDeveloper ? <div><Link to="/distribution">Distribution</Link></div> : null}
             <div><Link to="/support">Support</Link></div>
+            <div><Link to="/News">News</Link></div>
+            <div><Link to="/About">About</Link></div>
           </div>
           <div className="search-group">
             <div className="search-container">
@@ -99,7 +105,7 @@ const Layout = () => {
             {isLoggedIn ? (
               <div className='user-info'>
                 <div className='user-name'>
-                  <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar' alt="User Avatar" /></Link>
+                  <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar'/></Link>
                 </div>
                 <div className='logout-button' >
                   <button onClick={handleLogout}>Logout</button>
@@ -112,6 +118,8 @@ const Layout = () => {
                       <div><Link to="/games">Games</Link></div>
                       {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution">Distribution</Link></div>}
                       <div><Link to="/support">Support</Link></div>
+                      <div><Link to="/News">News</Link></div>
+                      <div><Link to="/About">About</Link></div>
                     </ul>
                   </div>
                 )}
