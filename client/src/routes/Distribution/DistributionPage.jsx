@@ -32,7 +32,7 @@ const DistributionPage = () => {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const res = await axios.get('http://localhost:8800/api/genres');
+        const res = await axios.get('http://45.77.32.24:8800/api/genres');
         if (res.data.success) {
           setGenres(res.data.data);
         } else {
@@ -73,7 +73,7 @@ const DistributionPage = () => {
     data.append("GameDescription", formData.GameDescription);
 
     try {
-      const res = await axios.post('http://localhost:8800/api/game/create-game', data, {
+      const res = await axios.post('http://45.77.32.24:8800/api/game/create-game', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true,
       });

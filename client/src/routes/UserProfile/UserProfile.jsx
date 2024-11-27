@@ -26,7 +26,7 @@ const UserProfile = () => {
 
     const fetchUserGames = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`, { withCredentials: true });
+        const res = await axios.get(`http://45.77.32.24:8800/api/game/publisher/${isLoggedIn.userInfo.id}`, { withCredentials: true });
         setUserGames(res.data.data || []); // Make sure to set an empty array if response data is undefined
       } catch (error) {
         console.error("Error fetching user games:", error);
@@ -52,7 +52,7 @@ const UserProfile = () => {
         alert("New password and confirm new password do not match");
         return;
       }
-      const res = await axios.post('http://localhost:8800/api/user/change-password', { userId, currentPassword, newPassword, confirmNewPassword }, { withCredentials: true });
+      const res = await axios.post('http://45.77.32.24:8800/api/user/change-password', { userId, currentPassword, newPassword, confirmNewPassword }, { withCredentials: true });
       if (res.data.success) {
         alert("Password changed successfully");
         setIsPasswordFormOpen(false);

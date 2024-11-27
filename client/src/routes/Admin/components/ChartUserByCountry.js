@@ -88,12 +88,12 @@ export default function ChartUserByCountry() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const genreResponse = await fetch('http://localhost:8800/api/genres');
+        const genreResponse = await fetch('http://45.77.32.24:8800/api/genres');
         const genreResult = await genreResponse.json();
 
         if (genreResult.success) {
           const genrePromises = genreResult.data.map(async (genre) => {
-            const gameResponse = await fetch(`http://localhost:8800/api/game?genreId=${genre.id}`);
+            const gameResponse = await fetch(`http://45.77.32.24:8800/api/game?genreId=${genre.id}`);
             const gameResult = await gameResponse.json();
             const gameIDs = new Set();
             gameResult.data.forEach((game) => {

@@ -16,7 +16,7 @@ const Login = ({ onLoginSuccess, onClose }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:8800/api/auth/login', { email, password }); // Gửi yêu cầu POST đến server
+      const res = await axios.post('http://45.77.32.24:8800/api/auth/login', { email, password }); // Gửi yêu cầu POST đến server
       // console.log('Response:', res.data); // Xử lý kết quả từ server
       if (res.data.success) {
         Cookies.set('token', res.data.token, { expires: 1 });

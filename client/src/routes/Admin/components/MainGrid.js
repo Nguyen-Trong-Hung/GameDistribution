@@ -32,8 +32,8 @@ export default function MainGrid() {
     const fetchData = async () => {
       try {
         const [usersResponse, gamesResponse] = await Promise.all([
-          fetch('http://localhost:8800/api/user/users'),
-          fetch('http://localhost:8800/api/game')
+          fetch('http://45.77.32.24:8800/api/user/users'),
+          fetch('http://45.77.32.24:8800/api/game')
         ]);
   
         const usersResult = await usersResponse.json();

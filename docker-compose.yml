@@ -6,7 +6,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "1702:1702"
     depends_on:
       - server
     networks:
@@ -38,7 +38,7 @@ services:
       - "8800:8800"
     environment:
       - DB_HOST=mysqldb
-      - FRONTEND_URL=http://localhost:3000
+      - FRONTEND_URL=http://45.77.32.24:1702
     volumes:
       - ./backend:/index.js 
     networks:
