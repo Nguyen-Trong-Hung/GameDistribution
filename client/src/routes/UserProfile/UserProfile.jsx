@@ -10,11 +10,9 @@ import ReactPaginate from "react-paginate";
 
 const UserProfile = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  // console.log(isLoggedIn);
-  // console.log(isLoggedIn.userInfo.is_locked);
   const [isPasswordFormOpen, setIsPasswordFormOpen] = useState(false);
   const [isLockFormOpen, setIsLockFormOpen] = useState(false);
-  const [userGames, setUserGames] = useState([]);
+  const [userGames, setUserGames] = useState([]); // Make sure userGames is initialized as an empty array
   const [currentPage, setCurrentPage] = useState(0);
   const gamesPerPage = 4;
   const navigate = useNavigate();
@@ -29,14 +27,14 @@ const UserProfile = () => {
     const fetchUserGames = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/api/game/publisher/${isLoggedIn.userInfo.id}`, { withCredentials: true });
-        setUserGames(res.data.data);
+        setUserGames(res.data.data || []); // Make sure to set an empty array if response data is undefined
       } catch (error) {
         console.error("Error fetching user games:", error);
       }
     };
 
-    checkLockStatus(); // Kiểm tra trạng thái khóa
-    fetchUserGames(); // Lấy danh sách trò chơi
+    checkLockStatus();
+    fetchUserGames();
   }, [isLoggedIn.userInfo.id, isLoggedIn.userInfo.is_locked]);
 
   const handlePasswordChangeClick = () => {
@@ -74,8 +72,9 @@ const UserProfile = () => {
     setCurrentPage(selected);
   };
 
+  // Ensure userGames is always an array before calling slice
   const offset = currentPage * gamesPerPage;
-  const currentGames = userGames.slice(offset, offset + gamesPerPage);
+  const currentGames = Array.isArray(userGames) ? userGames.slice(offset, offset + gamesPerPage) : [];
 
   return (
     <>
@@ -121,13 +120,13 @@ const UserProfile = () => {
                   previousLabel={"Prev"}
                   nextLabel={"Next"}
                   pageCount={Math.ceil(userGames.length / gamesPerPage)}
-                  marginPagesDisplayed={0}  // Không hiển thị margin pages
-                  pageRangeDisplayed={0}    // Không hiển thị các trang số
+                  marginPagesDisplayed={0}
+                  pageRangeDisplayed={0}
                   onPageChange={handlePageClick}
                   containerClassName={"pagination"}
                   subContainerClassName={"pages pagination"}
                   activeClassName={"active"}
-                  forcePage={currentPage}   // Giữ trang hiện tại
+                  forcePage={currentPage}
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: internproject
+-- Host: 45.77.32.24    Database: internproject
 -- ------------------------------------------------------
 -- Server version	8.0.39
 

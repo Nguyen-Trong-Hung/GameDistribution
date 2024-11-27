@@ -2,13 +2,13 @@
 FROM node:18
 
 # Thiết lập thư mục làm việc trong container
-WORKDIR /app
+WORKDIR /backend
 
-# Copy package.json và cài đặt dependencies
+# Copy package.json và package-lock.json (nếu có) và cài đặt dependencies
 COPY package*.json ./
 RUN npm install
 
-# Cài đặt nodemon nếu chưa có trong package.json
+# Cài đặt nodemon toàn cục nếu chưa có trong package.json
 RUN npm install -g nodemon
 
 # Copy mã nguồn vào container

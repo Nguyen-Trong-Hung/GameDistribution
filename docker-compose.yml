@@ -1,53 +1,52 @@
 version: '3.8'
 
 services:
-  frontend:
-    image: nginx:latest
-    container_name: frontend
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Nâng cấp frontend lên cổng 3000
-    volumes:
-      - ./client/build:/usr/share/nginx/html  # Ánh xạ build từ frontend
+      - "3000:3000"
     depends_on:
-      - backend
+      - server
     networks:
-      - app_network
+      - my_network
 
-  backend:
+  mysqldb:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=internproject
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3308:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./MyDatabase.sql:/docker-entrypoint-initdb.d/MyDatabase.sql
+    expose:
+      - 3306
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - my_network
+
+  server:
     build:
       context: ./backend
-    container_name: backend
+      dockerfile: Dockerfile
+    restart: always
     ports:
-      - "8800:8800"  # Cổng cho backend
-    volumes:
-      - ./backend:/app  # Ánh xạ mã nguồn backend
+      - "8800:8800"
     environment:
-      - NODE_ENV=development
-      - DB_HOST=db  # Kết nối tới db service
-      - DB_USER=root
-      - DB_PASSWORD=123456
-      - DB_NAME=InternProject
-    depends_on:
-      - db  # Đảm bảo db khởi động trước backend
-    networks:
-      - app_network
-
-  db:
-    image: mysql:8.0
-    container_name: mysql
-    ports:
-      - "3307:3306"  # MySQL bên trong chạy trên cổng 3306, bên ngoài là 3307
-    environment:
-      MYSQL_DATABASE: InternProject
-      MYSQL_ROOT_PASSWORD: 123456
+      - DB_HOST=mysqldb
+      - FRONTEND_URL=http://localhost:3000
     volumes:
-      - mysql_data:/var/lib/mysql  # Dữ liệu MySQL được lưu trữ ngoài container
+      - ./backend:/index.js 
     networks:
-      - app_network
+      - my_network
 
 volumes:
-  mysql_data:
+  db:
 
 networks:
-  app_network:
-    driver: bridge  # Chỉ định mạng bridge nếu cần (thường mặc định)
+  my_network:
+    driver: bridge

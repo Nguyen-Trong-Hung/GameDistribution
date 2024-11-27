@@ -15,12 +15,12 @@ export const getGames = (req, res) => {
     const placeholders = genreIds.map(() => '?').join(',');
     const number_of_genres = genreIds.length;
     const query = `
-      SELECT Game.*
-      FROM Game
-      JOIN Game_Genres ON Game.GameID = Game_Genres.game_id
-      WHERE Game_Genres.genre_id IN (${placeholders})
-      GROUP BY Game.GameID
-      HAVING COUNT(DISTINCT Game_Genres.genre_id) = ${number_of_genres}
+      SELECT game.*
+      FROM game
+      JOIN game_genres ON game.GameID = game_genres.game_id
+      WHERE game_genres.genre_id IN (${placeholders})
+      GROUP BY game.GameID
+      HAVING COUNT(DISTINCT game_genres.genre_id) = ${number_of_genres}
     `;
     db.query(query, genreIds, (err, result) => {
       if (err) {
@@ -33,7 +33,7 @@ export const getGames = (req, res) => {
 };
 
 export const getGameByPublisher = (req, res) => {
-  const sql = "SELECT * FROM game JOIN users ON Game.Publisher = users.username WHERE users.id = ?";
+  const sql = "SELECT * FROM game JOIN users ON game.Publisher = users.username WHERE users.id = ?";
   const { userId } = req.params;
   db.query(sql, [userId], (err, result) => {
     if (err) {
@@ -214,10 +214,10 @@ export const getGamesNeedApproved = (req, res) => {
     const query = `
       SELECT Game.*
       FROM Game
-      JOIN Game_Genres ON Game.GameID = Game_Genres.game_id
-      WHERE Game_Genres.genre_id IN (${placeholders})
+      JOIN game_genres ON Game.GameID = game_genres.game_id
+      WHERE game_genres.genre_id IN (${placeholders})
       GROUP BY Game.GameID
-      HAVING COUNT(DISTINCT Game_Genres.genre_id) = ${number_of_genres}
+      HAVING COUNT(DISTINCT game_genres.genre_id) = ${number_of_genres}
     `;
     db.query(query, genreIds, (err, result) => {
       if (err) {
