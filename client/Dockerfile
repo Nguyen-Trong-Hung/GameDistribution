@@ -1,20 +1,52 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18
+# Sử dụng image Node.js chính thức
+FROM node:18 AS build
 
-# Set the working directory
-WORKDIR /usr/app
+# Set thư mục làm việc trong container
+WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy file package.json và package-lock.json
 COPY package*.json ./
 
-# Install dependencies
+# Cài đặt dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy toàn bộ mã nguồn của ReactJS vào container
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 1702
+# Build ứng dụng
+RUN npm run build
 
-# Define the command to run the app
-CMD ["npm", "start"]
+# Sử dụng NGINX làm web server
+FROM nginx:stable-alpine
+
+# Copy file build vào thư mục NGINX
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy file cấu hình nginx tùy chỉnh (nếu có)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose cổng 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
+# # Use an official Node.js runtime as a parent image
+# FROM node:18
+
+# # Set the working directory
+# WORKDIR /usr/app
+
+# # Copy package.json and package-lock.json
+# COPY package*.json ./
+
+# # Install dependencies
+# RUN npm install
+
+# # Copy the rest of the application code
+# COPY . .
+
+# # Expose the port the app runs on
+# EXPOSE 1702
+
+# # Define the command to run the app
+# CMD ["npm", "start"]

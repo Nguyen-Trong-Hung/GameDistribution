@@ -6,7 +6,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "1702:1702"
+      - "1702:80"
     depends_on:
       - server
     networks:
