@@ -41,7 +41,7 @@ services:
       - FRONTEND_URL=https://hungnt.backendintern.online/:1702
     volumes:
       - ./backend:/index.js 
-      - ./client/public/uploads:/client/public/uploads
+      - ./client/public/uploads:/var/www/project1/GameDistribution/client/public/uploads
     networks:
       - my_network
 
