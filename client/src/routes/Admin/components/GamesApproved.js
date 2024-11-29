@@ -15,7 +15,7 @@ const GamesApproved = () => {
   useEffect(() => {
     const fetchGamesApproved = async () => {
       try {
-        const response = await axios.get('https://hungnt.backendintern.online/:8800/api/game/approve-game');
+        const response = await axios.get('https://hungnt.backendintern.online/api/game/approve-game');
         if (response.data.success) {
           const gamesApprovedData = response.data.data;
           setGamesApproved(gamesApprovedData);
@@ -37,7 +37,7 @@ const GamesApproved = () => {
 
   const fetchGenres = async (gameId) => {
     try {
-      const response = await axios.get(`https://hungnt.backendintern.online/:8800/api/genres/${gameId}`);
+      const response = await axios.get(`https://hungnt.backendintern.online/api/genres/${gameId}`);
       if (response.data.success) {
         setGenres(prevGenres => ({
           ...prevGenres,
@@ -60,7 +60,7 @@ const GamesApproved = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete(`https://hungnt.backendintern.online/:8800/api/game/delete/${gameID}`);
+      const response = await axios.delete(`https://hungnt.backendintern.online/api/game/delete/${gameID}`);
       if (response.data.success) {
         setGamesApproved((prevGamesApproved) => prevGamesApproved.filter((game) => game.GameID !== gameID));
         alert('Game deleted successfully');
@@ -78,7 +78,7 @@ const GamesApproved = () => {
     if (!confirmApproved) return;
 
     try {
-      const res = await axios.post(`https://hungnt.backendintern.online/:8800/api/game/approve/${gameID}`);
+      const res = await axios.post(`https://hungnt.backendintern.online/api/game/approve/${gameID}`);
       if (res.data.success) {
         setGamesApproved((prevGamesApproved) =>
           prevGamesApproved.map((game) =>

@@ -31,7 +31,7 @@ const GamePage = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('https://hungnt.backendintern.online/:8800/api/search/search-game', {
+      const response = await axios.get('https://hungnt.backendintern.online/api/search/search-game', {
         params: { q: searchInput },
       });
       setGames(response.data); // Update the game list with search results
@@ -43,7 +43,7 @@ const GamePage = () => {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const res = await axios.get('https://hungnt.backendintern.online/:8800/api/genres');
+        const res = await axios.get('https://hungnt.backendintern.online/api/genres');
         if (res.data.success) {
           setGenres(res.data.data);
         } else {
@@ -63,7 +63,7 @@ const GamePage = () => {
     const selectedGenreIds = genres
       .filter((genre) => selectedGenres.includes(genre.name))
       .map((genre) => genre.id);
-    axios.get(`https://hungnt.backendintern.online/:8800/api/game?genreId=${selectedGenreIds.join(",")}`)
+    axios.get(`https://hungnt.backendintern.online/api/game?genreId=${selectedGenreIds.join(",")}`)
       .then(response => {
         if (response.data.success) {
           setGames(response.data.data);
@@ -79,7 +79,7 @@ const GamePage = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axios.get('https://hungnt.backendintern.online/:8800/api/game');
+        const response = await axios.get('https://hungnt.backendintern.online/api/game');
         if (response.data.success) {
           setGames(response.data.data);
         } else {

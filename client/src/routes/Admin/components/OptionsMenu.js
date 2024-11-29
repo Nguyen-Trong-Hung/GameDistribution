@@ -28,7 +28,7 @@ export default function OptionsMenu() {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (!confirmLogout) return;
     try {
-      const res = await axios.get('https://hungnt.backendintern.online/:8800/api/admin/logoutAdmin', { withCredentials: true });
+      const res = await axios.get('https://hungnt.backendintern.online/api/admin/logoutAdmin', { withCredentials: true });
       console.log('Response:', res.data);
       if (res.data.success) {
         logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất

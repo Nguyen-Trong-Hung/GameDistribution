@@ -53,7 +53,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('https://hungnt.backendintern.online/:8800/api/user/users');
+        const response = await axios.get('https://hungnt.backendintern.online/api/user/users');
         if (response.data.success) {
           setUsers(response.data.data);
         } else {
@@ -78,7 +78,7 @@ const Users = () => {
       return;
     }
     try {
-      const response = await axios.post(`https://hungnt.backendintern.online/:8800/api/user/lock-user`, { userId }, { withCredentials: true });
+      const response = await axios.post(`https://hungnt.backendintern.online/api/user/lock-user`, { userId }, { withCredentials: true });
       if (response.data.success) {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -98,7 +98,7 @@ const Users = () => {
       return;
     }
     try {
-      const response = await axios.post(`https://hungnt.backendintern.online/:8800/api/user/unlock-user`, { userId }, { withCredentials: true });
+      const response = await axios.post(`https://hungnt.backendintern.online/api/user/unlock-user`, { userId }, { withCredentials: true });
       if (response.data.success) {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>

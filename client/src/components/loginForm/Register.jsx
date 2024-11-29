@@ -18,7 +18,7 @@ const Register = ({ onClose }) => {
     };
 
     try {
-      const response = await fetch('https://hungnt.backendintern.online/:8800/api/auth/register', {
+      const response = await fetch('https://hungnt.backendintern.online/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
