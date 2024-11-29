@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', getGames);
 router.get('/approve-game', getGamesNeedApproved);
 router.get("/similar/:gameId", getSimilarGamesByGenres);
-router.get("/publisher/:userId",verifyToken, getGameByPublisher);
+router.get("/publisher/:userId", getGameByPublisher);
 router.get('/:id', getGameById);
 router.post('/create-game', upload.single('GameImage'), createNewGame);
 router.post('/approve/:id', approveGame);
