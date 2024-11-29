@@ -30,7 +30,7 @@ const GameList = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axios.get('http://45.77.32.24:8800/api/game');
+        const response = await axios.get('https://hungnt.backendintern.online/:8800/api/game');
         if (response.data.success) {
           setGames(response.data.data);
         } else {

@@ -1,6 +1,9 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+// import fs from 'fs';
+import https from 'https';
+
 import authRoute from './Routes/auth.route.js';
 import gameRoute from './Routes/game.route.js';
 import userRoute from './Routes/user.route.js';
@@ -10,11 +13,23 @@ import searchRoute from './Routes/search.route.js';
 import ratingRoute from './Routes/rating.route.js';
 import commentsRoute from './Routes/comments.route.js';
 
+// Đọc chứng chỉ SSL từ file
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/fe1.backendintern.online/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/fe1.backendintern.online/fullchain.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/fe1.backendintern.online/chain.pem', 'utf8');
+
+const credentials = { key: privateKey, cert: certificate, ca: ca };
+
 // Initialize the app
 const app = express();
 
 // Middleware
-app.use(cors({ origin: ['http://45.77.32.24:1702', 'http://fe1.backendintern.online', 'https://fe1.backendintern.online'], credentials: true }));
+app.use(
+  cors({
+    origin: ['https://fe1.backendintern.online', 'http://45.77.32.24:1702'],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
@@ -28,8 +43,9 @@ app.use('/api/genres', genresRoute);
 app.use('/api/rating', ratingRoute);
 app.use('/api/comments', commentsRoute);
 
+// Khởi chạy server HTTPS
+const httpsServer = https.createServer(credentials, app);
 
-// Start server
-app.listen(8800, () => {
-  console.log('Server is running on port 8800.');
+httpsServer.listen(8800, () => {
+  console.log('HTTPS Server is running on port 8800.');
 });

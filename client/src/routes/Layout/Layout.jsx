@@ -25,7 +25,7 @@ const Layout = () => {
     if (!confirmLogout) return;
 
     try {
-      const res = await axios.get('http://45.77.32.24:8800/api/auth/logout', { withCredentials: true });
+      const res = await axios.get('https://hungnt.backendintern.online/:8800/api/auth/logout', { withCredentials: true });
       console.log('Response:', res.data);
       if (res.data.success) {
         logout();
@@ -44,7 +44,7 @@ const Layout = () => {
         alert('Please enter your request');
         return;
       }
-      const response = await axios.get('http://45.77.32.24:8800/api/search/search-game', {
+      const response = await axios.get('https://hungnt.backendintern.online/:8800/api/search/search-game', {
         params: { q: searchInput },
       });
       if (response.data.length === 0) {

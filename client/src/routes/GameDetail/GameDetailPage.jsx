@@ -23,7 +23,7 @@ const GameDetailPage = () => {
     useEffect(() => {
         const fetchGameDetail = async () => {
             try {
-                const res = await fetch(`http://45.77.32.24:8800/api/game/${id}`, {
+                const res = await fetch(`https://hungnt.backendintern.online/:8800/api/game/${id}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -46,7 +46,7 @@ const GameDetailPage = () => {
         if (gameDetailPage?.GameID) {
             const fetchGenres = async (gameId) => {
                 try {
-                    const response = await axios.get(`http://45.77.32.24:8800/api/genres/${gameId}`);
+                    const response = await axios.get(`https://hungnt.backendintern.online/:8800/api/genres/${gameId}`);
                     if (response.data.success) {
                         setGenres(prevGenres => ({
                             ...prevGenres,
@@ -67,7 +67,7 @@ const GameDetailPage = () => {
         const fetchGameSimilarGenres = async () => {
             try {
                 setLoading(true);
-                const res = await fetch(`http://45.77.32.24:8800/api/game/similar/${id}`, {
+                const res = await fetch(`https://hungnt.backendintern.online/:8800/api/game/similar/${id}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -89,7 +89,7 @@ const GameDetailPage = () => {
     useEffect(() => {
         const fetchAverageRating = async (gameId) => {
             try {
-                const response = await axios.get(`http://45.77.32.24:8800/api/rating/${gameId}`);
+                const response = await axios.get(`https://hungnt.backendintern.online/:8800/api/rating/${gameId}`);
                 if (response.data.success) {
                     const ratings = response.data.data;
                     const averageRating = (ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length).toFixed(1);
@@ -118,7 +118,7 @@ const GameDetailPage = () => {
     const submitRating = async (GameID, UserID, ratingValue) => {
 
         try {
-            const response = await fetch('http://45.77.32.24:8800/api/rating', {
+            const response = await fetch('https://hungnt.backendintern.online/:8800/api/rating', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

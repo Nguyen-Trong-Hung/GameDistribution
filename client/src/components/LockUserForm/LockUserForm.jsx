@@ -14,7 +14,7 @@ const LockUserForm = ({ isOpen, onClose }) => {
         if (!confirmLogout) return;
 
         try {
-            const res = await axios.get('http://45.77.32.24:8800/api/auth/logout', { withCredentials: true });
+            const res = await axios.get('https://hungnt.backendintern.online/:8800/api/auth/logout', { withCredentials: true });
             console.log('Response:', res.data);
             if (res.data.success) {
                 logout(); // Cập nhật trạng thái đăng nhập sau khi đăng xuất

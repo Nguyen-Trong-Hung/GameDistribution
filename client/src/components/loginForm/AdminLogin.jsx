@@ -14,7 +14,7 @@ const AdminLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://45.77.32.24:8800/api/admin/loginAdmin', { email, password });
+            const res = await axios.post('https://hungnt.backendintern.online/:8800/api/admin/loginAdmin', { email, password });
             if (res.data.success) {
                 Cookies.set('token', res.data.token, { expires: 1 });
                 console.log('Login successful');

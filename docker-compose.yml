@@ -38,7 +38,7 @@ services:
       - "8800:8800"
     environment:
       - DB_HOST=mysqldb
-      - FRONTEND_URL=http://45.77.32.24:1702
+      - FRONTEND_URL=https://hungnt.backendintern.online/:1702
     volumes:
       - ./backend:/index.js 
     networks:
