@@ -14,7 +14,7 @@ import commentsRoute from './Routes/comments.route.js';
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'http://45.77.32.24:1702', credentials: true }));
+app.use(cors({ origin: ['http://45.77.32.24:1702', 'http://fe1.backendintern.online/'], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
