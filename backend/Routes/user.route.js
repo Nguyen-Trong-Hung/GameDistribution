@@ -5,8 +5,8 @@ import { verifyToken } from '../Middleware/verifyToken.js';
 const router = express.Router();
 
 router.get('/users', getUser);
-router.post('/change-password',verifyToken, changePassword);
-router.post('/lock-user',verifyToken, lockUser);
-router.post('/unlock-user',verifyToken, unlockUser);
+router.post('/change-password', changePassword);
+router.post('/lock-user', lockUser);
+router.post('/unlock-user', unlockUser);
 
 export default router;
