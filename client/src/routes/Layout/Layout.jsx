@@ -66,6 +66,10 @@ const Layout = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
+
   return (
     <div>
       <div className="gameBar">
@@ -105,30 +109,30 @@ const Layout = () => {
             {isLoggedIn ? (
               <div className='user-info'>
                 <div className='user-name'>
-                  <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar'/></Link>
+                  <Link to="userprofile"><img src="DefaultAvatar.png" className='user-avatar' /></Link>
                 </div>
                 <div className='logout-button' >
                   <button onClick={handleLogout}>Logout</button>
                   <IoIosLogOut className='logout-icon' />
                 </div>
-                <div className="menu" onClick={toggleDropdown}><img src='menu.png' alt="Menu" /></div>
-                {showDropdown && (
-                  <div className="dropdown-menu">
-                    <ul>
-                      <div><Link to="/games">Games</Link></div>
-                      {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution">Distribution</Link></div>}
-                      <div><Link to="/support">Support</Link></div>
-                      <div><Link to="/News">News</Link></div>
-                      <div><Link to="/About">About</Link></div>
-                    </ul>
-                  </div>
-                )}
               </div>
             ) : (
               <button className='login-button' onClick={toggleForm}>
                 <FaUser className='login-icon' /> Login / Register
               </button>
             )}
+            <div className="menu-container">
+              <div className="menu" onClick={toggleDropdown}><img src='menu.png' alt="Menu" /></div>
+              {showDropdown && (
+                <div className="dropdown-menu">
+                    <div><Link to="/games" onClick={closeDropdown}>Games</Link></div>
+                    {isLoggedIn && isLoggedIn.userInfo.isDeveloper && <div><Link to="/distribution" onClick={closeDropdown}>Distribution</Link></div>}
+                    <div><Link to="/support" onClick={closeDropdown}>Support</Link></div>
+                    <div><Link to="/News" onClick={closeDropdown}>News</Link></div>
+                    <div><Link to="/About" onClick={closeDropdown}>About</Link></div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <OverlayLogin isOpen={showFormLogin} onClose={toggleForm} />
